@@ -40,10 +40,10 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 7;
+    final int maxSwipeSpeed = 5;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
-    final long baseSwipeTime = 400;
+    final long baseSwipeTime = 200;
     // The minimum distance a scale event has to traverse the FIRST time before scaling starts.
     final double minScaleFactor = 0.1;
     protected GestureDetector gestureDetector;
@@ -239,7 +239,6 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
             // If the mouse was moved OR as reported, some external mice trigger this when a
             // mouse button is pressed as well, so we check bstate here too.
             case MotionEvent.ACTION_HOVER_MOVE:
-                activity.showToolbar();
                 canvas.movePanToMakePointerVisible();
                 switch (bstate) {
                     case MotionEvent.BUTTON_PRIMARY:
@@ -302,7 +301,6 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         GeneralUtils.debugLog(debugLogging, TAG, "onSingleTapConfirmed, e: " + e);
 
         int metaState = e.getMetaState();
-        activity.showToolbar();
         pointer.leftButtonDown(getX(e), getY(e), metaState);
         SystemClock.sleep(50);
         pointer.releaseButton(getX(e), getY(e), metaState);
@@ -537,11 +535,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                 switch (action) {
                     case MotionEvent.ACTION_POINTER_DOWN:
                         if (!inScaling) {
-                            // This boolean prevents the right-click from firing simultaneously as a middle button click.
                             thirdPointerWasDown = true;
-                            pointer.middleButtonDown(getX(e), getY(e), meta);
-                            // Enter middle-drag mode.
-                            middleDragMode = true;
+                            activity.showKeyboard();
                         }
                 }
                 break;

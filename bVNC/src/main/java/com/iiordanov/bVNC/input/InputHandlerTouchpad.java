@@ -67,7 +67,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         // If we are scaling, allow panning around by moving two fingers around the screen
         if (inScaling) {
             float scale = canvas.getZoomFactor();
-            activity.showToolbar();
             canvas.relativePan(Math.round(distanceX * scale), Math.round(distanceY * scale));
         } else {
             // TODO: This is a workaround for Android 4.2
@@ -86,8 +85,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             if (twoFingers || inSwiping) {
                 return true;
             }
-
-            activity.showToolbar();
 
             // If the gesture has just began, then don't allow a big delta to prevent
             // pointer jumps at the start of scrolling.

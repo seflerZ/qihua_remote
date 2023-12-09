@@ -480,9 +480,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 FrameLayout.LayoutParams.WRAP_CONTENT);
 
         if (Utils.querySharedPreferenceBoolean(this, Constants.leftHandedModeTag)) {
-            params.gravity = Gravity.CENTER | Gravity.LEFT;
+            params.gravity = Gravity.TOP | Gravity.LEFT;
         } else {
-            params.gravity = Gravity.CENTER | Gravity.RIGHT;
+            params.gravity = Gravity.TOP | Gravity.RIGHT;
         }
 
         panner = new Panner(this, canvas.handler);
