@@ -64,62 +64,57 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
         final int meta = e2.getMetaState();
 
-        // If we are scaling, allow panning around by moving two fingers around the screen
-        if (inScaling) {
-            float scale = canvas.getZoomFactor();
-            canvas.relativePan(Math.round(distanceX * scale), Math.round(distanceY * scale));
-        } else {
-            // TODO: This is a workaround for Android 4.2
-            boolean twoFingers = false;
-            if (e1 != null)
-                twoFingers = (e1.getPointerCount() > 1);
-            if (e2 != null)
-                twoFingers = twoFingers || (e2.getPointerCount() > 1);
+        // TODO: This is a workaround for Android 4.2
+        boolean twoFingers = false;
+        if (e1 != null)
+            twoFingers = (e1.getPointerCount() > 1);
 
-            // onScroll called while scaling/swiping gesture is in effect. We ignore the event and pretend it was
-            // consumed. This prevents the mouse pointer from flailing around while we are scaling.
-            // Also, if one releases one finger slightly earlier than the other when scaling, it causes Android
-            // to stick a spiteful onScroll with a MASSIVE delta here.
-            // This would cause the mouse pointer to jump to another place suddenly.
-            // Hence, we ignore onScroll after scaling until we lift all pointers up.
-            if (twoFingers || inSwiping) {
-                return true;
-            }
+        twoFingers = twoFingers || (e2.getPointerCount() > 1);
 
-            // If the gesture has just began, then don't allow a big delta to prevent
-            // pointer jumps at the start of scrolling.
-            if (!inScrolling) {
-                inScrolling = true;
-                distanceX = getSign(distanceX);
-                distanceY = getSign(distanceY);
-                distXQueue.clear();
-                distYQueue.clear();
-            }
-
-            distXQueue.add(distanceX);
-            distYQueue.add(distanceY);
-
-            // Only after the first two events have arrived do we start using distanceX and Y
-            // In order to effectively discard the last two events (which are typically unreliable
-            // because of the finger lifting off).
-            if (distXQueue.size() > 2) {
-                distanceX = distXQueue.poll();
-                distanceY = distYQueue.poll();
-            } else {
-                return true;
-            }
-
-            // Make distanceX/Y display density independent.
-            float sensitivity = pointer.getSensitivity();
-            distanceX = sensitivity * distanceX / displayDensity;
-            distanceY = sensitivity * distanceY / displayDensity;
-
-            // Compute the absolute new mouse position.
-            int newX = Math.round(pointer.getX() + getDelta(-distanceX));
-            int newY = Math.round(pointer.getY() + getDelta(-distanceY));
-
-            pointer.moveMouse(newX, newY, meta);
+        // onScroll called while scaling/swiping gesture is in effect. We ignore the event and pretend it was
+        // consumed. This prevents the mouse pointer from flailing around while we are scaling.
+        // Also, if one releases one finger slightly earlier than the other when scaling, it causes Android
+        // to stick a spiteful onScroll with a MASSIVE delta here.
+        // This would cause the mouse pointer to jump to another place suddenly.
+        // Hence, we ignore onScroll after scaling until we lift all pointers up.
+        if (twoFingers || inSwiping) {
+            return true;
         }
+
+        // If the gesture has just began, then don't allow a big delta to prevent
+        // pointer jumps at the start of scrolling.
+        if (!inScrolling) {
+            inScrolling = true;
+            distanceX = getSign(distanceX);
+            distanceY = getSign(distanceY);
+            distXQueue.clear();
+            distYQueue.clear();
+        }
+
+        distXQueue.add(distanceX);
+        distYQueue.add(distanceY);
+
+        // Only after the first two events have arrived do we start using distanceX and Y
+        // In order to effectively discard the last two events (which are typically unreliable
+        // because of the finger lifting off).
+        if (distXQueue.size() > 2) {
+            distanceX = distXQueue.poll();
+            distanceY = distYQueue.poll();
+        } else {
+            return true;
+        }
+
+        // Make distanceX/Y display density independent.
+        float sensitivity = pointer.getSensitivity();
+        distanceX = sensitivity * distanceX / displayDensity;
+        distanceY = sensitivity * distanceY / displayDensity;
+
+        // Compute the absolute new mouse position.
+        int newX = Math.round(pointer.getX() + getDelta(-distanceX));
+        int newY = Math.round(pointer.getY() + getDelta(-distanceY));
+
+        pointer.moveMouse(newX, newY, meta);
+
         canvas.movePanToMakePointerVisible();
         return true;
     }
