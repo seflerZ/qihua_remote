@@ -129,8 +129,8 @@ class ZoomScaling extends AbstractScaling {
     @Override
     public void changeZoom(RemoteCanvasActivity activity, float scaleFactor, float fx, float fy) {
 
-        float oldScale;
-        float newScale = scaleFactor * scaling;
+        float oldScale = scaling;
+        float newScale = scaleFactor * oldScale;
         if (scaleFactor < 1) {
             if (newScale < minimumScale) {
                 newScale = minimumScale;
@@ -142,16 +142,17 @@ class ZoomScaling extends AbstractScaling {
         }
 
         RemoteCanvas canvas = activity.getCanvas();
-        // ax is the absolute x of the focus
+        // "dx" is the distance to left screen edge in screen's coordinate.
+        // "fx" is the point's x position in original image's coordinate.
+        //  1. newXPan*newScale + dx = fx * newScale
+        //  => newXPan = fx - dx / newScale
+        //  2. dx = fx / imageWidth * canvasWidth = fx * minimumScale
         int xPan = canvas.absoluteXPosition;
-        float ax = (fx / scaling) + xPan;
-        float newXPan = (scaling * xPan - scaling * ax + newScale * ax) / newScale;
+        float newXPan = fx * (1 - canvas.getMinimumScale() / newScale);
         int yPan = canvas.absoluteYPosition;
-        float ay = (fy / scaling) + yPan;
-        float newYPan = (scaling * yPan - scaling * ay + newScale * ay) / newScale;
+        float newYPan = fy * (1 - canvas.getMinimumScale() / newScale);
 
         // Here we do snapping to 1:1. If we are approaching scale = 1, we snap to it.
-        oldScale = scaling;
         if ((newScale > 0.90f && newScale < 1.00f) ||
                 (newScale > 1.00f && newScale < 1.10f)) {
             newScale = 1.f;
@@ -193,9 +194,10 @@ class ZoomScaling extends AbstractScaling {
         RemoteCanvas canvas = activity.getCanvas();
         if (canvas == null || canvas.myDrawable == null)
             return;
-        canvasXOffset = -canvas.getCenteredXOffset();
-        canvasYOffset = -canvas.getCenteredYOffset();
-        canvas.computeShiftFromFullToView();
+
+        canvasXOffset = 0;
+        canvasYOffset = 0;
+
         minimumScale = canvas.getMinimumScale();
         scaling = minimumScale;
         resolveZoom(canvas);

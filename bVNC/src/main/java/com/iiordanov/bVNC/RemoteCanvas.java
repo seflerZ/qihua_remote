@@ -1543,32 +1543,15 @@ public class RemoteCanvas extends AppCompatImageView
         if (canvasZoomer != null && !canvasZoomer.isAbleToPan())
             return false;
 
-        double scale = getZoomFactor();
-
-        double sX = (double) dX / scale;
-        double sY = (double) dY / scale;
-
-        int buttonAndCurveOffset = getBottomMargin(scale);
-        int curveOffset = 0;
-        if (userPanned) {
-            curveOffset = getTopMargin(scale);
-        }
-
-        userPanned = dX != 0.0 || dY != 0.0;
-
-        // Prevent panning above the desktop image except for provision for curved screens.
-        if (absoluteXPosition + sX < 0)
-            // dX = diff to 0
-            sX = -absoluteXPosition;
-        if (absoluteYPosition + sY < 0 - curveOffset)
-            sY = -absoluteYPosition - curveOffset;
+        double sX = dX;
+        double sY = dY;
 
         // Prevent panning right or below desktop image except for provision for on-screen
         // buttons and curved screens
-        if (absoluteXPosition + getVisibleDesktopWidth() + sX > getImageWidth())
-            sX = getImageWidth() - getVisibleDesktopWidth() - absoluteXPosition;
-        if (absoluteYPosition + getVisibleDesktopHeight() + sY > getImageHeight() + buttonAndCurveOffset)
-            sY = getImageHeight() - getVisibleDesktopHeight() - absoluteYPosition + buttonAndCurveOffset;
+//        if (absoluteXPosition + getVisibleDesktopWidth() + sX > getImageWidth())
+//            sX = getImageWidth() - getVisibleDesktopWidth() - absoluteXPosition;
+//        if (absoluteYPosition + getVisibleDesktopHeight() + sY > getImageHeight() + buttonAndCurveOffset)
+//            sY = getImageHeight() - getVisibleDesktopHeight() - absoluteYPosition + buttonAndCurveOffset;
 
         absoluteXPosition += sX;
         absoluteYPosition += sY;
@@ -1828,11 +1811,11 @@ public class RemoteCanvas extends AppCompatImageView
     }
 
     public int getCenteredXOffset() {
-        return (rfbconn.framebufferWidth() - getWidth()) / 2;
+        return (int)(rfbconn.framebufferWidth() * getMinimumScale() - getWidth()) / 2;
     }
 
     public int getCenteredYOffset() {
-        return (rfbconn.framebufferHeight() - getHeight()) / 2;
+        return (int)(rfbconn.framebufferHeight() * getMinimumScale() - getHeight()) / 2;
     }
 
     public float getMinimumScale() {

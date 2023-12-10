@@ -43,8 +43,8 @@ public class Constants {
     // H_THRESH needs to be < than TOP_MARGIN to avoid pan following pointer unnecessarily.
     public static final int H_THRESH = 50;
     public static final int W_THRESH = 50;
-    public static final int TOP_MARGIN = 110;
-    public static final int BOTTOM_MARGIN = 300;
+    public static final int TOP_MARGIN = 0;
+    public static final int BOTTOM_MARGIN = 0;
     public static final int DEFAULT_VNC_PORT = 5900;
     public static final int DEFAULT_RDP_PORT = 3389;
     public static final int DEFAULT_RDP_COLOR_MODE = 16;
