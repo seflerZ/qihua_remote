@@ -1463,13 +1463,6 @@ public class RemoteCanvas extends AppCompatImageView
         boolean panX = true;
         boolean panY = true;
 
-        // Don't pan in a certain direction if dimension scaled is already less
-        // than the dimension of the visible part of the screen.
-        if (rfbconn.framebufferWidth() < getVisibleDesktopWidth())
-            panX = false;
-        if (rfbconn.framebufferHeight() < getVisibleDesktopHeight())
-            panY = false;
-
         // We only pan if the current scaling is able to pan.
         if (canvasZoomer != null && !canvasZoomer.isAbleToPan())
             return;
