@@ -290,21 +290,7 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
      * @param scales true to enable quick scaling, false to disable
      */
     public void setQuickScaleEnabled(boolean scales) {
-        mQuickScaleEnabled = scales;
-        if (mQuickScaleEnabled && mGestureDetector == null) {
-            GestureDetector.SimpleOnGestureListener gestureListener =
-                    new GestureDetector.SimpleOnGestureListener() {
-                        @Override
-                        public boolean onDoubleTap(MotionEvent e) {
-                            // Double tap: start watching for a swipe
-                            mAnchoredScaleStartX = e.getX();
-                            mAnchoredScaleStartY = e.getY();
-                            mAnchoredScaleMode = ANCHORED_SCALE_MODE_DOUBLE_TAP;
-                            return true;
-                        }
-                    };
-            mGestureDetector = new GestureDetector(mContext, gestureListener, mHandler);
-        }
+
     }
 
     /**
