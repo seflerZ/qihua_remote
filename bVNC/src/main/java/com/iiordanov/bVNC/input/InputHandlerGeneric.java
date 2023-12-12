@@ -555,8 +555,60 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         boolean eventConsumed = true;
 
         // Get the current focus.
-        xCurrentFocus = pointer.getX();
-        yCurrentFocus = pointer.getY();
+        xCurrentFocus = detector.getFocusX();
+        yCurrentFocus = detector.getFocusY();
+
+        // If we haven't started scaling yet, we check whether a swipe is being performed.
+        // The arbitrary fudge factor may not be the best way to set a tolerance...
+        if (!inScaling) {
+            // Start swiping mode only after we've moved away from the initial focal point some distance.
+            if (!inSwiping) {
+                if ((yCurrentFocus < (yInitialFocus - startSwipeDist)) ||
+                        (yCurrentFocus > (yInitialFocus + startSwipeDist)) ||
+                        (xCurrentFocus < (xInitialFocus - startSwipeDist)) ||
+                        (xCurrentFocus > (xInitialFocus + startSwipeDist))) {
+                    inSwiping = true;
+                    xPreviousFocus = xCurrentFocus;
+                    yPreviousFocus = yCurrentFocus;
+                }
+            }
+
+            // If in swiping mode, indicate a swipe at regular intervals.
+            if (inSwiping) {
+                scrollDown = false;
+                scrollUp = false;
+                scrollRight = false;
+                scrollLeft = false;
+                if (yCurrentFocus < (yPreviousFocus - baseSwipeDist)) {
+                    scrollDown = true;
+                    xPreviousFocus = xCurrentFocus;
+                    yPreviousFocus = yCurrentFocus;
+                } else if (yCurrentFocus > (yPreviousFocus + baseSwipeDist)) {
+                    scrollUp = true;
+                    xPreviousFocus = xCurrentFocus;
+                    yPreviousFocus = yCurrentFocus;
+                } else if (xCurrentFocus < (xPreviousFocus - baseSwipeDist)) {
+                    scrollRight = true;
+                    xPreviousFocus = xCurrentFocus;
+                    yPreviousFocus = yCurrentFocus;
+                } else if (xCurrentFocus > (xPreviousFocus + baseSwipeDist)) {
+                    scrollLeft = true;
+                    xPreviousFocus = xCurrentFocus;
+                    yPreviousFocus = yCurrentFocus;
+                } else {
+                    eventConsumed = false;
+                }
+                // The faster we swipe, the faster we traverse the screen, and hence, the
+                // smaller the time-delta between consumed events. We take the reciprocal
+                // obtain swipeSpeed. If it goes to zero, we set it to at least one.
+                long elapsedTime = detector.getTimeDelta();
+                if (elapsedTime < 10) elapsedTime = 10;
+
+                swipeSpeed = baseSwipeTime / elapsedTime;
+                if (swipeSpeed == 0) swipeSpeed = 1;
+                GeneralUtils.debugLog(debugLogging, TAG, "Current swipe speed: " + swipeSpeed);
+            }
+        }
 
         if (!inSwiping) {
             if (!inScaling && Math.abs(1.0 - detector.getScaleFactor()) < minScaleFactor) {
@@ -569,7 +621,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                     inScaling = true;
                 }
                 GeneralUtils.debugLog(debugLogging, TAG, "Changing zoom level: " + detector.getScaleFactor());
-                canvas.canvasZoomer.changeZoom(activity, detector.getScaleFactor(), xCurrentFocus, yCurrentFocus);
+                canvas.canvasZoomer.changeZoom(activity, detector.getScaleFactor(), pointer.getX(), pointer.getY());
             }
         }
         return eventConsumed;
