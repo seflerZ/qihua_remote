@@ -660,6 +660,11 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            activity.showToolbar();
+            return true;
+        }
+
         GeneralUtils.debugLog(debugLogging, TAG, "onKeyDown, e: " + e);
         return canvas.getKeyboard().keyEvent(keyCode, e);
     }

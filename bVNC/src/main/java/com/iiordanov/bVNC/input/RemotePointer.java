@@ -56,18 +56,6 @@ public abstract class RemotePointer {
         if (keyCode == KeyEvent.KEYCODE_CAMERA) {
             result = true;
             // Or the back button is pressed
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // Determine SDK
-            boolean preGingerBread = android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD;
-            // Whether the source is a mouse (getSource() is not available pre-Gingerbread)
-            boolean mouseSource = (!preGingerBread && e.getSource() == InputDevice.SOURCE_MOUSE);
-            // Whether the device has a qwerty keyboard
-            boolean noQwertyKbd = isNoQwertyKbd(context);
-            // Whether the device is pre-Gingerbread or the event came from the "hard buttons"
-            boolean fromVirtualHardKey = preGingerBread || (e.getFlags() & KeyEvent.FLAG_VIRTUAL_HARD_KEY) != 0;
-            if (mouseSource || noQwertyKbd || fromVirtualHardKey) {
-                result = true;
-            }
         }
 
         return result;
