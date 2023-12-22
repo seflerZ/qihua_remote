@@ -750,6 +750,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         // Define action of tab key and meta keys.
         keyTab = (ImageButton) findViewById(R.id.keyTab);
+        keyTab.setImageResource(R.drawable.taboff);
+
         keyTab.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
@@ -771,6 +773,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyEsc = (ImageButton) findViewById(R.id.keyEsc);
+        keyEsc.setImageResource(R.drawable.escoff);
+
         keyEsc.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
@@ -792,6 +796,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyCtrl = (ImageButton) findViewById(R.id.keyCtrl);
+        keyCtrl.setImageResource(R.drawable.ctrloff);
+
         keyCtrl.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -819,6 +825,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keySuper = (ImageButton) findViewById(R.id.keySuper);
+        keySuper.setImageResource(R.drawable.superoff);
+
         keySuper.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -846,6 +854,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyAlt = (ImageButton) findViewById(R.id.keyAlt);
+        keyAlt.setImageResource(R.drawable.altoff);
+
         keyAlt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -873,6 +883,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyShift = (ImageButton) findViewById(R.id.keyShift);
+        keyShift.setImageResource(R.drawable.shiftoff);
+
         keyShift.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -904,6 +916,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         // Define action of arrow keys.
         keyUp = (ImageButton) findViewById(R.id.keyUpArrow);
+        keyUp.setImageResource(R.drawable.upoff);
+
         keyUp.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
@@ -925,6 +939,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyDown = (ImageButton) findViewById(R.id.keyDownArrow);
+        keyDown.setImageResource(R.drawable.downoff);
+
         keyDown.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
@@ -946,6 +962,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyLeft = (ImageButton) findViewById(R.id.keyLeftArrow);
+        keyLeft.setImageResource(R.drawable.leftoff);
+
         keyLeft.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
@@ -967,6 +985,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
 
         keyRight = (ImageButton) findViewById(R.id.keyRightArrow);
+        keyRight.setImageResource(R.drawable.rightoff);
+
         keyRight.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
