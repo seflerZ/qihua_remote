@@ -86,7 +86,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 15.f;
+    float startSwipeDist = 10.f;
     float baseSwipeDist = 10.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeDistance = 10.f;
