@@ -148,18 +148,9 @@ class ZoomScaling extends AbstractScaling {
         //  => newXPan = fx - dx / newScale
         //  2. dx = fx / imageWidth * canvasWidth = fx * minimumScale
         int xPan = canvas.absoluteXPosition;
-        float newXPan = fx * (1 - canvas.getMinimumScale() / newScale);
+        float newXPan = (fx + canvasXOffset) * (1 - canvas.getMinimumScale() / newScale);
         int yPan = canvas.absoluteYPosition;
-        float newYPan = fy * (1 - canvas.getMinimumScale() / newScale);
-
-        // Here we do snapping to 1:1. If we are approaching scale = 1, we snap to it.
-        if ((newScale > 0.90f && newScale < 1.00f) ||
-                (newScale > 1.00f && newScale < 1.10f)) {
-            newScale = 1.f;
-            // Only if oldScale is outside the snap region, do we inform the user.
-            if (oldScale < 0.90f || oldScale > 1.10f)
-                canvas.displayShortToastMessage(R.string.snap_one_to_one);
-        }
+        float newYPan = (fy + canvasYOffset) * (1 - canvas.getMinimumScale() / newScale);
 
         resetMatrix();
         scaling = newScale;
@@ -195,7 +186,8 @@ class ZoomScaling extends AbstractScaling {
         if (canvas == null || canvas.myDrawable == null)
             return;
 
-        canvasXOffset = 0;
+        // top center align
+        canvasXOffset = -canvas.getCenteredXOffset();
         canvasYOffset = 0;
 
         minimumScale = canvas.getMinimumScale();
