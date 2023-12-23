@@ -109,7 +109,6 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|left"
                 android:orientation="horizontal"
                 android:padding="0sp">
 
@@ -130,13 +129,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shiftoff" />
-            </LinearLayout>
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="0sp">
 
                 <ImageButton
                     android:id="@+id/keyCtrl"
@@ -167,13 +159,6 @@
             android:orientation="vertical"
             android:padding="0sp">
 
-            <ImageButton
-                android:id="@+id/keyUpArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:background="@drawable/upoff" />
-
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -186,6 +171,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/leftoff" />
+
+                <ImageButton
+                    android:id="@+id/keyUpArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:background="@drawable/upoff" />
 
                 <ImageButton
                     android:id="@+id/keyDownArrow"
