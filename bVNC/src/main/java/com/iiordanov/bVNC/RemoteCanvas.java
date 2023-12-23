@@ -1460,6 +1460,11 @@ public class RemoteCanvas extends AppCompatImageView
         if (rfbconn == null)
             return;
 
+        // Do not pan when not scaled.
+        if (getZoomFactor() == getMinimumScale()) {
+            return;
+        }
+
         boolean panX = true;
         boolean panY = true;
 

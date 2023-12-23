@@ -40,7 +40,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 5;
+    final int maxSwipeSpeed = 4;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
     final long baseSwipeTime = 200;
@@ -536,7 +536,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                     case MotionEvent.ACTION_POINTER_DOWN:
                         if (!inScaling) {
                             thirdPointerWasDown = true;
-                            activity.showKeyboard();
+
+                            activity.toggleKeyboard(null);
                         }
                 }
                 break;

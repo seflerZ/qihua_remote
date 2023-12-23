@@ -1685,7 +1685,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     public void toggleKeyboard(MenuItem menuItem) {
         if (softKeyboardUp) {
-            hideKeyboard();
+            hideKeyboardAndExtraKeys();
         } else {
             showKeyboard();
         }
