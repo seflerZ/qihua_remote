@@ -40,7 +40,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 4;
+    final int maxSwipeSpeed = 3;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
     final long baseSwipeTime = 200;
@@ -58,6 +58,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     protected boolean rightDragMode = false;
     protected boolean middleDragMode = false;
     protected float dragX, dragY;
+    protected float totalDragX, totalDragY;
     protected boolean singleHandedGesture = false;
     protected boolean singleHandedJustEnded = false;
     // These variables keep track of which pointers have seen ACTION_DOWN events.
@@ -315,15 +316,13 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     public boolean onDoubleTap(MotionEvent e) {
         GeneralUtils.debugLog(debugLogging, TAG, "onDoubleTap, e: " + e);
 
-        int metaState = e.getMetaState();
-        pointer.leftButtonDown(getX(e), getY(e), metaState);
-        SystemClock.sleep(50);
-        pointer.releaseButton(getX(e), getY(e), metaState);
-        SystemClock.sleep(50);
-        pointer.leftButtonDown(getX(e), getY(e), metaState);
-        SystemClock.sleep(50);
-        pointer.releaseButton(getX(e), getY(e), metaState);
-        canvas.movePanToMakePointerVisible();
+        totalDragX = 0;
+        totalDragY = 0;
+
+        // Will handle the double click if the drag not performed in endDragModesAndScrolling()
+
+        dragMode = true;
+
         return true;
     }
 
@@ -334,9 +333,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     public void onLongPress(MotionEvent e) {
         GeneralUtils.debugLog(debugLogging, TAG, "onLongPress, e: " + e);
 
-        int metaState = e.getMetaState();
-
-        if (secondPointerWasDown || thirdPointerWasDown) {
+        if (secondPointerWasDown || thirdPointerWasDown || dragMode) {
             GeneralUtils.debugLog(debugLogging, TAG,
                     "onLongPress: right/middle-click gesture in progress, not starting drag mode");
             return;
@@ -344,8 +341,10 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
 
         activity.sendShortVibration();
 
-        dragMode = true;
-        pointer.leftButtonDown(getX(e), getY(e), metaState);
+        totalDragX = 0;
+        totalDragY = 0;
+
+        rightDragMode = true;
     }
 
     /**
@@ -354,7 +353,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
      */
     protected boolean endDragModesAndScrolling() {
         GeneralUtils.debugLog(debugLogging, TAG, "endDragModesAndScrolling");
-        boolean nonDragGesture = panMode || inScaling || inSwiping || inScrolling || immersiveSwipe;
+        boolean nonDragGesture = true;
         canvas.cursorBeingMoved = false;
         panMode = false;
         inScaling = false;
@@ -466,6 +465,17 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             GeneralUtils.debugLog(debugLogging, TAG,
                                     "onTouchEvent: No non-drag gestures detected, sending mouse up event");
                             pointer.releaseButton(getX(e), getY(e), meta);
+
+                            // not drag at all consider it double tap
+                            if (Math.abs(totalDragY) < 5 && Math.abs(totalDragX) < 5) {
+                                pointer.leftButtonDown(getX(e), getY(e), meta);
+                                SystemClock.sleep(50);
+                                pointer.releaseButton(getX(e), getY(e), meta);
+                                SystemClock.sleep(50);
+                                pointer.leftButtonDown(getX(e), getY(e), meta);
+                                SystemClock.sleep(50);
+                                pointer.releaseButton(getX(e), getY(e), meta);
+                            }
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -479,8 +489,16 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE panMode");
                             return true;
                         } else if (dragMode || rightDragMode || middleDragMode) {
-                            canvas.movePanToMakePointerVisible();
+                            if (dragMode && totalDragY == 0 && totalDragX == 0) {
+                                pointer.leftButtonDown(getX(e), getY(e), meta);
+                            } else if (rightDragMode && totalDragY == 0 && totalDragX == 0) {
+                                pointer.rightButtonDown(getX(e), getY(e), meta);
+                            } else if (middleDragMode && totalDragY == 0 && totalDragX == 0){
+                                pointer.middleButtonDown(getX(e), getY(e), meta);
+                            }
+
                             pointer.moveMouseButtonDown(getX(e), getY(e), meta);
+                            canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
                             return true;
                         } else if (inSwiping) {

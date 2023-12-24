@@ -38,6 +38,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -571,7 +572,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 layoutArrowKeys.offsetLeftAndRight(diffArrowKeysPosition);
                 if (softKeyboardPositionChanged) {
                     android.util.Log.d(TAG, "onGlobalLayout: hiding on-screen buttons");
-                    setExtraKeysVisibility(View.GONE, false);
+//                    setExtraKeysVisibility(View.GONE, false);
                     canvas.invalidate();
                 }
             }
@@ -1006,6 +1007,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 return false;
             }
         });
+
+        setExtraKeysVisibility(View.VISIBLE, true);
     }
 
     /**
@@ -1685,7 +1688,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     public void toggleKeyboard(MenuItem menuItem) {
         if (softKeyboardUp) {
-            hideKeyboardAndExtraKeys();
+            hideKeyboard();
         } else {
             showKeyboard();
         }

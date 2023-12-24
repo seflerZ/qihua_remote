@@ -192,7 +192,7 @@ public class Constants {
     public static final int REMOTE_SOUND_DISABLED = 2;
     public static final int REMOTE_SOUND_ON_SERVER = 1;
     public static final int REMOTE_SOUND_ON_DEVICE = 0;
-    public static final int SHORT_VIBRATION = 1;
+    public static final int SHORT_VIBRATION = 60;
     public static final int CURSOR_AUTO = 0;
     public static final int CURSOR_FORCE_LOCAL = 1;
     public static final int CURSOR_FORCE_DISABLE = 2;

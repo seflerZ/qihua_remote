@@ -139,8 +139,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         if (dragMode || rightDragMode || middleDragMode) {
             float distanceX = e.getX() - dragX;
             dragX = e.getX();
+
+            totalDragX += distanceX;
             // Compute the absolute new X coordinate.
-            return Math.round(p.getX() + getDelta(distanceX));
+            return Math.round(p.getX() + distanceX);
         }
         dragX = e.getX();
         return p.getX();
@@ -155,8 +157,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         if (dragMode || rightDragMode || middleDragMode) {
             float distanceY = e.getY() - dragY;
             dragY = e.getY();
+
+            totalDragY += distanceY;
             // Compute the absolute new Y coordinate.
-            return Math.round(p.getY() + getDelta(distanceY));
+            return Math.round(p.getY() + distanceY);
         }
         dragY = e.getY();
         return p.getY();
