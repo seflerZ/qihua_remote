@@ -1007,8 +1007,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 return false;
             }
         });
-
-        setExtraKeysVisibility(View.VISIBLE, true);
     }
 
     /**
