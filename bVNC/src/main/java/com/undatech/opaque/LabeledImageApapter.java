@@ -118,6 +118,7 @@ public class LabeledImageApapter extends BaseAdapter {
                 Log.d(TAG, "Setting screenshot from file " + screenshotFilePath);
                 Bitmap gridImage = BitmapFactory.decodeFile(screenshotFilePath);
                 imageView.setImageBitmap(gridImage);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             } else {
                 imageView.setImageResource(R.drawable.ic_screen_black_48dp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
