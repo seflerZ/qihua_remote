@@ -680,6 +680,12 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // If the toolbar is already shown, disconnect
+            if (activity.getSupportActionBar().isShowing()) {
+                activity.getCanvas().disconnectWithoutMessage();
+                return true;
+            }
+
             activity.showToolbar();
             return true;
         }
