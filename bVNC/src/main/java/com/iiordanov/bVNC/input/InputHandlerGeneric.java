@@ -40,7 +40,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 3;
+    final int maxSwipeSpeed = 2;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
     final long baseSwipeTime = 80;
@@ -87,7 +87,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 10.f;
+    float startSwipeDist = 15.f;
     float baseSwipeDist = 10.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeDistance = 10.f;
