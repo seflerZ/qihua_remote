@@ -546,18 +546,11 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                         thirdPointerWasDown = false;
                         break;
                     case MotionEvent.ACTION_POINTER_UP:
+                    case MotionEvent.ACTION_UP:
                         if (!inSwiping && !inScaling && !thirdPointerWasDown) {
-                            // If user taps with a second finger while first finger is down, then we treat this as
-                            // a right mouse click, but we only effect the click when the second pointer goes up.
-                            // If the user taps with a second and third finger while the first
-                            // finger is down, we treat it as a middle mouse click. We ignore the lifting of the
-                            // second index when the third index has gone down (using the thirdPointerWasDown variable)
-                            // to prevent inadvertent right-clicks when a middle click has been performed.
                             pointer.rightButtonDown(getX(e), getY(e), meta);
-                            // Enter right-drag mode.
-                            rightDragMode = true;
-                            // Now the event must be passed on to the parent class in order to
-                            // end scaling as it was certainly started when the second pointer went down.
+                            SystemClock.sleep(50);
+                            pointer.releaseButton(getX(e), getY(e), meta);
                         }
                         break;
                 }
