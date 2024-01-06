@@ -513,11 +513,14 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             if (immersiveSwipe) {
                                 scrollUp = false;
                                 scrollDown = false;
+                                swipeSpeed = 1;
                                 if (y < immerInitY) {
                                     scrollDown = true;
                                 } else if (y > immerInitY) {
                                     scrollUp = true;
                                 }
+
+                                immerInitY = y;
                             }
 
                             // Set the coordinates to where the swipe began (i.e. where scaling started).
