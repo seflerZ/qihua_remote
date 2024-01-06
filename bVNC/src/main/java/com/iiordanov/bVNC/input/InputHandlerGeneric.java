@@ -40,7 +40,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 4;
+    final int maxSwipeSpeed = 1;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
     final long baseSwipeTime = 400;
@@ -92,7 +92,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     float startSwipeDist = 15.f;
     float baseSwipeDist = 10.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
-    float immersiveSwipeDistance = 100.f;
+    float immersiveSwipeDistance = 70.f;
     boolean immersiveSwipe = false;
     // Some variables indicating what kind of a gesture we're currently in or just finished.
     boolean inScrolling = false;
@@ -236,7 +236,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                 } else
                     break;
 
-                sendScrollEvents(x, y, meta);
+                sendScrollEvents(x, y, -1, meta);
                 used = true;
                 break;
             // If the mouse was moved OR as reported, some external mice trigger this when a
@@ -272,20 +272,20 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
      * @param y
      * @param meta
      */
-    protected void sendScrollEvents(int x, int y, int meta) {
+    protected void sendScrollEvents(int x, int y, int delta, int meta) {
         GeneralUtils.debugLog(debugLogging, TAG, "sendScrollEvents");
 
         int numEvents = 0;
         while (numEvents < swipeSpeed && numEvents < maxSwipeSpeed) {
             if (scrollDown) {
-                pointer.scrollDown(x, y, 0, meta);
+                pointer.scrollDown(x, y, -delta, meta);
             } else if (scrollUp) {
-                pointer.scrollUp(x, y, 0, meta);
+                pointer.scrollUp(x, y, delta, meta);
             }
             if (scrollRight) {
-                pointer.scrollRight(x, y, 0, meta);
+                pointer.scrollRight(x, y, delta, meta);
             } else if (scrollLeft) {
-                pointer.scrollLeft(x, y, 0, meta);
+                pointer.scrollLeft(x, y, -delta, meta);
             }
             numEvents++;
         }
@@ -515,13 +515,20 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                                 } else if (y > immerInitY) {
                                     scrollUp = true;
                                 }
-
-                                immerInitY = y;
                             }
+
+                            int delta = (int)((y - immerInitY) * 5);
+                            if (delta > 255) {
+                                delta = 0x0ff;
+                            } else if (delta < -255) {
+                                delta = -255;
+                            }
+
+                            immerInitY = y;
 
                             // Set the coordinates to where the swipe began (i.e. where scaling started).
                             setEventCoordinates(e, xInitialFocus, yInitialFocus);
-                            sendScrollEvents(getX(e), getY(e), meta);
+                            sendScrollEvents(getX(e), getY(e), delta, meta);
                             // Restore the coordinates so that onScale doesn't get all muddled up.
                             setEventCoordinates(e, x, y);
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
@@ -763,7 +770,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         } else if (e1.getY() > e2.getY()) {
             scrollDown = true;
         }
-        sendScrollEvents(getX(e1), getY(e1), meta);
+        sendScrollEvents(getX(e1), getY(e1), -1, meta);
         return true;
     }
 }

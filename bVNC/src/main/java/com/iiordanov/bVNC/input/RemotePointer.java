@@ -201,9 +201,9 @@ public abstract class RemotePointer {
         @Override
         public void run() {
             if (direction == 0) {
-                RemotePointer.this.scrollUp(pointerX, pointerY, 0, 0);
+                RemotePointer.this.scrollUp(pointerX, pointerY, -1, 0);
             } else {
-                RemotePointer.this.scrollDown(pointerX, pointerY, 0, 0);
+                RemotePointer.this.scrollDown(pointerX, pointerY, -1, 0);
             }
             handler.postDelayed(this, delay);
 

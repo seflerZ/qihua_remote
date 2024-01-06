@@ -101,10 +101,10 @@ public class RemoteRdpKeyboard extends RemoteKeyboard {
                     pointer.middleButtonDown(x, y, meta.getMetaFlags() | onScreenMetaState);
                     break;
                 case RemoteVncPointer.MOUSE_BUTTON_SCROLL_UP:
-                    pointer.scrollUp(x, y, 0, meta.getMetaFlags() | onScreenMetaState);
+                    pointer.scrollUp(x, y, -1, meta.getMetaFlags() | onScreenMetaState);
                     break;
                 case RemoteVncPointer.MOUSE_BUTTON_SCROLL_DOWN:
-                    pointer.scrollDown(x, y, 0, meta.getMetaFlags() | onScreenMetaState);
+                    pointer.scrollDown(x, y, -1, meta.getMetaFlags() | onScreenMetaState);
                     break;
             }
             try {
