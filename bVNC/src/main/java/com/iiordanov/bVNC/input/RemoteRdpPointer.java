@@ -55,13 +55,13 @@ public class RemoteRdpPointer extends RemotePointer {
 
     @Override
     public void scrollUp(int x, int y, int metaState) {
-        pointerMask = MOUSE_BUTTON_SCROLL_UP | POINTER_DOWN_MASK;
+        pointerMask = MOUSE_BUTTON_SCROLL_UP;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
     public void scrollDown(int x, int y, int metaState) {
-        pointerMask = MOUSE_BUTTON_SCROLL_DOWN | POINTER_DOWN_MASK;
+        pointerMask = MOUSE_BUTTON_SCROLL_DOWN;
         sendPointerEvent(x, y, metaState, false);
     }
 
