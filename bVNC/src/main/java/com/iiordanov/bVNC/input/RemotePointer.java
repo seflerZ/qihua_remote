@@ -147,13 +147,13 @@ public abstract class RemotePointer {
 
     abstract public void rightButtonDown(int x, int y, int metaState);
 
-    abstract public void scrollUp(int x, int y, int metaState);
+    abstract public void scrollUp(int x, int y, int speed, int metaState);
 
-    abstract public void scrollDown(int x, int y, int metaState);
+    abstract public void scrollDown(int x, int y, int speed, int metaState);
 
-    abstract public void scrollLeft(int x, int y, int metaState);
+    abstract public void scrollLeft(int x, int y, int speed, int metaState);
 
-    abstract public void scrollRight(int x, int y, int metaState);
+    abstract public void scrollRight(int x, int y, int speed, int metaState);
 
     abstract public void releaseButton(int x, int y, int metaState);
 
@@ -201,9 +201,9 @@ public abstract class RemotePointer {
         @Override
         public void run() {
             if (direction == 0) {
-                RemotePointer.this.scrollUp(pointerX, pointerY, 0);
+                RemotePointer.this.scrollUp(pointerX, pointerY, 0, 0);
             } else {
-                RemotePointer.this.scrollDown(pointerX, pointerY, 0);
+                RemotePointer.this.scrollDown(pointerX, pointerY, 0, 0);
             }
             handler.postDelayed(this, delay);
 

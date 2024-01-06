@@ -278,14 +278,14 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         int numEvents = 0;
         while (numEvents < swipeSpeed && numEvents < maxSwipeSpeed) {
             if (scrollDown) {
-                pointer.scrollDown(x, y, meta);
+                pointer.scrollDown(x, y, 0, meta);
             } else if (scrollUp) {
-                pointer.scrollUp(x, y, meta);
+                pointer.scrollUp(x, y, 0, meta);
             }
             if (scrollRight) {
-                pointer.scrollRight(x, y, meta);
+                pointer.scrollRight(x, y, 0, meta);
             } else if (scrollLeft) {
-                pointer.scrollLeft(x, y, meta);
+                pointer.scrollLeft(x, y, 0, meta);
             }
             numEvents++;
         }

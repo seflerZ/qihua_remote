@@ -60,25 +60,25 @@ public class RemoteVncPointer extends RemotePointer {
     }
 
     @Override
-    public void scrollUp(int x, int y, int metaState) {
+    public void scrollUp(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_UP | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
-    public void scrollDown(int x, int y, int metaState) {
+    public void scrollDown(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_DOWN | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
-    public void scrollLeft(int x, int y, int metaState) {
+    public void scrollLeft(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_LEFT | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
-    public void scrollRight(int x, int y, int metaState) {
+    public void scrollRight(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_RIGHT | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
     }

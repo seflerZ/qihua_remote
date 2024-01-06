@@ -54,24 +54,24 @@ public class RemoteRdpPointer extends RemotePointer {
     }
 
     @Override
-    public void scrollUp(int x, int y, int metaState) {
+    public void scrollUp(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_UP;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
-    public void scrollDown(int x, int y, int metaState) {
+    public void scrollDown(int x, int y, int speed, int metaState) {
         pointerMask = MOUSE_BUTTON_SCROLL_DOWN;
         sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
-    public void scrollLeft(int x, int y, int metaState) {
+    public void scrollLeft(int x, int y, int speed, int metaState) {
         // TODO: Protocol does not support scrolling left/right yet.
     }
 
     @Override
-    public void scrollRight(int x, int y, int metaState) {
+    public void scrollRight(int x, int y, int speed, int metaState) {
         // TODO: Protocol does not support scrolling left/right yet.
     }
 
