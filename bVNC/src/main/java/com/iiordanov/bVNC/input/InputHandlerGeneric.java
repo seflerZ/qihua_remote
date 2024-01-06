@@ -279,17 +279,13 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         while (numEvents < swipeSpeed && numEvents < maxSwipeSpeed) {
             if (scrollDown) {
                 pointer.scrollDown(x, y, meta);
-                pointer.moveMouseButtonUp(x, y, meta);
             } else if (scrollUp) {
                 pointer.scrollUp(x, y, meta);
-                pointer.moveMouseButtonUp(x, y, meta);
             }
             if (scrollRight) {
                 pointer.scrollRight(x, y, meta);
-                pointer.moveMouseButtonUp(x, y, meta);
             } else if (scrollLeft) {
                 pointer.scrollLeft(x, y, meta);
-                pointer.moveMouseButtonUp(x, y, meta);
             }
             numEvents++;
         }
@@ -547,7 +543,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                         break;
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
-                        if (!inSwiping && !inScaling && !thirdPointerWasDown) {
+                        if (!inSwiping && !inScaling && secondPointerWasDown) {
                             pointer.rightButtonDown(getX(e), getY(e), meta);
                             SystemClock.sleep(50);
                             pointer.releaseButton(getX(e), getY(e), meta);
@@ -596,6 +592,9 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                     inSwiping = true;
                     xPreviousFocus = xCurrentFocus;
                     yPreviousFocus = yCurrentFocus;
+
+                    // prevent right click
+                    secondPointerWasDown = false;
                 }
             }
 
