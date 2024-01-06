@@ -40,10 +40,10 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
-    final int maxSwipeSpeed = 2;
+    final int maxSwipeSpeed = 4;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
-    final long baseSwipeTime = 80;
+    final long baseSwipeTime = 400;
     // The minimum distance a scale event has to traverse the FIRST time before scaling starts.
     final double minScaleFactor = 0.1;
     protected GestureDetector gestureDetector;
