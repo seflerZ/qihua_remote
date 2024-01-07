@@ -517,7 +517,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                                 }
                             }
 
-                            int delta = (int)((y - immerInitY) * 5);
+                            int delta = (int)((y - immerInitY) * 6);
                             if (delta > 255) {
                                 delta = 0x0ff;
                             } else if (delta < -255) {
@@ -554,6 +554,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             pointer.rightButtonDown(getX(e), getY(e), meta);
                             SystemClock.sleep(50);
                             pointer.releaseButton(getX(e), getY(e), meta);
+                            secondPointerWasDown = false;
                         }
                         break;
                 }
@@ -562,11 +563,16 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
             case 2:
                 switch (action) {
                     case MotionEvent.ACTION_POINTER_DOWN:
-                        if (!inScaling) {
-                            thirdPointerWasDown = true;
-
+                        thirdPointerWasDown = true;
+                        secondPointerWasDown = false;
+                        break;
+                    case MotionEvent.ACTION_POINTER_UP:
+                    case MotionEvent.ACTION_UP:
+                        if (!inScaling && thirdPointerWasDown) {
                             activity.toggleKeyboard(null);
+                            thirdPointerWasDown = false;
                         }
+                        break;
                 }
                 break;
         }
