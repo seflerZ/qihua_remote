@@ -43,7 +43,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     final int maxSwipeSpeed = 1;
     // If swipe events are registered once every baseSwipeTime miliseconds, then
     // swipeSpeed will be one. If more often, swipe-speed goes up, if less, down.
-    final long baseSwipeTime = 400;
+    final long baseSwipeTime = 200;
     // The minimum distance a scale event has to traverse the FIRST time before scaling starts.
     final double minScaleFactor = 0.1;
     protected GestureDetector gestureDetector;
@@ -89,8 +89,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 15.f;
-    float baseSwipeDist = 10.f;
+    float startSwipeDist = 8.f;
+    float baseSwipeDist = 1.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeDistance = 70.f;
     boolean immersiveSwipe = false;
@@ -277,15 +277,15 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
 
         int numEvents = 0;
         while (numEvents < swipeSpeed && numEvents < maxSwipeSpeed) {
-            if (scrollDown) {
-                pointer.scrollDown(x, y, -delta, meta);
-            } else if (scrollUp) {
+            if (scrollDown & delta > 0) {
+                pointer.scrollDown(x, y, delta, meta);
+            } else if (scrollUp & delta > 0) {
                 pointer.scrollUp(x, y, delta, meta);
             }
-            if (scrollRight) {
+            if (scrollRight & delta > 0) {
                 pointer.scrollRight(x, y, delta, meta);
-            } else if (scrollLeft) {
-                pointer.scrollLeft(x, y, -delta, meta);
+            } else if (scrollLeft & delta > 0) {
+                pointer.scrollLeft(x, y, delta, meta);
             }
             numEvents++;
         }
@@ -501,27 +501,63 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
                             return true;
-                        } else if (inSwiping) {
+                        } else if (immersiveSwipe) {
                             // Save the coordinates and restore them afterward.
                             float x = e.getX();
                             float y = e.getY();
 
-                            if (immersiveSwipe) {
-                                scrollUp = false;
-                                scrollDown = false;
-                                swipeSpeed = 1;
-                                if (y < immerInitY) {
-                                    scrollDown = true;
-                                } else if (y > immerInitY) {
-                                    scrollUp = true;
-                                }
+                            scrollUp = false;
+                            scrollDown = false;
+                            if (y < immerInitY) {
+                                scrollDown = true;
+                            } else if (y > immerInitY) {
+                                scrollUp = true;
                             }
 
-                            int delta = (int)((y - immerInitY) * 6);
+                            int delta = (int)(y - immerInitY);
                             if (delta > 255) {
-                                delta = 0x0ff;
+                                delta = 255;
                             } else if (delta < -255) {
                                 delta = -255;
+                            }
+
+                            // use positive number to represent the component directly for
+                            // the least two bytes
+                            if (delta < 0) {
+                                delta = 256 + delta;
+                            }
+
+                            immerInitY = y;
+
+                            // Set the coordinates to where the swipe began (i.e. where scaling started).
+                            setEventCoordinates(e, xInitialFocus, yInitialFocus);
+                            sendScrollEvents(getX(e), getY(e), delta, meta);
+                            // Restore the coordinates so that onScale doesn't get all muddled up.
+                            setEventCoordinates(e, x, y);
+                            GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
+                        } else if (inSwiping) {
+                            float x = e.getX();
+                            float y = e.getY();
+
+                            scrollUp = false;
+                            scrollDown = false;
+                            if (y < immerInitY) {
+                                scrollDown = true;
+                            } else if (y > immerInitY) {
+                                scrollUp = true;
+                            }
+
+                            int delta = (int)(y - immerInitY);
+                            if (delta > 255) {
+                                delta = 255;
+                            } else if (delta < -255) {
+                                delta = -255;
+                            }
+
+                            // use positive number to represent the component directly for
+                            // the least two bytes
+                            if (delta < 0) {
+                                delta = 256 + delta;
                             }
 
                             immerInitY = y;
@@ -657,6 +693,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
             if (eventConsumed && canvas != null && canvas.canvasZoomer != null) {
                 if (inScaling == false) {
                     inScaling = true;
+                    // prevent right click
+                    secondPointerWasDown = false;
                 }
                 GeneralUtils.debugLog(debugLogging, TAG, "Changing zoom level: " + detector.getScaleFactor());
                 canvas.canvasZoomer.changeZoom(activity, detector.getScaleFactor(), pointer.getX(), pointer.getY());

@@ -69,7 +69,7 @@ public class RemoteRdpPointer extends RemotePointer {
         if (speed < 0) {
             pointerMask = MOUSE_BUTTON_SCROLL_DOWN;
         } else {
-            pointerMask = 0x0300 | (-speed & 0x00ff);
+            pointerMask = 0x0300 | (speed & 0x00ff);
         }
         sendPointerEvent(x, y, metaState, false);
     }
