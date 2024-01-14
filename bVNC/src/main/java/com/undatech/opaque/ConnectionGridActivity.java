@@ -179,10 +179,8 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         LabeledImageApapter labeledImageApapter = new LabeledImageApapter(
                 ConnectionGridActivity.this,
                 getConnectionLoader(this).loadConnectionsById(),
-                search.getText().toString().toLowerCase().split(" "),
-                2);
+                search.getText().toString().toLowerCase().split(" "));
         gridView.setAdapter(labeledImageApapter);
-        gridView.setNumColumns(labeledImageApapter.getNumCols());
     }
 
     private void launchConnection(View v) {

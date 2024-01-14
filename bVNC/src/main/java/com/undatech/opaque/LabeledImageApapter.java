@@ -53,9 +53,8 @@ public class LabeledImageApapter extends BaseAdapter {
     private String defaultLabel = "Untitled";
     private boolean doNotShowDesktopThumbnails = false;
 
-    public LabeledImageApapter(Context context, Map<String, Connection> connectionsByPosition, String[] filter, int maxNumCols) {
+    public LabeledImageApapter(Context context, Map<String, Connection> connectionsByPosition, String[] filter) {
         this.context = context;
-        this.numCols = maxNumCols;
         this.filter = filter;
         if (connectionsByPosition != null) {
             for (Connection c : connectionsByPosition.values()) {
@@ -71,9 +70,6 @@ public class LabeledImageApapter extends BaseAdapter {
             }
         }
         doNotShowDesktopThumbnails = Utils.querySharedPreferenceBoolean(context, Constants.doNotShowDesktopThumbnails);
-        if (doNotShowDesktopThumbnails) {
-            numCols = 1;
-        }
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,7 +80,15 @@ public class LabeledImageApapter extends BaseAdapter {
         android.util.Log.d(TAG, "Now setting label at position: " + position + " to: " + label);
 
         GridView gView = (GridView) ((Activity) context).findViewById(R.id.gridView);
-        int height = gView.getWidth() / numCols;
+
+        if (doNotShowDesktopThumbnails) {
+            numCols = 1;
+        } else {
+            numCols = gView.getNumColumns();
+        }
+
+        int width = gView.getWidth() / numCols;
+        int height = width;
 
         View gridView;
         if (convertView != null) {
@@ -121,7 +125,7 @@ public class LabeledImageApapter extends BaseAdapter {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             } else {
                 imageView.setImageResource(R.drawable.ic_screen_black_48dp);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
         }
         gridView.setLayoutParams(lp);
@@ -152,9 +156,5 @@ public class LabeledImageApapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    public int getNumCols() {
-        return numCols;
     }
 }
