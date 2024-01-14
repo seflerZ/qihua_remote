@@ -136,7 +136,7 @@
     <string name="address_caption_ssh">SSH서버</string>
     <string name="address_caption_ssh_hint">SSH서버</string>
     <string name="alt_check">Alt</string>
-    <string name="ardp_app_name">aRDP Pro</string>
+    <string name="ardp_app_name">ColorRDP</string>
     <string name="arrow_down">아래쪽 화살표</string>
     <string name="arrow_left">왼쪽 화살표</string>
     <string name="arrow_right">오른쪽 화살표</string>

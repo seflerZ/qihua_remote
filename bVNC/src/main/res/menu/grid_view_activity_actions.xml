@@ -28,15 +28,6 @@
         tools:ignore="AppCompatResource" />
 
     <item
-        android:id="@+id/shareOrRate"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:onClick="rateOrShare"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_rate_or_share_app"
-        app:showAsAction="ifRoom"
-        tools:ignore="AppCompatResource" />
-
-    <item
         android:id="@+id/actionEditDefaultSettings"
         android:icon="@android:drawable/ic_menu_manage"
         android:onClick="editDefaultSettings"

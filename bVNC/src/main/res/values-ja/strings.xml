@@ -135,7 +135,7 @@
     <string name="address_caption_ssh">SSHサーバー</string>
     <string name="address_caption_ssh_hint">SSHサーバー</string>
     <string name="alt_check">Alt</string>
-    <string name="ardp_app_name">aRDP Pro</string>
+    <string name="ardp_app_name">ColorRDP</string>
     <string name="arrow_down">下矢印</string>
     <string name="arrow_left">左矢印</string>
     <string name="arrow_right">右矢印</string>
