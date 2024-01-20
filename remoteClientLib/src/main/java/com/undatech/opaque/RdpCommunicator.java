@@ -49,7 +49,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
     // security certificate. Used to control progress while the dialog asking the user
     // to confirm the authenticity of a certificate is displayed.
     private boolean certificateAccepted = false;
-    private boolean reattemptWithoutCredentials = true;
+    private boolean reattemptWithoutCredentials = false;
     private boolean authenticationAttempted = false;
     private boolean disconnectRequested = false;
 
