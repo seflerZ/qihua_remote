@@ -17,15 +17,18 @@
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="0.90"
             android:hint="@string/search_connections"
-            android:padding="10dp"
+            android:paddingBottom="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"></EditText>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/addNewConnection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:layout_weight="0.10"
             android:contentDescription="@string/action_new_connection"
             android:title="@string/action_new_connection"
