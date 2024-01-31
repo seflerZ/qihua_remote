@@ -38,7 +38,6 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
     private final Handler mHandler;
     private float mFocusX;
     private float mFocusY;
-    private boolean mQuickScaleEnabled;
     private boolean mStylusScaleEnabled;
     private float mCurrSpan;
     private float mPrevSpan;
@@ -89,17 +88,17 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
         mContext = context;
         mListener = listener;
         final ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
-        mSpanSlop = 0;
-        mMinSpan = 0;
+        mSpanSlop = viewConfiguration.getScaledTouchSlop();
+        mMinSpan = viewConfiguration.getScaledMinimumScalingSpan();
         mHandler = handler;
         // Quick scale is enabled by default after JB_MR2
         final int targetSdkVersion = context.getApplicationInfo().targetSdkVersion;
         if (targetSdkVersion > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            setQuickScaleEnabled(true);
+            setQuickScaleEnabled(false);
         }
         // Stylus scale is enabled by default after LOLLIPOP_MR1
         if (targetSdkVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            setStylusScaleEnabled(true);
+            setStylusScaleEnabled(false);
         }
     }
 
@@ -118,12 +117,11 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
     public boolean onTouchEvent(MotionEvent event) {
         mCurrTime = event.getEventTime();
 
-        final int action = event.getActionMasked();
-
-        // Forward the event to check for double tap gesture
-        if (mQuickScaleEnabled) {
-            mGestureDetector.onTouchEvent(event);
+        if (event.getPointerCount() < 2) {
+            return false;
         }
+
+        final int action = event.getActionMasked();
 
         final int count = event.getPointerCount();
         final boolean isStylusButtonDown =
@@ -226,7 +224,7 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
         final boolean wasInProgress = mInProgress;
         mFocusX = focusX;
         mFocusY = focusY;
-        if (!inAnchoredScaleMode() && mInProgress && (span < mMinSpan || configChanged)) {
+        if (!inAnchoredScaleMode() && mInProgress && configChanged) {
             mListener.onScaleEnd(this);
             mInProgress = false;
             mInitialSpan = span;
@@ -253,7 +251,7 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
             mCurrSpanY = spanY;
             mCurrSpan = span;
 
-            boolean updatePrev = true;
+            boolean updatePrev = false;
 
             if (mInProgress) {
                 updatePrev = mListener.onScale(this);
@@ -265,32 +263,15 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
                 mPrevSpan = mCurrSpan;
                 mPrevTime = mCurrTime;
             }
+
+            return updatePrev;
         }
 
-        return true;
+        return false;
     }
 
     private boolean inAnchoredScaleMode() {
         return mAnchoredScaleMode != ANCHORED_SCALE_MODE_NONE;
-    }
-
-    /**
-     * Return whether the quick scale gesture, in which the user performs a double tap followed by a
-     * swipe, should perform scaling. {@see #setQuickScaleEnabled(boolean)}.
-     */
-    public boolean isQuickScaleEnabled() {
-        return mQuickScaleEnabled;
-    }
-
-    /**
-     * Set whether the associated {@link OnScaleGestureListener} should receive onScale callbacks
-     * when the user performs a doubleTap followed by a swipe. Note that this is enabled by default
-     * if the app targets API 19 and newer.
-     *
-     * @param scales true to enable quick scaling, false to disable
-     */
-    public void setQuickScaleEnabled(boolean scales) {
-
     }
 
     /**

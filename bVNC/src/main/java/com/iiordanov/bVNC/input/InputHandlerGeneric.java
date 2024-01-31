@@ -89,8 +89,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 8.f;
-    float baseSwipeDist = 1.f;
+    float startSwipeDist = 0.f;
+    float baseSwipeDist = 0.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeDistance = 70.f;
     boolean immersiveSwipe = false;
@@ -354,7 +354,6 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         boolean nonDragGesture = true;
         canvas.cursorBeingMoved = false;
         panMode = false;
-        inScaling = false;
         inSwiping = false;
         inScrolling = false;
         immersiveSwipe = false;
@@ -521,6 +520,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                                 delta = -255;
                             }
 
+                            delta *= ((float)1 / canvas.getMinimumScale());
+
                             // use positive number to represent the component directly for
                             // the least two bytes
                             if (delta < 0) {
@@ -554,6 +555,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                                 delta = -255;
                             }
 
+                            delta *= ((float)1 / canvas.getMinimumScale());
+
                             // use positive number to represent the component directly for
                             // the least two bytes
                             if (delta < 0) {
@@ -575,8 +578,8 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                 switch (action) {
                     case MotionEvent.ACTION_POINTER_DOWN:
                         // We re-calculate the initial focal point to be between the 1st and 2nd pointer index.
-                        xInitialFocus = 0.5f * (dragX + e.getX(pointerID));
-                        yInitialFocus = 0.5f * (dragY + e.getY(pointerID));
+                        xInitialFocus = (e.getX(pointerID));
+                        yInitialFocus = (e.getY(pointerID));
                         // Here we only prepare for the second click, which we perform on ACTION_POINTER_UP for pointerID==1.
                         endDragModesAndScrolling();
                         // Permit sending mouse-down event on long-tap again.
@@ -613,8 +616,11 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                 break;
         }
 
-        scalingGestureDetector.onTouchEvent(e);
-        return gestureDetector.onTouchEvent(e);
+        if (!scalingGestureDetector.onTouchEvent(e) && !inScaling) {
+            gestureDetector.onTouchEvent(e);
+        }
+
+        return true;
     }
 
     /*
@@ -623,84 +629,30 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
         GeneralUtils.debugLog(debugLogging, TAG, "onScale");
-        boolean eventConsumed = true;
 
         // Get the current focus.
         xCurrentFocus = detector.getFocusX();
         yCurrentFocus = detector.getFocusY();
 
-        // If we haven't started scaling yet, we check whether a swipe is being performed.
-        // The arbitrary fudge factor may not be the best way to set a tolerance...
-        if (!inScaling) {
-            // Start swiping mode only after we've moved away from the initial focal point some distance.
-            if (!inSwiping) {
-                if ((yCurrentFocus < (yInitialFocus - startSwipeDist)) ||
-                        (yCurrentFocus > (yInitialFocus + startSwipeDist)) ||
-                        (xCurrentFocus < (xInitialFocus - startSwipeDist)) ||
-                        (xCurrentFocus > (xInitialFocus + startSwipeDist))) {
-                    inSwiping = true;
-                    xPreviousFocus = xCurrentFocus;
-                    yPreviousFocus = yCurrentFocus;
-
-                    // prevent right click
-                    secondPointerWasDown = false;
-                }
-            }
-
-            // If in swiping mode, indicate a swipe at regular intervals.
-            if (inSwiping) {
-                scrollDown = false;
-                scrollUp = false;
-                scrollRight = false;
-                scrollLeft = false;
-                if (yCurrentFocus < (yPreviousFocus - baseSwipeDist)) {
-                    scrollDown = true;
-                    xPreviousFocus = xCurrentFocus;
-                    yPreviousFocus = yCurrentFocus;
-                } else if (yCurrentFocus > (yPreviousFocus + baseSwipeDist)) {
-                    scrollUp = true;
-                    xPreviousFocus = xCurrentFocus;
-                    yPreviousFocus = yCurrentFocus;
-                } else if (xCurrentFocus < (xPreviousFocus - baseSwipeDist)) {
-                    scrollRight = true;
-                    xPreviousFocus = xCurrentFocus;
-                    yPreviousFocus = yCurrentFocus;
-                } else if (xCurrentFocus > (xPreviousFocus + baseSwipeDist)) {
-                    scrollLeft = true;
-                    xPreviousFocus = xCurrentFocus;
-                    yPreviousFocus = yCurrentFocus;
-                } else {
-                    eventConsumed = false;
-                }
-                // The faster we swipe, the faster we traverse the screen, and hence, the
-                // smaller the time-delta between consumed events. We take the reciprocal
-                // obtain swipeSpeed. If it goes to zero, we set it to at least one.
-                long elapsedTime = detector.getTimeDelta();
-                if (elapsedTime < 10) elapsedTime = 10;
-
-                swipeSpeed = baseSwipeTime / elapsedTime;
-                if (swipeSpeed == 0) swipeSpeed = 1;
-                GeneralUtils.debugLog(debugLogging, TAG, "Current swipe speed: " + swipeSpeed);
-            }
-        }
-
         if (!inSwiping) {
             if (!inScaling && Math.abs(1.0 - detector.getScaleFactor()) < minScaleFactor) {
                 GeneralUtils.debugLog(debugLogging, TAG, "Not scaling due to small scale factor");
-                eventConsumed = false;
+                return false;
             }
 
-            if (eventConsumed && canvas != null && canvas.canvasZoomer != null) {
-                if (inScaling == false) {
+            if (canvas != null && canvas.canvasZoomer != null) {
+                if (!inScaling) {
                     inScaling = true;
                     // prevent right click
                     secondPointerWasDown = false;
                 }
+
                 GeneralUtils.debugLog(debugLogging, TAG, "Changing zoom level: " + detector.getScaleFactor());
                 canvas.canvasZoomer.changeZoom(activity, detector.getScaleFactor(), pointer.getX(), pointer.getY());
             }
         }
-        return eventConsumed;
+
+        return true;
     }
 
     /*

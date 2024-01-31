@@ -67,55 +67,91 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         // TODO: This is a workaround for Android 4.2
         boolean twoFingers = false;
         if (e1 != null)
-            twoFingers = (e1.getPointerCount() > 1);
+            twoFingers = (e1.getPointerCount() == 2);
 
-        twoFingers = twoFingers || (e2.getPointerCount() > 1);
+        twoFingers = twoFingers || (e2.getPointerCount() == 2);
 
-        // onScroll called while scaling/swiping gesture is in effect. We ignore the event and pretend it was
-        // consumed. This prevents the mouse pointer from flailing around while we are scaling.
-        // Also, if one releases one finger slightly earlier than the other when scaling, it causes Android
-        // to stick a spiteful onScroll with a MASSIVE delta here.
-        // This would cause the mouse pointer to jump to another place suddenly.
-        // Hence, we ignore onScroll after scaling until we lift all pointers up.
-        if (twoFingers || inSwiping) {
+        if (inScaling) {
             return true;
         }
 
-        // If the gesture has just began, then don't allow a big delta to prevent
-        // pointer jumps at the start of scrolling.
-        if (!inScrolling) {
+        // Prevent action when intend to scale. In scrolling case,
+        // any of the axis change must be significantly large while the other should,
+        // keep small.
+        if (twoFingers) {
+            float diffX = e2.getX(1) - xInitialFocus;
+            float diffY = e2.getY(1) - yInitialFocus;
+
+            if (Math.abs(diffX) <= 2.5 && Math.abs(diffY) <= 2.5) {
+                return true;
+            }
+
+            if (Math.abs(diffX) > 2.5 && Math.abs(diffY) > 2.5) {
+                return true;
+            }
+        }
+
+        if (!inScrolling && twoFingers) {
             inScrolling = true;
-            distanceX = getSign(distanceX);
-            distanceY = getSign(distanceY);
+
             distXQueue.clear();
             distYQueue.clear();
+
+            inSwiping = true;
+
+            // prevent right click
+            secondPointerWasDown = false;
         }
 
-        distXQueue.add(distanceX);
-        distYQueue.add(distanceY);
+        // If in swiping mode, indicate a swipe at regular intervals.
+        if (inSwiping) {
+            scrollDown = false;
+            scrollUp = false;
+            scrollRight = false;
+            scrollLeft = false;
 
-        // Only after the first two events have arrived do we start using distanceX and Y
-        // In order to effectively discard the last two events (which are typically unreliable
-        // because of the finger lifting off).
-        if (distXQueue.size() > 2) {
-            distanceX = distXQueue.poll();
-            distanceY = distYQueue.poll();
+            distanceX = getSign(distanceX);
+            distanceY = getSign(distanceY);
+
+            if (distanceY > 0) {
+                scrollDown = true;
+            } else if (distanceY < 0) {
+                scrollUp = true;
+            } else if (distanceX > 0) {
+                scrollRight = true;
+            } else if (distanceX < 0) {
+                scrollLeft = true;
+            }
+
+            swipeSpeed = 1;
         } else {
-            return true;
+            distXQueue.add(distanceX);
+            distYQueue.add(distanceY);
+
+            // Only after the first two events have arrived do we start using distanceX and Y
+            // In order to effectively discard the last two events (which are typically unreliable
+            // because of the finger lifting off).
+            if (distXQueue.size() > 2) {
+                distanceX = distXQueue.poll();
+                distanceY = distYQueue.poll();
+            } else {
+                return true;
+            }
+
+            // Make distanceX/Y display density independent.
+            float sensitivity = pointer.getSensitivity();
+            distanceX = sensitivity * distanceX / displayDensity;
+            distanceY = sensitivity * distanceY / displayDensity;
+
+            // Compute the absolute new mouse position.
+            int newX = Math.round(pointer.getX() + getDelta(-distanceX));
+            int newY = Math.round(pointer.getY() + getDelta(-distanceY));
+
+            pointer.moveMouse(newX, newY, meta);
+
+            canvas.movePanToMakePointerVisible();
         }
 
-        // Make distanceX/Y display density independent.
-        float sensitivity = pointer.getSensitivity();
-        distanceX = sensitivity * distanceX / displayDensity;
-        distanceY = sensitivity * distanceY / displayDensity;
-
-        // Compute the absolute new mouse position.
-        int newX = Math.round(pointer.getX() + getDelta(-distanceX));
-        int newY = Math.round(pointer.getY() + getDelta(-distanceY));
-
-        pointer.moveMouse(newX, newY, meta);
-
-        canvas.movePanToMakePointerVisible();
         return true;
     }
 
@@ -168,6 +204,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
     /**
      * Computes how far the pointer will move.
+     *
      * @param distance
      * @return
      */
@@ -178,6 +215,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
     /**
      * Computes the acceleration depending on the size of the supplied delta.
+     *
      * @param delta
      * @return
      */
