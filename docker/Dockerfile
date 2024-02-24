@@ -6,7 +6,7 @@ ARG CURRENT_WORKING_DIR
 ARG ANDROID_SDK
 
 RUN apt update && \
-apt install -yy gnome-common gobject-introspection nasm openjdk-8-jdk build-essential git python-setuptools python3-setuptools wget curl unzip sudo rsync && \
+apt install -yy gnome-common gobject-introspection nasm openjdk-17-jdk build-essential git python-setuptools python3-setuptools wget curl unzip sudo rsync && \
 apt clean && apt autoclean
 
 # This layer is needed by cerbero to avoid an interactive sudo apt-get failing, needs to be update with subsequent cerbero versions
@@ -33,5 +33,5 @@ WORKDIR ${CURRENT_WORKING_DIR}
 RUN git config --global protocol.file.allow always
 
 CMD export PROJECT=libs && export ANDROID_SDK=$ANDROID_SDK && export PATH=$PATH:$ANDROID_SDK/platform-tools/ && export PATH=$PATH:$ANDROID_SDK/tools && \
-yes | $ANDROID_SDK/tools/bin/sdkmanager --licenses && \
+yes | $ANDROID_SDK/cmdline-tools/latest/bin/sdkmanager --licenses && \
 ./bVNC/prepare_project.sh libs $ANDROID_SDK
