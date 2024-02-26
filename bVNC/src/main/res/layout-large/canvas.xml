@@ -168,6 +168,12 @@
                 android:padding="0sp">
 
                 <ImageButton
+                    android:id="@+id/keyKeyboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/keyboard" />
+
+                <ImageButton
                     android:id="@+id/keyLeftArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

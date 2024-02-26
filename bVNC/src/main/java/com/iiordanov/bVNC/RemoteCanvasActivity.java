@@ -153,6 +153,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyDown;
     ImageButton keyLeft;
     ImageButton keyRight;
+    ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
     boolean extraKeysHidden = false;
     volatile boolean softKeyboardUp;
@@ -956,6 +957,21 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                     keyDown.setImageResource(R.drawable.downoff);
                     resetOnScreenKeys(0);
                     k.stopRepeatingKeyEvent();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        keyKeyboard = (ImageButton) findViewById(R.id.keyKeyboard);
+        keyKeyboard.setImageResource(R.drawable.keyboard);
+
+        keyKeyboard.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    sendShortVibration();
+                    toggleKeyboard(null);
                     return true;
                 }
                 return false;
