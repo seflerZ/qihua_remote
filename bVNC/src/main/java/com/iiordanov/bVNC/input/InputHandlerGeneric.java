@@ -539,7 +539,20 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
                             delta *= ((float)1 / canvas.getMinimumScale());
 
+                            // use positive number to represent the component directly for
+                            // the least two bytes
+                            if (delta < 0) {
+                                delta = 256 + delta;
+                            }
 
+                            immerInitY = y;
+
+                            // Set the coordinates to where the swipe began (i.e. where scaling started).
+                            setEventCoordinates(e, xInitialFocus, yInitialFocus);
+                            sendScrollEvents(getX(e), getY(e), delta, meta);
+                            // Restore the coordinates so that onScale doesn't get all muddled up.
+                            setEventCoordinates(e, x, y);
+                            GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
                         }
                 }
                 break;
