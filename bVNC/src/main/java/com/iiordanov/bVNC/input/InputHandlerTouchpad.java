@@ -75,21 +75,21 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             return true;
         }
 
-        // Prevent action when intend to scale. In scrolling case,
-        // any of the axis change must be significantly large while the other should,
-        // keep small.
-        if (twoFingers) {
-            float diffX = e2.getX(1) - xInitialFocus;
-            float diffY = e2.getY(1) - yInitialFocus;
-
-            if (Math.abs(diffX) <= 2.5 && Math.abs(diffY) <= 2.5) {
-                return true;
-            }
-
-            if (Math.abs(diffX) > 2.5 && Math.abs(diffY) > 2.5) {
-                return true;
-            }
-        }
+//        // Prevent action when intend to scale. In scrolling case,
+//        // any of the axis change must be significantly large while the other should,
+//        // keep small.
+//        if (twoFingers) {
+//            float diffX = e2.getX(1) - xInitialFocus;
+//            float diffY = e2.getY(1) - yInitialFocus;
+//
+//            if (Math.abs(diffX) <= 2.5 && Math.abs(diffY) <= 2.5) {
+//                return true;
+//            }
+//
+//            if (Math.abs(diffX) > 2.5 && Math.abs(diffY) > 2.5) {
+//                return true;
+//            }
+//        }
 
         if (!inScrolling && twoFingers) {
             inScrolling = true;
@@ -125,19 +125,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
             swipeSpeed = 1;
         } else {
-            distXQueue.add(distanceX);
-            distYQueue.add(distanceY);
-
-            // Only after the first two events have arrived do we start using distanceX and Y
-            // In order to effectively discard the last two events (which are typically unreliable
-            // because of the finger lifting off).
-            if (distXQueue.size() > 2) {
-                distanceX = distXQueue.poll();
-                distanceY = distYQueue.poll();
-            } else {
-                return true;
-            }
-
             // Make distanceX/Y display density independent.
             float sensitivity = pointer.getSensitivity();
             distanceX = sensitivity * distanceX / displayDensity;
@@ -228,7 +215,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         } else if (accelerated && delta <= 70.0f) {
             delta = delta * delta / 20.0f;
         } else if (accelerated) {
-            delta = delta * 4.5f;
+            delta = delta * 3.0f;
         }
         return origSign * delta;
     }

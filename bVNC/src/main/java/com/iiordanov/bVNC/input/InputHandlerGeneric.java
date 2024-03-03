@@ -21,13 +21,13 @@
 package com.iiordanov.bVNC.input;
 
 import android.os.SystemClock;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
 import androidx.core.view.InputDeviceCompat;
 
+import com.freerdp.freerdpcore.utils.GestureDetector;
 import com.iiordanov.bVNC.Constants;
 import com.iiordanov.bVNC.RemoteCanvas;
 import com.iiordanov.bVNC.RemoteCanvasActivity;
@@ -119,7 +119,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         useDpadAsArrows = true; //activity.getUseDpadAsArrows();
         rotateDpad = false; //activity.getRotateDpad();
 
-        gestureDetector = new GestureDetector(activity, this);
+        gestureDetector = new GestureDetector(activity, this, null, false);
         scalingGestureDetector = new MyScaleGestureDetector(activity, this);
 
         gestureDetector.setOnDoubleTapListener(this);
@@ -459,23 +459,6 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                             return true;
                         }
 
-                        if (!endDragModesAndScrolling()) {
-                            // If no non-drag gestures were going on, send a mouse up event.
-                            GeneralUtils.debugLog(debugLogging, TAG,
-                                    "onTouchEvent: No non-drag gestures detected, sending mouse up event");
-                            pointer.releaseButton(getX(e), getY(e), meta);
-
-                            // not drag at all consider it double tap
-                            if (Math.abs(totalDragY) < 5 && Math.abs(totalDragX) < 5) {
-                                pointer.leftButtonDown(getX(e), getY(e), meta);
-                                SystemClock.sleep(50);
-                                pointer.releaseButton(getX(e), getY(e), meta);
-                                SystemClock.sleep(50);
-                                pointer.leftButtonDown(getX(e), getY(e), meta);
-                                SystemClock.sleep(50);
-                                pointer.releaseButton(getX(e), getY(e), meta);
-                            }
-                        }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE");
@@ -580,21 +563,11 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                         // We re-calculate the initial focal point to be between the 1st and 2nd pointer index.
                         xInitialFocus = (e.getX(pointerID));
                         yInitialFocus = (e.getY(pointerID));
-                        // Here we only prepare for the second click, which we perform on ACTION_POINTER_UP for pointerID==1.
-                        endDragModesAndScrolling();
+
                         // Permit sending mouse-down event on long-tap again.
                         secondPointerWasDown = true;
                         // Permit right-clicking again.
                         thirdPointerWasDown = false;
-                        break;
-                    case MotionEvent.ACTION_POINTER_UP:
-                    case MotionEvent.ACTION_UP:
-                        if (!inSwiping && !inScaling && secondPointerWasDown) {
-                            pointer.rightButtonDown(getX(e), getY(e), meta);
-                            SystemClock.sleep(50);
-                            pointer.releaseButton(getX(e), getY(e), meta);
-                            secondPointerWasDown = false;
-                        }
                         break;
                 }
                 break;
@@ -614,6 +587,33 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
                         break;
                 }
                 break;
+        }
+
+        if (action == MotionEvent.ACTION_UP) {
+            if (!inSwiping && !inScaling && secondPointerWasDown) {
+                pointer.rightButtonDown(getX(e), getY(e), meta);
+                SystemClock.sleep(50);
+                pointer.releaseButton(getX(e), getY(e), meta);
+                secondPointerWasDown = false;
+            }
+
+            if (!endDragModesAndScrolling()) {
+                // If no non-drag gestures were going on, send a mouse up event.
+                GeneralUtils.debugLog(debugLogging, TAG,
+                        "onTouchEvent: No non-drag gestures detected, sending mouse up event");
+                pointer.releaseButton(getX(e), getY(e), meta);
+
+                // not drag at all consider it double tap
+                if (Math.abs(totalDragY) < 5 && Math.abs(totalDragX) < 5) {
+                    pointer.leftButtonDown(getX(e), getY(e), meta);
+                    SystemClock.sleep(50);
+                    pointer.releaseButton(getX(e), getY(e), meta);
+                    SystemClock.sleep(50);
+                    pointer.leftButtonDown(getX(e), getY(e), meta);
+                    SystemClock.sleep(50);
+                    pointer.releaseButton(getX(e), getY(e), meta);
+                }
+            }
         }
 
         if (!scalingGestureDetector.onTouchEvent(e) && !inScaling) {

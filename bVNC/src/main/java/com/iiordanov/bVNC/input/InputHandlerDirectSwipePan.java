@@ -67,40 +67,6 @@ public class InputHandlerDirectSwipePan extends InputHandlerGeneric {
 
     /*
      * (non-Javadoc)
-     * @see android.view.GestureDetector.SimpleOnGestureListener#onFling(android.view.MotionEvent, android.view.MotionEvent, float, float)
-     */
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        GeneralUtils.debugLog(debugLogging, TAG, "onFling, e1: " + e1 + ", e2: " + e2);
-
-        if (consumeAsMouseWheel(e1, e2)) {
-            return true;
-        }
-
-        // TODO: Workaround for Android 4.2.
-        boolean twoFingers = false;
-        if (e1 != null)
-            twoFingers = (e1.getPointerCount() > 1);
-        if (e2 != null)
-            twoFingers = twoFingers || (e2.getPointerCount() > 1);
-
-        // onFling called while scaling/swiping gesture is in effect. We ignore the event and pretend it was
-        // consumed. This prevents the mouse pointer from flailing around while we are scaling.
-        // Also, if one releases one finger slightly earlier than the other when scaling, it causes Android
-        // to stick a spiteful onFling with a MASSIVE delta here.
-        // This would cause the mouse pointer to jump to another place suddenly.
-        // Hence, we ignore onFing after scaling until we lift all pointers up.
-        if (twoFingers || disregardNextOnFling || inSwiping || inScaling || scalingJustFinished) {
-            return true;
-        }
-
-        activity.showToolbar();
-        panRepeater.start(-velocityX, -velocityY);
-        return true;
-    }
-
-    /*
-     * (non-Javadoc)
      * @see android.view.GestureDetector.SimpleOnGestureListener#onScroll(android.view.MotionEvent, android.view.MotionEvent, float, float)
      */
     @Override
