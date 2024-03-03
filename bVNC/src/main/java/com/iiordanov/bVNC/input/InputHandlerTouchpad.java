@@ -31,6 +31,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
     public static final String ID = "TOUCHPAD_MODE";
     static final String TAG = "InputHandlerTouchpad";
 
+    private float lastDistanceY = 0;
+
     public InputHandlerTouchpad(RemoteCanvasActivity activity, RemoteCanvas canvas,
                                 RemotePointer pointer, boolean debugLogging) {
         super(activity, canvas, pointer, debugLogging);
@@ -75,22 +77,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             return true;
         }
 
-//        // Prevent action when intend to scale. In scrolling case,
-//        // any of the axis change must be significantly large while the other should,
-//        // keep small.
-//        if (twoFingers) {
-//            float diffX = e2.getX(1) - xInitialFocus;
-//            float diffY = e2.getY(1) - yInitialFocus;
-//
-//            if (Math.abs(diffX) <= 2.5 && Math.abs(diffY) <= 2.5) {
-//                return true;
-//            }
-//
-//            if (Math.abs(diffX) > 2.5 && Math.abs(diffY) > 2.5) {
-//                return true;
-//            }
-//        }
-
         if (!inScrolling && twoFingers) {
             inScrolling = true;
 
@@ -110,8 +96,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             scrollRight = false;
             scrollLeft = false;
 
-            distanceX = getSign(distanceX);
-            distanceY = getSign(distanceY);
+            lastDistanceY = distanceY;
 
             if (distanceY > 0) {
                 scrollDown = true;
@@ -122,6 +107,28 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else if (distanceX < 0) {
                 scrollLeft = true;
             }
+
+            distanceY = -distanceY;
+            if (distanceY > 50) {
+                // decrease in case of too fast
+                distanceY = distanceY / 10;
+            }
+
+            int delta = (int)(distanceY / (canvas.getMinimumScale()));
+            if (delta > 255) {
+                delta = 255;
+            } else if (delta < -255) {
+                delta = -255;
+            }
+
+            // use positive number to represent the component directly for
+            // the least two bytes
+            if (delta < 0) {
+                delta = 256 + delta;
+            }
+            // Set the coordinates to where the swipe began (i.e. where scaling started).
+            setEventCoordinates(e2, xInitialFocus, yInitialFocus);
+            sendScrollEvents(getX(e2), getY(e2), delta, meta);
 
             swipeSpeed = 1;
         } else {

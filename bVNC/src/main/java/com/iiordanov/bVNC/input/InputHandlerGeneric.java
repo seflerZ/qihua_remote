@@ -274,20 +274,17 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected void sendScrollEvents(int x, int y, int delta, int meta) {
         GeneralUtils.debugLog(debugLogging, TAG, "sendScrollEvents");
 
-        int numEvents = 0;
-        while (numEvents < swipeSpeed && numEvents < maxSwipeSpeed) {
-            if (scrollDown & delta > 0) {
-                pointer.scrollDown(x, y, delta, meta);
-            } else if (scrollUp & delta > 0) {
-                pointer.scrollUp(x, y, delta, meta);
-            }
-            if (scrollRight & delta > 0) {
-                pointer.scrollRight(x, y, delta, meta);
-            } else if (scrollLeft & delta > 0) {
-                pointer.scrollLeft(x, y, delta, meta);
-            }
-            numEvents++;
+        if (scrollDown & delta > 0) {
+            pointer.scrollDown(x, y, delta, meta);
+        } else if (scrollUp & delta > 0) {
+            pointer.scrollUp(x, y, delta, meta);
         }
+        if (scrollRight & delta > 0) {
+            pointer.scrollRight(x, y, delta, meta);
+        } else if (scrollLeft & delta > 0) {
+            pointer.scrollLeft(x, y, delta, meta);
+        }
+
         pointer.releaseButton(x, y, meta);
     }
 
@@ -484,41 +481,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             return true;
                         } else if (immersiveSwipe) {
                             // Save the coordinates and restore them afterward.
-                            float x = e.getX();
-                            float y = e.getY();
-
-                            scrollUp = false;
-                            scrollDown = false;
-                            if (y < immerInitY) {
-                                scrollDown = true;
-                            } else if (y > immerInitY) {
-                                scrollUp = true;
-                            }
-
-                            int delta = (int)(y - immerInitY);
-                            if (delta > 255) {
-                                delta = 255;
-                            } else if (delta < -255) {
-                                delta = -255;
-                            }
-
-                            delta *= ((float)1 / canvas.getMinimumScale());
-
-                            // use positive number to represent the component directly for
-                            // the least two bytes
-                            if (delta < 0) {
-                                delta = 256 + delta;
-                            }
-
-                            immerInitY = y;
-
-                            // Set the coordinates to where the swipe began (i.e. where scaling started).
-                            setEventCoordinates(e, xInitialFocus, yInitialFocus);
-                            sendScrollEvents(getX(e), getY(e), delta, meta);
-                            // Restore the coordinates so that onScale doesn't get all muddled up.
-                            setEventCoordinates(e, x, y);
-                            GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
-                        } else if (inSwiping) {
                             float x = e.getX();
                             float y = e.getY();
 
