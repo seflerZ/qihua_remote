@@ -27,7 +27,6 @@ import android.view.ScaleGestureDetector;
 
 import androidx.core.view.InputDeviceCompat;
 
-import com.freerdp.freerdpcore.utils.GestureDetector;
 import com.iiordanov.bVNC.Constants;
 import com.iiordanov.bVNC.RemoteCanvas;
 import com.iiordanov.bVNC.RemoteCanvasActivity;
@@ -36,7 +35,7 @@ import com.undatech.opaque.util.GeneralUtils;
 import java.util.LinkedList;
 import java.util.Queue;
 
-abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListener
+abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureListener
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
     private static final String TAG = "InputHandlerGeneric";
     protected final boolean debugLogging;
@@ -46,7 +45,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
     final long baseSwipeTime = 200;
     // The minimum distance a scale event has to traverse the FIRST time before scaling starts.
     final double minScaleFactor = 0.1;
-    protected GestureDetector gestureDetector;
+    protected MyGestureDectector gestureDetector;
     protected MyScaleGestureDetector scalingGestureDetector;
     // Handles to the RemoteCanvas view and RemoteCanvasActivity activity.
     protected RemoteCanvas canvas;
@@ -119,7 +118,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
         useDpadAsArrows = true; //activity.getUseDpadAsArrows();
         rotateDpad = false; //activity.getRotateDpad();
 
-        gestureDetector = new GestureDetector(activity, this, null, false);
+        gestureDetector = new MyGestureDectector(activity, this, null, false);
         scalingGestureDetector = new MyScaleGestureDetector(activity, this);
 
         gestureDetector.setOnDoubleTapListener(this);
@@ -540,20 +539,7 @@ abstract class InputHandlerGeneric extends GestureDetector.SimpleOnGestureListen
 
                             delta *= ((float)1 / canvas.getMinimumScale());
 
-                            // use positive number to represent the component directly for
-                            // the least two bytes
-                            if (delta < 0) {
-                                delta = 256 + delta;
-                            }
 
-                            immerInitY = y;
-
-                            // Set the coordinates to where the swipe began (i.e. where scaling started).
-                            setEventCoordinates(e, xInitialFocus, yInitialFocus);
-                            sendScrollEvents(getX(e), getY(e), delta, meta);
-                            // Restore the coordinates so that onScale doesn't get all muddled up.
-                            setEventCoordinates(e, x, y);
-                            GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
                         }
                 }
                 break;
