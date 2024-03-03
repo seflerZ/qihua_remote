@@ -69,6 +69,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     float yInitialFocus;
     // This is the final "focal point" of the gesture (between the two fingers).
 
+    float lastDistanceY = 0;
+    MotionEvent lastScrollEvent = null;
+
     float immerInitY;
     float xCurrentFocus;
     float yCurrentFocus;
@@ -479,42 +482,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
                             return true;
-                        } else if (immersiveSwipe) {
-                            // Save the coordinates and restore them afterward.
-                            float x = e.getX();
-                            float y = e.getY();
-
-                            scrollUp = false;
-                            scrollDown = false;
-                            if (y < immerInitY) {
-                                scrollDown = true;
-                            } else if (y > immerInitY) {
-                                scrollUp = true;
-                            }
-
-                            int delta = (int)(y - immerInitY);
-                            if (delta > 255) {
-                                delta = 255;
-                            } else if (delta < -255) {
-                                delta = -255;
-                            }
-
-                            delta *= ((float)1 / canvas.getMinimumScale());
-
-                            // use positive number to represent the component directly for
-                            // the least two bytes
-                            if (delta < 0) {
-                                delta = 256 + delta;
-                            }
-
-                            immerInitY = y;
-
-                            // Set the coordinates to where the swipe began (i.e. where scaling started).
-                            setEventCoordinates(e, xInitialFocus, yInitialFocus);
-                            sendScrollEvents(getX(e), getY(e), delta, meta);
-                            // Restore the coordinates so that onScale doesn't get all muddled up.
-                            setEventCoordinates(e, x, y);
-                            GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE inSwiping, saving coordinates");
                         }
                 }
                 break;
@@ -556,6 +523,14 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 SystemClock.sleep(50);
                 pointer.releaseButton(getX(e), getY(e), meta);
                 secondPointerWasDown = false;
+            }
+
+            if (inSwiping) {
+                // do inertial scrolling
+                while (lastDistanceY != 0) {
+                    onScroll(lastScrollEvent, lastScrollEvent, 0, lastDistanceY);
+                    lastDistanceY = (int) (lastDistanceY / 2);
+                }
             }
 
             if (!endDragModesAndScrolling()) {

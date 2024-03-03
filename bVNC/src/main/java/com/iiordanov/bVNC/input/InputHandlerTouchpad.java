@@ -31,8 +31,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
     public static final String ID = "TOUCHPAD_MODE";
     static final String TAG = "InputHandlerTouchpad";
 
-    private float lastDistanceY = 0;
-
     public InputHandlerTouchpad(RemoteCanvasActivity activity, RemoteCanvas canvas,
                                 RemotePointer pointer, boolean debugLogging) {
         super(activity, canvas, pointer, debugLogging);
@@ -90,13 +88,14 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         }
 
         // If in swiping mode, indicate a swipe at regular intervals.
-        if (inSwiping) {
+        if (inSwiping || immersiveSwipe) {
             scrollDown = false;
             scrollUp = false;
             scrollRight = false;
             scrollLeft = false;
 
             lastDistanceY = distanceY;
+            lastScrollEvent = e2;
 
             if (distanceY > 0) {
                 scrollDown = true;
@@ -109,12 +108,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             distanceY = -distanceY;
-            if (distanceY > 50) {
-                // decrease in case of too fast
-                distanceY = distanceY / 10;
-            }
 
-            int delta = (int)(distanceY / (canvas.getMinimumScale()));
+            int delta = (int)(distanceY * (canvas.getMinimumScale()) / 1.5);
             if (delta > 255) {
                 delta = 255;
             } else if (delta < -255) {
