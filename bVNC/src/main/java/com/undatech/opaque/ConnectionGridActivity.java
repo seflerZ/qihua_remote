@@ -93,6 +93,8 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     private boolean togglingMasterPassword = false;
     private AppCompatImageButton addNewConnection = null;
 
+    private AppCompatImageButton editDefaultSettings = null;
+
     private RateOrShareFragment rateOrShareFragment = new RateOrShareFragment();
 
     @Override
@@ -179,6 +181,14 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             @Override
             public void onClick(View v) {
                 addNewConnection();
+            }
+        });
+
+        editDefaultSettings = findViewById(R.id.actionEditDefaultSettings);
+        editDefaultSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editDefaultSettings(null);
             }
         });
     }

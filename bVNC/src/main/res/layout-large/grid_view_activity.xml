@@ -13,26 +13,35 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/addNewConnection"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_weight="0.10"
+            android:contentDescription="@string/action_new_connection"
+            android:title="@string/action_new_connection"
+            app:srcCompat="@drawable/ic_add_connection_48" />
+
         <EditText
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="0.90"
             android:hint="@string/search_connections"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"></EditText>
+            android:paddingBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/addNewConnection"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/actionEditDefaultSettings"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
             android:layout_marginTop="40dp"
             android:layout_weight="0.10"
-            android:contentDescription="@string/action_new_connection"
-            android:title="@string/action_new_connection"
-            app:srcCompat="@drawable/ic_add_connection_48"></androidx.appcompat.widget.AppCompatImageButton>
+            app:srcCompat="@android:drawable/ic_menu_manage"
+            android:title="@string/action_edit_default_settings" />
     </LinearLayout>
 
     <GridView
