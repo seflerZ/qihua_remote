@@ -94,35 +94,46 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             scrollRight = false;
             scrollLeft = false;
 
-            lastDistanceY = distanceY;
-            lastScrollEvent = e2;
-
             if (distanceY > 0) {
+                lastScrollDirection = 2;
                 scrollDown = true;
             } else if (distanceY < 0) {
+                lastScrollDirection = 0;
                 scrollUp = true;
             } else if (distanceX > 0) {
+                lastScrollDirection = 3;
                 scrollRight = true;
             } else if (distanceX < 0) {
+                lastScrollDirection = 1;
                 scrollLeft = true;
             }
 
-            distanceY = -distanceY;
+            // The direction is just up side down.
+            int newY = (int)-(distanceY / 3);
+            int delta = 0;
+            if (distanceY < 0 && newY == 0) {
+                delta = 1;
+            } else if (distanceY > 0 && newY == 0) {
+                delta = -1;
+            } else {
+                delta = newY;
+            }
 
-            int delta = (int)(distanceY * (canvas.getMinimumScale()) / 1.5);
             if (delta > 255) {
                 delta = 255;
             } else if (delta < -255) {
                 delta = -255;
             }
 
-            // use positive number to represent the component directly for
-            // the least two bytes
             if (delta < 0) {
+                // use positive number to represent the component directly for
+                // the least two bytes
                 delta = 256 + delta;
             }
+
+            lastDelta = delta;
+
             // Set the coordinates to where the swipe began (i.e. where scaling started).
-            setEventCoordinates(e2, xInitialFocus, yInitialFocus);
             sendScrollEvents(getX(e2), getY(e2), delta, meta);
 
             swipeSpeed = 1;

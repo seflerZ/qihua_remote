@@ -31,8 +31,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MyGestureDectector
 {
 
-    private static final int TAP_TIMEOUT = 1000;
-    private static final int DOUBLE_TAP_TIMEOUT = 500;
+    private static final int TAP_TIMEOUT = 120;
+    private static final int DOUBLE_TAP_TIMEOUT = 400;
     // Distance a touch can wander before we think the user is the first touch in a sequence of
     // double tap
     private static final int LARGE_TOUCH_SLOP = 18;
@@ -48,6 +48,7 @@ public class MyGestureDectector
     private int mLargeTouchSlopSquare;
     private int mDoubleTapSlopSquare;
     private int mLongpressTimeout = 500;
+    private long lastTapTime = 0;
     private OnDoubleTapListener mDoubleTapListener;
     private boolean mStillDown;
     private boolean mInLongPress;
@@ -253,6 +254,7 @@ public class MyGestureDectector
             case MotionEvent.ACTION_DOWN:
                 if (mDoubleTapListener != null)
                 {
+
                     boolean hadTapMessage = mHandler.hasMessages(TAP);
                     if (hadTapMessage)
                         mHandler.removeMessages(TAP);
@@ -266,11 +268,6 @@ public class MyGestureDectector
                         handled |= mDoubleTapListener.onDoubleTap(mCurrentDownEvent);
                         // Give a callback with down event of the double-tap
                         handled |= mDoubleTapListener.onDoubleTapEvent(ev);
-                    }
-                    else
-                    {
-                        // This is a first tap
-                        mHandler.sendEmptyMessageDelayed(TAP, DOUBLE_TAP_TIMEOUT);
                     }
                 }
 
@@ -292,9 +289,6 @@ public class MyGestureDectector
                     mHandler.sendEmptyMessageAtTime(LONG_PRESS, mCurrentDownEvent.getDownTime() +
                             mLongpressTimeout);
                 }
-                mHandler.sendEmptyMessageAtTime(SHOW_PRESS,
-                        mCurrentDownEvent.getDownTime() + TAP_TIMEOUT);
-                handled |= mListener.onDown(ev);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -360,7 +354,7 @@ public class MyGestureDectector
                 }
                 else if (mAlwaysInTapRegion)
                 {
-                    handled = mListener.onSingleTapUp(mCurrentDownEvent);
+                    mHandler.sendEmptyMessageDelayed(TAP, TAP_TIMEOUT);
                 }
                 else
                 {

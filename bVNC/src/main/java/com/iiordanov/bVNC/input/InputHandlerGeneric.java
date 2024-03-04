@@ -69,8 +69,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     float yInitialFocus;
     // This is the final "focal point" of the gesture (between the two fingers).
 
-    float lastDistanceY = 0;
-    MotionEvent lastScrollEvent = null;
+    int lastDelta = 0;
+
+    // 0, 1, 2, 3 = up lef down right
+    int lastScrollDirection = 0;
 
     float immerInitY;
     float xCurrentFocus;
@@ -448,17 +450,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
                         detectImmersiveSwipe(dragX);
                         break;
-                    case MotionEvent.ACTION_UP:
-                        singleHandedGesture = false;
-                        singleHandedJustEnded = true;
-
-                        // If this is the end of a swipe that showed the nav bar, consume.
-                        if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
-                            endDragModesAndScrolling();
-                            return true;
-                        }
-
-                        break;
                     case MotionEvent.ACTION_MOVE:
                         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE");
                         // Send scroll up/down events if swiping is happening.
@@ -525,12 +516,26 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 secondPointerWasDown = false;
             }
 
-            if (inSwiping) {
-                // do inertial scrolling
-                while (lastDistanceY != 0) {
-                    onScroll(lastScrollEvent, lastScrollEvent, 0, lastDistanceY);
-                    lastDistanceY = (int) (lastDistanceY / 2);
-                }
+            if (inSwiping || immersiveSwipe) {
+//                inertialThread = new Thread(() -> {
+//                    float lastDeltaFloat = lastDelta;
+//                    // do inertial scrolling
+//                    while (lastDeltaFloat > 5 && lastDeltaFloat < 250) {
+//                        sendScrollEvents(getX(e), getY(e), (int) lastDeltaFloat, meta);
+//
+//                        if (lastScrollDirection == 0) {
+//                            lastDeltaFloat = lastDeltaFloat * 0.7f;
+//                        } else if (lastScrollDirection == 2) {
+//                            lastDeltaFloat = 255 - (255 - lastDeltaFloat) * 0.7f;
+//                        } else {
+//                            break;
+//                        }
+//
+//                    }
+//                }, "inertialRunner");
+//
+//                inertialThread.setDaemon(true);
+//                inertialThread.start();
             }
 
             if (!endDragModesAndScrolling()) {
@@ -538,16 +543,16 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 GeneralUtils.debugLog(debugLogging, TAG,
                         "onTouchEvent: No non-drag gestures detected, sending mouse up event");
                 pointer.releaseButton(getX(e), getY(e), meta);
+            }
 
-                // not drag at all consider it double tap
-                if (Math.abs(totalDragY) < 5 && Math.abs(totalDragX) < 5) {
-                    pointer.leftButtonDown(getX(e), getY(e), meta);
-                    SystemClock.sleep(50);
-                    pointer.releaseButton(getX(e), getY(e), meta);
-                    SystemClock.sleep(50);
-                    pointer.leftButtonDown(getX(e), getY(e), meta);
-                    SystemClock.sleep(50);
-                    pointer.releaseButton(getX(e), getY(e), meta);
+            if (pointerID == 0) {
+                singleHandedGesture = false;
+                singleHandedJustEnded = true;
+
+                // If this is the end of a swipe that showed the nav bar, consume.
+                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
+                    endDragModesAndScrolling();
+                    return true;
                 }
             }
         }
@@ -705,4 +710,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         sendScrollEvents(getX(e1), getY(e1), -1, meta);
         return true;
     }
+
+    private Thread inertialThread;
 }
