@@ -459,7 +459,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             dragX = e.getX();
                             dragY = e.getY();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE panMode");
-                            return true;
+                            break;
                         } else if (dragMode || rightDragMode || middleDragMode) {
                             if (dragMode && totalDragY == 0 && totalDragX == 0) {
                                 pointer.leftButtonDown(getX(e), getY(e), meta);
@@ -472,7 +472,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             pointer.moveMouseButtonDown(getX(e), getY(e), meta);
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
-                            return true;
+                            break;
                         }
                 }
                 break;
@@ -517,25 +517,25 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             }
 
             if (inSwiping || immersiveSwipe) {
-//                inertialThread = new Thread(() -> {
-//                    float lastDeltaFloat = lastDelta;
-//                    // do inertial scrolling
-//                    while (lastDeltaFloat > 5 && lastDeltaFloat < 250) {
-//                        sendScrollEvents(getX(e), getY(e), (int) lastDeltaFloat, meta);
-//
-//                        if (lastScrollDirection == 0) {
-//                            lastDeltaFloat = lastDeltaFloat * 0.7f;
-//                        } else if (lastScrollDirection == 2) {
-//                            lastDeltaFloat = 255 - (255 - lastDeltaFloat) * 0.7f;
-//                        } else {
-//                            break;
-//                        }
-//
-//                    }
-//                }, "inertialRunner");
-//
-//                inertialThread.setDaemon(true);
-//                inertialThread.start();
+                inertialThread = new Thread(() -> {
+                    float lastDeltaFloat = lastDelta;
+                    // do inertial scrolling
+                    while (lastDeltaFloat > 5 && lastDeltaFloat < 250) {
+                        sendScrollEvents(getX(e), getY(e), (int) lastDeltaFloat, meta);
+
+                        if (lastScrollDirection == 0) {
+                            lastDeltaFloat = lastDeltaFloat * 0.7f;
+                        } else if (lastScrollDirection == 2) {
+                            lastDeltaFloat = 255 - (255 - lastDeltaFloat) * 0.7f;
+                        } else {
+                            break;
+                        }
+
+                    }
+                }, "inertialRunner");
+
+                inertialThread.setDaemon(true);
+                inertialThread.start();
             }
 
             if (!endDragModesAndScrolling()) {

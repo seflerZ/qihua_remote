@@ -256,8 +256,6 @@ public class MyGestureDectector
                 {
 
                     boolean hadTapMessage = mHandler.hasMessages(TAP);
-                    if (hadTapMessage)
-                        mHandler.removeMessages(TAP);
                     if ((mCurrentDownEvent != null) && (mPreviousUpEvent != null) &&
                             hadTapMessage &&
                             isConsideredDoubleTap(mCurrentDownEvent, mPreviousUpEvent, ev))
@@ -301,18 +299,25 @@ public class MyGestureDectector
                 {
                     break;
                 }
+
                 final float scrollX = mLastMotionX - x;
                 final float scrollY = mLastMotionY - y;
+
+                final int deltaX = (int)(x - mCurrentDownEvent.getX());
+                final int deltaY = (int)(y - mCurrentDownEvent.getY());
+                int distance = (deltaX * deltaX) + (deltaY * deltaY);
+
+
                 if (mIsDoubleTapping)
                 {
                     // Give the move events of the double-tap
                     handled |= mDoubleTapListener.onDoubleTapEvent(ev);
+                    if (distance >= mTouchSlopSquare) {
+                        mAlwaysInTapRegion = false;
+                    }
                 }
                 else if (mAlwaysInTapRegion)
                 {
-                    final int deltaX = (int)(x - mCurrentDownEvent.getX());
-                    final int deltaY = (int)(y - mCurrentDownEvent.getY());
-                    int distance = (deltaX * deltaX) + (deltaY * deltaY);
                     if (distance >= mTouchSlopSquare)
                     {
                         mLastMotionX = x;
@@ -335,16 +340,17 @@ public class MyGestureDectector
                     mLastMotionX = x;
                     mLastMotionY = y;
                 }
+
                 break;
 
             case MotionEvent.ACTION_UP:
                 mIgnoreNextMove.set(false);
                 mStillDown = false;
                 MotionEvent currentUpEvent = MotionEvent.obtain(ev);
-                if (mIsDoubleTapping)
+                if (mIsDoubleTapping && mAlwaysInTapRegion)
                 {
-                    // Finally, give the up event of the double-tap
-                    handled |= mDoubleTapListener.onDoubleTapEvent(ev);
+                    // Finally, give the second tap event
+                    mHandler.sendEmptyMessageDelayed(TAP, 0);
                 }
                 else if (mInLongPress)
                 {

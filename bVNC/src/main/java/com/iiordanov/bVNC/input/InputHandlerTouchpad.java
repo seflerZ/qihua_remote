@@ -109,7 +109,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             // The direction is just up side down.
-            int newY = (int)-(distanceY / 3);
+            int newY = (int)-(distanceY / 2.3);
             int delta = 0;
             if (distanceY < 0 && newY == 0) {
                 delta = 1;
