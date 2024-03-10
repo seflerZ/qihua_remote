@@ -9,6 +9,7 @@ import com.undatech.opaque.util.GeneralUtils;
 public class RemoteRdpPointer extends RemotePointer {
     private static final String TAG = "RemoteRdpPointer";
 
+    private final static int PTRFLAGS_HWHEEL = 0x0400;
     private final static int PTRFLAGS_WHEEL = 0x0200;
     private final static int PTRFLAGS_WHEEL_NEGATIVE = 0x0100;
     //private final static int PTRFLAGS_DOWN           = 0x8000;
@@ -21,6 +22,11 @@ public class RemoteRdpPointer extends RemotePointer {
     private static final int MOUSE_BUTTON_MIDDLE = 0x4000;
     private static final int MOUSE_BUTTON_SCROLL_UP = PTRFLAGS_WHEEL | 0x0078;
     private static final int MOUSE_BUTTON_SCROLL_DOWN = PTRFLAGS_WHEEL | PTRFLAGS_WHEEL_NEGATIVE | 0x0088;
+
+
+
+    private static final int MOUSE_BUTTON_SCROLL_LEFT = PTRFLAGS_HWHEEL | 0x0078;
+    private static final int MOUSE_BUTTON_SCROLL_RIGHT = PTRFLAGS_HWHEEL | PTRFLAGS_WHEEL_NEGATIVE | 0x0088;
 
     public RemoteRdpPointer(RfbConnectable spicecomm, RemoteCanvas canvas, Handler handler,
                             boolean debugLogging) {
@@ -76,12 +82,22 @@ public class RemoteRdpPointer extends RemotePointer {
 
     @Override
     public void scrollLeft(int x, int y, int speed, int metaState) {
-        // TODO: Protocol does not support scrolling left/right yet.
+        if (speed < 0) {
+            pointerMask = MOUSE_BUTTON_SCROLL_LEFT;
+        } else {
+            pointerMask = 0x0400 | (speed & 0x00ff);
+        }
+        sendPointerEvent(x, y, metaState, false);
     }
 
     @Override
     public void scrollRight(int x, int y, int speed, int metaState) {
-        // TODO: Protocol does not support scrolling left/right yet.
+        if (speed < 0) {
+            pointerMask = MOUSE_BUTTON_SCROLL_RIGHT;
+        } else {
+            pointerMask = 0x0500 | (speed & 0x00ff);
+        }
+        sendPointerEvent(x, y, metaState, false);
     }
 
     @Override

@@ -100,7 +100,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else if (distanceY < 0) {
                 lastScrollDirection = 0;
                 scrollUp = true;
-            } else if (distanceX > 0) {
+            }
+
+            if (distanceX > 0) {
                 lastScrollDirection = 3;
                 scrollRight = true;
             } else if (distanceX < 0) {
@@ -110,33 +112,74 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
             // The direction is just up side down.
             int newY = (int)-(distanceY / 2.3);
+            int newX = (int)(distanceX / 2.3);
             int delta = 0;
-            if (distanceY < 0 && newY == 0) {
-                delta = 1;
-            } else if (distanceY > 0 && newY == 0) {
-                delta = -1;
+
+            if (Math.abs(distanceY) >= Math.abs(distanceX)) {
+                scrollRight = false;
+                scrollLeft = false;
             } else {
-                delta = newY;
+                scrollUp = false;
+                scrollDown = false;
             }
 
-            if (delta > 255) {
-                delta = 255;
-            } else if (delta < -255) {
-                delta = -255;
+            if (scrollUp || scrollDown) {
+                if (distanceY < 0 && newY == 0) {
+                    delta = 1;
+                } else if (distanceY > 0 && newY == 0) {
+                    delta = -1;
+                } else {
+                    delta = newY;
+                }
+
+                if (delta > 255) {
+                    delta = 255;
+                } else if (delta < -255) {
+                    delta = -255;
+                }
+
+                if (delta < 0) {
+                    // use positive number to represent the component directly for
+                    // the least two bytes
+                    delta = 256 + delta;
+                }
+
+                lastDelta = delta;
+
+                // Set the coordinates to where the swipe began (i.e. where scaling started).
+                sendScrollEvents(getX(e2), getY(e2), delta, meta);
+
+                swipeSpeed = 1;
             }
 
-            if (delta < 0) {
-                // use positive number to represent the component directly for
-                // the least two bytes
-                delta = 256 + delta;
+            if (scrollRight || scrollLeft){
+                if (distanceX < 0 && newX == 0) {
+                    delta = -1;
+                } else if (distanceX > 0 && newX == 0) {
+                    delta = 1;
+                } else {
+                    delta = newX;
+                }
+
+                if (delta > 255) {
+                    delta = 255;
+                } else if (delta < -255) {
+                    delta = -255;
+                }
+
+                if (delta < 0) {
+                    // use positive number to represent the component directly for
+                    // the least two bytes
+                    delta = 256 + delta;
+                }
+
+                lastDelta = delta;
+
+                // Set the coordinates to where the swipe began (i.e. where scaling started).
+                sendScrollEvents(getX(e2), getY(e2), delta, meta);
+
+                swipeSpeed = 1;
             }
-
-            lastDelta = delta;
-
-            // Set the coordinates to where the swipe began (i.e. where scaling started).
-            sendScrollEvents(getX(e2), getY(e2), delta, meta);
-
-            swipeSpeed = 1;
         } else {
             // Make distanceX/Y display density independent.
             float sensitivity = pointer.getSensitivity();
