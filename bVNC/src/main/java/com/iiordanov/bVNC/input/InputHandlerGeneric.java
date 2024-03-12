@@ -279,13 +279,13 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected void sendScrollEvents(int x, int y, int delta, int meta) {
         GeneralUtils.debugLog(debugLogging, TAG, "sendScrollEvents");
 
-        if (scrollDown & delta > 0) {
+        if (scrollDown) {
             pointer.scrollDown(x, y, delta, meta);
-        } else if (scrollUp & delta > 0) {
+        } else if (scrollUp) {
             pointer.scrollUp(x, y, delta, meta);
-        } else if (scrollRight & delta > 0) {
+        } else if (scrollRight) {
             pointer.scrollLeft(x, y, delta, meta);
-        } else if (scrollLeft & delta > 0) {
+        } else if (scrollLeft) {
             pointer.scrollRight(x, y, delta, meta);
         }
 

@@ -64,7 +64,7 @@ public class RemoteRdpPointer extends RemotePointer {
         if (speed < 0) {
             pointerMask = MOUSE_BUTTON_SCROLL_UP;
         } else {
-            pointerMask = 0x0200 | (speed & 0x00ff);
+            pointerMask = PTRFLAGS_WHEEL | (speed & 0x00ff);
         }
 
         sendPointerEvent(x, y, metaState, false);
@@ -75,7 +75,7 @@ public class RemoteRdpPointer extends RemotePointer {
         if (speed < 0) {
             pointerMask = MOUSE_BUTTON_SCROLL_DOWN;
         } else {
-            pointerMask = 0x0300 | (speed & 0x00ff);
+            pointerMask = PTRFLAGS_WHEEL | PTRFLAGS_WHEEL_NEGATIVE | (speed & 0x00ff);
         }
         sendPointerEvent(x, y, metaState, false);
     }
@@ -85,7 +85,7 @@ public class RemoteRdpPointer extends RemotePointer {
         if (speed < 0) {
             pointerMask = MOUSE_BUTTON_SCROLL_LEFT;
         } else {
-            pointerMask = 0x0400 | (speed & 0x00ff);
+            pointerMask = PTRFLAGS_HWHEEL | (speed & 0x00ff);
         }
         sendPointerEvent(x, y, metaState, false);
     }
@@ -95,7 +95,7 @@ public class RemoteRdpPointer extends RemotePointer {
         if (speed < 0) {
             pointerMask = MOUSE_BUTTON_SCROLL_RIGHT;
         } else {
-            pointerMask = 0x0500 | (speed & 0x00ff);
+            pointerMask = PTRFLAGS_HWHEEL | PTRFLAGS_WHEEL_NEGATIVE | (speed & 0x00ff);
         }
         sendPointerEvent(x, y, metaState, false);
     }
