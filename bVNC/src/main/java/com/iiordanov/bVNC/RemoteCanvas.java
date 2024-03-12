@@ -1448,8 +1448,8 @@ public class RemoteCanvas extends AppCompatImageView
         float scale = getZoomFactor();
         //android.util.Log.d(TAG, "resetScroll: " + (absoluteXPosition - shiftX) * scale + ", "
         //                                        + (absoluteYPosition - shiftY) * scale);
-        scrollTo((int) ((absoluteXPosition - shiftX) * scale),
-                (int) ((absoluteYPosition - shiftY) * scale));
+        scrollTo((int) ((absoluteXPosition) * scale),
+                (int) ((absoluteYPosition) * scale));
     }
 
     /**
@@ -1468,46 +1468,56 @@ public class RemoteCanvas extends AppCompatImageView
         boolean panX = true;
         boolean panY = true;
 
+        boolean panned = false;
+
         // We only pan if the current scaling is able to pan.
         if (canvasZoomer != null && !canvasZoomer.isAbleToPan())
             return;
 
-        int x = pointer.getX();
-        int y = pointer.getY();
-        boolean panned = false;
-        int w = getVisibleDesktopWidth();
-        int h = getVisibleDesktopHeight();
+        // Coordinates in screen's resolution
+        int x = (int) (pointer.getX());
+        int y = (int) (pointer.getY());
+        int wthresh = (int) (Constants.H_THRESH / getZoomFactor());
+        int hthresh = (int) (Constants.W_THRESH / getZoomFactor());
+
+        // Coordinates in picture's resolution
+        int w = (int) (getVisibleDesktopWidth());
+        int h = (int) (getVisibleDesktopHeight());
         int iw = getImageWidth();
         int ih = getImageHeight();
-        int wthresh = Constants.H_THRESH;
-        int hthresh = Constants.W_THRESH;
 
+
+        int bWidth = (int) ((getWidth() - iw * getMinimumScale()) / 2);
+
+        // newX and newY are in screen's resolution
         int newX = absoluteXPosition;
         int newY = absoluteYPosition;
 
-        if (x - absoluteXPosition >= w - wthresh) {
-            newX = x - (w - wthresh);
-            if (newX + w > iw)
-                newX = iw - w;
-        } else if (x < absoluteXPosition + wthresh) {
-            newX = x - wthresh;
-            if (newX < 0)
-                newX = 0;
+        if (x + bWidth > w + absoluteXPosition - wthresh) {
+            newX += ((x + bWidth) - (w + absoluteXPosition - wthresh));
+            if (newX + w > getWidth() - bWidth)
+                newX = getWidth() - w - bWidth;
+        } else if (x + bWidth < absoluteXPosition + wthresh) {
+            newX += ((x + bWidth) - (absoluteXPosition + wthresh));
+            if (newX < bWidth)
+                newX = (int) bWidth;
         }
+
         if (panX && newX != absoluteXPosition) {
             absoluteXPosition = newX;
             panned = true;
         }
 
-        if (y - absoluteYPosition >= h - hthresh) {
-            newY = y - (h - hthresh);
-            if (newY + h > ih)
-                newY = ih - h;
+        if (y > h + absoluteYPosition - hthresh) {
+            newY += ((y) - (h + absoluteYPosition - hthresh));
+            if (newY + h > getHeight())
+                newY = getHeight() - h;
         } else if (y < absoluteYPosition + hthresh) {
-            newY = y - hthresh;
+            newY += ((y) - (absoluteYPosition + hthresh));
             if (newY < 0)
                 newY = 0;
         }
+
         if (panY && newY != absoluteYPosition) {
             absoluteYPosition = newY;
             panned = true;
@@ -1786,14 +1796,14 @@ public class RemoteCanvas extends AppCompatImageView
     }
 
     public int getVisibleDesktopWidth() {
-        return (int) ((double) getWidth() / getZoomFactor() + 0.5);
+        return (int) ((double) getWidth() / getZoomFactor());
     }
 
     public int getVisibleDesktopHeight() {
         if (visibleHeight > 0)
-            return (int) ((double) visibleHeight / getZoomFactor() + 0.5);
+            return (int) ((double) visibleHeight / getZoomFactor());
         else
-            return (int) ((double) getHeight() / getZoomFactor() + 0.5);
+            return (int) ((double) getHeight() / getZoomFactor());
     }
 
     public void setVisibleDesktopHeight(int newHeight) {
