@@ -1498,8 +1498,8 @@ public class RemoteCanvas extends AppCompatImageView
 
         if (x + bWidth > w + absoluteXPosition - wthresh) {
             newX += ((x + bWidth) - (w + absoluteXPosition - wthresh));
-            if (newX + w > getWidth() - bWidth)
-                newX = getWidth() - w - bWidth;
+            if (newX + w > iw - bWidth)
+                newX = iw - w - bWidth;
         } else if (x + bWidth < absoluteXPosition + wthresh) {
             newX += ((x + bWidth) - (absoluteXPosition + wthresh));
             if (newX < bWidth)
@@ -1513,8 +1513,8 @@ public class RemoteCanvas extends AppCompatImageView
 
         if (y > h + absoluteYPosition - hthresh) {
             newY += ((y) - (h + absoluteYPosition - hthresh));
-            if (newY + h > getHeight())
-                newY = getHeight() - h;
+            if (newY + h > ih)
+                newY = ih - h;
         } else if (y < absoluteYPosition + hthresh) {
             newY += ((y) - (absoluteYPosition + hthresh));
             if (newY < 0)
