@@ -1464,9 +1464,9 @@ public class RemoteCanvas extends AppCompatImageView
             return;
 
         // Do not pan when not scaled.
-        if (getZoomFactor() == getMinimumScale()) {
-            return;
-        }
+//        if (getZoomFactor() == getMinimumScale()) {
+//            return;
+//        }
 
         boolean panX = true;
         boolean panY = true;
@@ -1807,6 +1807,10 @@ public class RemoteCanvas extends AppCompatImageView
             return (int) ((double) visibleHeight / getZoomFactor());
         else
             return (int) ((double) getHeight() / getZoomFactor());
+    }
+
+    public int getImageVisibleInScreenHeight() {
+        return (int) ((getImageHeight() - getAbsY()) * getZoomFactor());
     }
 
     public void setVisibleDesktopHeight(int newHeight) {

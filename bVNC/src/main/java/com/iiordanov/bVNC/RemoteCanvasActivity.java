@@ -83,6 +83,7 @@ import com.iiordanov.bVNC.input.InputHandlerDirectDragPan;
 import com.iiordanov.bVNC.input.InputHandlerDirectSwipePan;
 import com.iiordanov.bVNC.input.InputHandlerSingleHanded;
 import com.iiordanov.bVNC.input.InputHandlerTouchpad;
+import com.iiordanov.bVNC.input.KeyBoardListenerHelper;
 import com.iiordanov.bVNC.input.MetaKeyBean;
 import com.iiordanov.bVNC.input.Panner;
 import com.iiordanov.bVNC.input.RemoteCanvasHandler;
@@ -313,6 +314,20 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         if (connection != null && connection.isReadyForConnection()) {
             continueConnecting();
         }
+
+        KeyBoardListenerHelper helper = new KeyBoardListenerHelper(this);
+        helper.setOnKeyBoardChangeListener((isShow, keyBoardHeight) -> {
+            int curHeight = (int) ((canvas.getImageHeight() - canvas.getAbsY()) * canvas.getZoomFactor());
+            int diff = (int) (canvas.getImageHeight() * canvas.getZoomFactor() - canvas.getHeight());
+            if ( diff < 0 ) {
+                canvas.absolutePan(canvas.getAbsX(), 0);
+            } else {
+                canvas.absolutePan(canvas.getAbsX(), (int) (diff / canvas.getZoomFactor()));
+            }
+
+            canvas.movePanToMakePointerVisible();
+        });
+
         android.util.Log.d(TAG, "OnCreate complete");
     }
 
