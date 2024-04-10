@@ -130,6 +130,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ctrloff" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="0sp">
 
                 <ImageButton
                     android:id="@+id/keyTab"
@@ -164,20 +171,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="bottom|center"
+                android:layout_gravity="bottom|right"
                 android:padding="0sp">
-
-                <ImageButton
-                    android:id="@+id/keyKeyboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/keyboard" />
-
-                <ImageButton
-                    android:id="@+id/keyLeftArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/leftoff" />
 
                 <ImageButton
                     android:id="@+id/keyUpArrow"
@@ -185,6 +180,25 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:background="@drawable/upoff" />
+
+                <ImageButton
+                    android:id="@+id/keyKeyboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/keyboard" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="0sp">
+
+                <ImageButton
+                    android:id="@+id/keyLeftArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/leftoff" />
 
                 <ImageButton
                     android:id="@+id/keyDownArrow"

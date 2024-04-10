@@ -984,12 +984,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         keyKeyboard.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
-                if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                    sendShortVibration();
-                    toggleKeyboard(null);
-                    return true;
+                if (e.getAction() != MotionEvent.ACTION_DOWN) {
+                    return false;
                 }
-                return false;
+
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_A + 2;
+                canvas.getKeyboard().onScreenCtrlToggle();
+                k.keyEvent(key, new KeyEvent(e.getAction(), key));
+                canvas.getKeyboard().onScreenCtrlOff();
+                return true;
             }
         });
 
@@ -1721,6 +1725,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         } else {
             showKeyboard();
         }
+
+        extraKeysToggle(menuItem);
     }
 
     public void showKeyboard() {
