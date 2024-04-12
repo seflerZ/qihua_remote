@@ -978,8 +978,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             }
         });
 
-        keyKeyboard = (ImageButton) findViewById(R.id.keyKeyboard);
-        keyKeyboard.setImageResource(R.drawable.keyboard);
+        keyKeyboard = (ImageButton) findViewById(R.id.copy);
+        keyKeyboard.setImageResource(R.drawable.copyoff);
 
         keyKeyboard.setOnTouchListener(new OnTouchListener() {
             @Override
