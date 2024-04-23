@@ -360,4 +360,5 @@
     </string-array>
 
     <string name="vnc_server_empty">Pole serwera lub portu VNC jest puste. Nie można połączyć.</string>
+    <string name="rdp_geom_full_hd">1080p</string>
 </resources>

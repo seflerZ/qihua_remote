@@ -899,4 +899,5 @@ aSPICEで의 대응 기능는 이하와 같다 :
     <string name="prefer_sending_unicode">유니코드 입력(Windows만 해당)</string>
     <string name="hide_connection_thumbnails">썸네일 비표시</string>
     <string name="show_only_connection_nicknames">닉네임 표시</string>
+    <string name="rdp_geom_full_hd">1080p</string>
 </resources>

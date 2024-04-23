@@ -923,4 +923,5 @@ Abaixo, é onde você configura sua conexão.
     <string name="rdp_adv_gfx">RDP Gfx</string>
     <string name="rdp_adv_gfxh264">RDP Gfx H264</string>
     <string name="more_debug_logging">Mais registros de depuração</string>
+    <string name="rdp_geom_full_hd">1080p</string>
 </resources>

@@ -576,6 +576,7 @@ If you are looking for a quick performance boost, try setting the Color mode to 
     <string-array name="rdp_geometry">
         <item>@string/rdp_geom_native_landscape</item>
         <item>@string/rdp_geom_native_portrait</item>
+        <item>@string/rdp_geom_full_hd</item>
         <item>@string/rdp_geom_custom</item>
     </string-array>
     <string-array name="spice_geometry">
@@ -942,4 +943,5 @@ Below that is where you configure your connection.
     <string name="pref_keyboard_type_label_TYPE_NULL">Default (TYPE_NULL)</string>
     <string name="pref_keyboard_type_label_VISIBLE_PASSWORD">Text/Numbers No Suggestions (VISIBLE_PASSWORD)</string>
     <string name="pref_keyboard_type_label_TYPE_CLASS_TEXT">Text With Suggestions (TYPE_CLASS_TEXT)</string>
+    <string name="rdp_geom_full_hd">1080p</string>
 </resources>

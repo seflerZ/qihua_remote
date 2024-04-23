@@ -907,4 +907,5 @@ Debajo es donde configura su conexión.
     <string name="report_bug">Reportar un error</string>
     <string name="download_from_server">Descargar desde el servidor</string>
     <string name="import_from_file">Importar desde archivo</string>
+    <string name="rdp_geom_full_hd">1080p</string>
 </resources>

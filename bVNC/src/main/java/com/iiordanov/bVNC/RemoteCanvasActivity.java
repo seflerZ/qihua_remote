@@ -317,7 +317,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         KeyBoardListenerHelper helper = new KeyBoardListenerHelper(this);
         helper.setOnKeyBoardChangeListener((isShow, keyBoardHeight) -> {
-            int curHeight = (int) ((canvas.getImageHeight() - canvas.getAbsY()) * canvas.getZoomFactor());
             int diff = (int) (canvas.getImageHeight() * canvas.getZoomFactor() - canvas.getHeight());
             if ( diff < 0 ) {
                 canvas.absolutePan(canvas.getAbsX(), 0);
@@ -325,6 +324,10 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 canvas.absolutePan(canvas.getAbsX(), (int) (diff / canvas.getZoomFactor()));
             }
 
+            if (!isShow && !extraKeysHidden) {
+                hideKeyboardAndExtraKeys();
+            }
+            
             canvas.movePanToMakePointerVisible();
         });
 
@@ -1721,12 +1724,10 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     public void toggleKeyboard(MenuItem menuItem) {
         if (softKeyboardUp) {
-            hideKeyboard();
+            hideKeyboardAndExtraKeys();
         } else {
-            showKeyboard();
+            showKeyboardAndExtraKeys();
         }
-
-        extraKeysToggle(menuItem);
     }
 
     public void showKeyboard() {
@@ -1752,6 +1753,15 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             setExtraKeysVisibility(View.GONE, false);
         }
     }
+
+    public void showKeyboardAndExtraKeys() {
+        showKeyboard();
+        if (layoutKeys.getVisibility() == View.GONE) {
+            extraKeysHidden = false;
+            setExtraKeysVisibility(View.VISIBLE, false);
+        }
+    }
+
 
     public void stopPanner() {
         panner.stop();

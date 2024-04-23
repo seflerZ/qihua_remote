@@ -1021,6 +1021,8 @@ public class RemoteCanvas extends AppCompatImageView
             remoteWidth = Math.min(viewWidth, viewHeight);
         } else if (connection.getRdpResType() == Constants.RDP_GEOM_SELECT_NATIVE_LANDSCAPE) {
             remoteWidth = Math.max(viewWidth, viewHeight);
+        } else if (connection.getRdpResType() == Constants.RDP_GEOM_FULL_HD) {
+            remoteWidth = 1920;
         } else {
             remoteWidth = viewWidth;
         }
@@ -1043,6 +1045,8 @@ public class RemoteCanvas extends AppCompatImageView
             remoteHeight = Math.max(viewWidth, viewHeight);
         } else if (connection.getRdpResType() == Constants.RDP_GEOM_SELECT_NATIVE_LANDSCAPE) {
             remoteHeight = Math.min(viewWidth, viewHeight);
+        } else if (connection.getRdpResType() == Constants.RDP_GEOM_FULL_HD) {
+            remoteHeight = 1080;
         } else {
             remoteHeight = viewHeight;
         }
