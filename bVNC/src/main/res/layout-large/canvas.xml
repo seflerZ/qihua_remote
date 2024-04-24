@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="bottom|right"
+                android:layout_gravity="bottom|center"
                 android:padding="0sp">
 
                 <ImageButton
@@ -181,11 +181,11 @@
                     android:layout_gravity="top|center"
                     android:background="@drawable/upoff" />
 
-                <ImageButton
-                    android:id="@+id/copy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/copyoff" />
+<!--                <ImageButton-->
+<!--                    android:id="@+id/copy"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/copyoff" />-->
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

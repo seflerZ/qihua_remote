@@ -156,7 +156,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyRight;
     ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
-    boolean extraKeysHidden = false;
+    boolean extraKeysHidden = true;
     volatile boolean softKeyboardUp;
     RemoteToolbar toolbar;
     View rootView;
@@ -981,24 +981,24 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             }
         });
 
-        keyKeyboard = (ImageButton) findViewById(R.id.copy);
-        keyKeyboard.setImageResource(R.drawable.copyoff);
-
-        keyKeyboard.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View arg0, MotionEvent e) {
-                if (e.getAction() != MotionEvent.ACTION_DOWN) {
-                    return false;
-                }
-
-                RemoteKeyboard k = canvas.getKeyboard();
-                int key = KeyEvent.KEYCODE_A + 2;
-                canvas.getKeyboard().onScreenCtrlToggle();
-                k.keyEvent(key, new KeyEvent(e.getAction(), key));
-                canvas.getKeyboard().onScreenCtrlOff();
-                return true;
-            }
-        });
+//        keyKeyboard = (ImageButton) findViewById(R.id.copy);
+//        keyKeyboard.setImageResource(R.drawable.copyoff);
+//
+//        keyKeyboard.setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View arg0, MotionEvent e) {
+//                if (e.getAction() != MotionEvent.ACTION_DOWN) {
+//                    return false;
+//                }
+//
+//                RemoteKeyboard k = canvas.getKeyboard();
+//                int key = KeyEvent.KEYCODE_A + 2;
+//                canvas.getKeyboard().onScreenCtrlToggle();
+//                k.keyEvent(key, new KeyEvent(e.getAction(), key));
+//                canvas.getKeyboard().onScreenCtrlOff();
+//                return true;
+//            }
+//        });
 
         keyLeft = (ImageButton) findViewById(R.id.keyLeftArrow);
         keyLeft.setImageResource(R.drawable.leftoff);

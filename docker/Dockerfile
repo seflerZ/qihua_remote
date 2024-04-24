@@ -5,6 +5,8 @@ ARG USER_GID
 ARG CURRENT_WORKING_DIR
 ARG ANDROID_SDK
 
+COPY ./sources.list /etc/apt/sources.list
+
 RUN apt update && \
 apt install -yy gnome-common gobject-introspection nasm openjdk-17-jdk build-essential git python-setuptools python3-setuptools wget curl unzip sudo rsync && \
 apt clean && apt autoclean
