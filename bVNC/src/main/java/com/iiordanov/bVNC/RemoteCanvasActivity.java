@@ -1322,13 +1322,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             }
             updateScalingMenu();
 
-            // Set the text of the Extra Keys menu item appropriately.
-            // TODO: Implement for Opaque
-            if (connection != null && connection.getExtraKeysToggleType() == Constants.EXTRA_KEYS_ON)
-                menu.findItem(R.id.itemExtraKeys).setTitle(R.string.extra_keys_disable);
-            else
-                menu.findItem(R.id.itemExtraKeys).setTitle(R.string.extra_keys_enable);
-
             OnTouchListener moveListener = new OnTouchViewMover(toolbar, handler, toolbarHider, hideToolbarDelay);
             ImageButton moveButton = new ImageButton(this);
 
@@ -1494,20 +1487,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             //case R.id.itemOpenDoc:
             //    Utils.showDocumentation(this);
             //    return true;
-        } else if (itemId == R.id.itemExtraKeys) {
-            if (connection.getExtraKeysToggleType() == Constants.EXTRA_KEYS_ON) {
-                connection.setExtraKeysToggleType(Constants.EXTRA_KEYS_OFF);
-                item.setTitle(R.string.extra_keys_enable);
-                setExtraKeysVisibility(View.GONE, false);
-            } else {
-                connection.setExtraKeysToggleType(Constants.EXTRA_KEYS_ON);
-                item.setTitle(R.string.extra_keys_disable);
-                setExtraKeysVisibility(View.VISIBLE, false);
-                extraKeysHidden = false;
-            }
-            invalidateOptionsMenu();
-            connection.save(this);
-            return true;
         } else if (itemId == R.id.itemHelpInputMode) {
             showDialog(R.id.itemHelpInputMode);
             return true;

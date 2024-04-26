@@ -21,10 +21,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/itemExtraKeys"
-        android:icon="@drawable/extra_keys"
-        android:title="@string/extra_keys_disable" />
-    <item
         android:id="@+id/itemInputMode"
         android:alphabeticShortcut="p"
         android:icon="@android:drawable/ic_input_get"
