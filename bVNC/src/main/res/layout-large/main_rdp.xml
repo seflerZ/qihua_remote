@@ -454,6 +454,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_remotefx"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -462,6 +463,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_desktop_background"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -470,6 +472,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_font_smoothing"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -478,6 +481,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_desktop_composition"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -486,6 +490,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_window_contents"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -494,6 +499,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_menu_animation"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -502,6 +508,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_visual_styles"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -510,6 +517,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_gfx"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <CheckBox
@@ -518,6 +526,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_gfxh264"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView

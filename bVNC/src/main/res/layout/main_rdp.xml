@@ -455,6 +455,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_remotefx"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -464,6 +465,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_desktop_background"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -473,6 +475,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_font_smoothing"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -482,6 +485,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_desktop_composition"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -491,6 +495,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_window_contents"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -500,6 +505,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_menu_animation"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -509,6 +515,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_visual_styles"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -518,6 +525,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_gfx"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -527,6 +535,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_gfxh264"
                 android:checked="true"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
