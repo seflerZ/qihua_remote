@@ -515,27 +515,28 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 secondPointerWasDown = false;
             }
 
-            if (inSwiping || immersiveSwipe) {
-                inertialThread = new Thread(() -> {
-                    float lastDeltaFloat = lastDelta;
-                    // do inertial scrolling
-                    while (lastDeltaFloat > 5 && lastDeltaFloat < 250) {
-                        sendScrollEvents(getX(e), getY(e), (int) lastDeltaFloat, meta);
+//            int timeCost = (int) (System.currentTimeMillis() - swipeStartTime);
 
-                        if (lastScrollDirection == 0) {
-                            lastDeltaFloat = lastDeltaFloat * 0.7f;
-                        } else if (lastScrollDirection == 2) {
-                            lastDeltaFloat = 255 - (255 - lastDeltaFloat) * 0.7f;
-                        } else {
-                            break;
-                        }
-
-                    }
-                }, "inertialRunner");
-
-                inertialThread.setDaemon(true);
-                inertialThread.start();
-            }
+//            if ((inSwiping || immersiveSwipe) && timeCost < 800) {
+//
+//                inertialThread = new Thread(() -> {
+//                    int t = (int) (50 - timeCost / 7);
+//                    // do inertial scrolling
+//                    while (t > 2) {
+//                        t -= 2;
+//                        if (scrollDown) {
+//                            sendScrollEvents(getX(e), getY(e), (int) 255 - t, meta);
+//                        } else if (scrollUp) {
+//                            sendScrollEvents(getX(e), getY(e), (int) t, meta);
+//                        } else {
+//                            break;
+//                        }
+//                    }
+//                }, "inertialRunner");
+//
+//                inertialThread.setDaemon(true);
+//                inertialThread.start();
+//            }
 
             if (!endDragModesAndScrolling()) {
                 // If no non-drag gestures were going on, send a mouse up event.

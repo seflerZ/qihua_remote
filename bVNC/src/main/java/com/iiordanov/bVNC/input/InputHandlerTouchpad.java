@@ -111,8 +111,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             // The direction is just up side down.
-            int newY = (int)-(distanceY / 2.3);
-            int newX = (int)(distanceX / 2.3);
+            int newY = (int)-(distanceY / (canvas.getZoomFactor()));
+            int newX = (int)(distanceX / (canvas.getZoomFactor()));
             int delta = 0;
 
             if (Math.abs(distanceY) >= Math.abs(distanceX)) {
@@ -125,11 +125,15 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
             if (scrollUp || scrollDown) {
                 if (distanceY < 0 && newY == 0) {
-                    delta = 1;
+                    delta = 0;
                 } else if (distanceY > 0 && newY == 0) {
-                    delta = -1;
+                    delta = 0;
                 } else {
                     delta = newY;
+                }
+
+                if (delta == 0) {
+                    return true;
                 }
 
                 if (delta > 255) {
