@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -1750,14 +1751,25 @@ public class RemoteCanvas extends AppCompatImageView
      */
     void initializeSoftCursor() {
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cursor);
+
         int w = bm.getWidth();
         int h = bm.getHeight();
-        int[] tempPixels = new int[w * h];
-        bm.getPixels(tempPixels, 0, w, 0, 0, w, h);
+
+        int scaledW = w / 2;
+        int scaledH = h / 2;
+
+        Matrix m = new Matrix();
+        m.postScale(0.5f, 0.5f);// 使用后乘
+        Bitmap newBM = Bitmap.createBitmap(bm, 0, 0, w, h, m, false);
+
+        int[] tempPixels = new int[scaledW * scaledH];
+        newBM.getPixels(tempPixels, 0, scaledW, 0, 0, scaledW, scaledH);
         // Set cursor rectangle as well.
-        myDrawable.setCursorRect(pointer.getX(), pointer.getY(), w, h, 0, 0);
+        myDrawable.setCursorRect(pointer.getX(), pointer.getY(), scaledW, scaledH, 0, 0);
         // Set softCursor to whatever the resource is.
         myDrawable.setSoftCursor(tempPixels);
+
+        newBM.recycle();
         bm.recycle();
     }
 

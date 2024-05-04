@@ -272,10 +272,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         boolean accelerated = pointer.isAccelerated();
         if (delta <= 15) {
             delta = delta * 0.75f;
-        } else if (accelerated && delta <= 70.0f) {
-            delta = delta * delta / 20.0f;
+        } else if (accelerated && delta <= 40.0f) {
+            delta = delta * 2.0f;
         } else if (accelerated) {
-            delta = delta * 3.0f;
+            delta = delta * 4.0f;
         }
         return origSign * delta;
     }

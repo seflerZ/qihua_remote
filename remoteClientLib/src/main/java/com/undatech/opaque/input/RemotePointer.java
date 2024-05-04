@@ -24,7 +24,7 @@ import android.view.KeyEvent;
 
 public abstract class RemotePointer {
     public static final int POINTER_DOWN_MASK = 0x8000;
-    public static float DEFAULT_SENSITIVITY = 2.0f;
+    public static float DEFAULT_SENSITIVITY = 1.0f;
     public static boolean DEFAULT_ACCELERATED = true;
     /**
      * Indicates where the mouse pointer is located.
