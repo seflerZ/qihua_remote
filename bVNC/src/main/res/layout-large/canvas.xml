@@ -120,6 +120,12 @@
                     android:background="@drawable/escoff" />
 
                 <ImageButton
+                    android:id="@+id/keyTab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/taboff" />
+
+                <ImageButton
                     android:id="@+id/keyShift"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,31 +136,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ctrloff" />
-            </LinearLayout>
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="0sp">
-
-                <ImageButton
-                    android:id="@+id/keyTab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/taboff" />
-
-                <ImageButton
-                    android:id="@+id/keySuper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/superoff" />
 
                 <ImageButton
                     android:id="@+id/keyAlt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/altoff" />
+
+                <ImageButton
+                    android:id="@+id/keySuper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/superoff" />
             </LinearLayout>
         </LinearLayout>
 
@@ -166,27 +159,6 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:padding="0sp">
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="bottom|center"
-                android:padding="0sp">
-
-                <ImageButton
-                    android:id="@+id/keyUpArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center"
-                    android:background="@drawable/upoff" />
-
-<!--                <ImageButton-->
-<!--                    android:id="@+id/copy"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/copyoff" />-->
-            </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
@@ -205,6 +177,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/downoff" />
+
+                <ImageButton
+                    android:id="@+id/keyUpArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:background="@drawable/upoff" />
 
                 <ImageButton
                     android:id="@+id/keyRightArrow"

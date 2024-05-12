@@ -273,7 +273,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         if (delta <= 15) {
             delta = delta * 0.75f;
         } else if (accelerated && delta <= 40.0f) {
-            delta = delta * 2.0f;
+            delta = delta * 2.4f;
         } else if (accelerated) {
             delta = delta * 4.0f;
         }
