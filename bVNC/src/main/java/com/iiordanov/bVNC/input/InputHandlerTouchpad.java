@@ -272,6 +272,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         boolean accelerated = pointer.isAccelerated();
         if (delta <= 15) {
             delta = delta * 0.75f;
+        } else if (accelerated && delta <= 25.0f) {
+            delta = delta * 1.5f;
         } else if (accelerated && delta <= 40.0f) {
             delta = delta * 2.4f;
         } else if (accelerated) {
