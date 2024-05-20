@@ -1503,8 +1503,12 @@ public class RemoteCanvas extends AppCompatImageView
 
         if (x + bWidth > w + absoluteXPosition - wthresh) {
             newX += ((x + bWidth) - (w + absoluteXPosition - wthresh));
-            if (newX + w > iw + bWidth)
+
+            // left padding x + image_width visible is larger than left black border + image_width
+            // which means the right side has been reached, no more space to do right panning now
+            if (newX + w > iw + bWidth) {
                 newX = iw - w + bWidth;
+            }
         } else if (x + bWidth < absoluteXPosition + wthresh) {
             newX += ((x + bWidth) - (absoluteXPosition + wthresh));
             if (newX < bWidth)
