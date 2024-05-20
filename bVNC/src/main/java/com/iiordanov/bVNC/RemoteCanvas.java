@@ -1489,12 +1489,12 @@ public class RemoteCanvas extends AppCompatImageView
         int hthresh = (int) (Constants.W_THRESH / getZoomFactor());
 
         // Coordinates in picture's resolution
-        int w = (int) (getVisibleDesktopWidth());
-        int h = (int) (getVisibleDesktopHeight());
+        int w = getVisibleDesktopWidth();
+        int h = getVisibleDesktopHeight();
         int iw = getImageWidth();
         int ih = getImageHeight();
 
-
+        // bWidth = black border width
         int bWidth = (int) ((getWidth() - iw * getMinimumScale()) / 2);
 
         // newX and newY are in screen's resolution
@@ -1503,12 +1503,12 @@ public class RemoteCanvas extends AppCompatImageView
 
         if (x + bWidth > w + absoluteXPosition - wthresh) {
             newX += ((x + bWidth) - (w + absoluteXPosition - wthresh));
-            if (newX + w > iw - bWidth)
-                newX = iw - w - bWidth;
+            if (newX + w > iw + bWidth)
+                newX = iw - w + bWidth;
         } else if (x + bWidth < absoluteXPosition + wthresh) {
             newX += ((x + bWidth) - (absoluteXPosition + wthresh));
             if (newX < bWidth)
-                newX = (int) bWidth;
+                newX = bWidth;
         }
 
         if (panX && newX != absoluteXPosition) {
