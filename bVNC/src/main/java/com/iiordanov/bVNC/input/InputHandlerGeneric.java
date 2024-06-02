@@ -20,6 +20,8 @@
 
 package com.iiordanov.bVNC.input;
 
+import static com.iiordanov.bVNC.input.MetaKeyBean.keysByKeyCode;
+
 import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -30,6 +32,7 @@ import androidx.core.view.InputDeviceCompat;
 import com.iiordanov.bVNC.Constants;
 import com.iiordanov.bVNC.RemoteCanvas;
 import com.iiordanov.bVNC.RemoteCanvasActivity;
+import com.undatech.opaque.input.RemoteKeyboard;
 import com.undatech.opaque.util.GeneralUtils;
 
 import java.util.LinkedList;
@@ -57,6 +60,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected boolean rightDragMode = false;
     protected boolean middleDragMode = false;
     protected float dragX, dragY;
+    protected float gestureX, gestureY;
     protected float totalDragX, totalDragY;
     protected boolean singleHandedGesture = false;
     protected boolean singleHandedJustEnded = false;
@@ -109,8 +113,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     // Indicates that the next onFling will be disregarded.
     boolean disregardNextOnFling = false;
     // Queue which holds the last two MotionEvents which triggered onScroll
+    float lastZoomFactor = 1;
+    private long lastDragStartTime;
     Queue<Float> distXQueue;
     Queue<Float> distYQueue;
+    private boolean dragHelped = false;
 
     InputHandlerGeneric(RemoteCanvasActivity activity, RemoteCanvas canvas, RemotePointer pointer,
                         boolean debugLogging) {
@@ -321,6 +328,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         dragMode = true;
 
+        // These are for drag helper
+        lastZoomFactor = canvas.getZoomFactor();
+        lastDragStartTime = System.currentTimeMillis();
+
         return true;
     }
 
@@ -420,6 +431,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             canvas.invalidate();
         }
 
+        int endX, endY = 0;
+
         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: pointerID: " + pointerID);
         switch (pointerID) {
             case 0:
@@ -470,6 +483,14 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 pointer.middleButtonDown(getX(e), getY(e), meta);
                             }
 
+                            // If try to drag with long time, enlarge the screen for drag helper. This is very helpful in selecting texts in small screen.
+                            if (System.currentTimeMillis() - lastDragStartTime > 1000
+                                    && dragMode && (Math.abs(totalDragX) < 50 && Math.abs(totalDragY) < 50)
+                                    && lastZoomFactor < 2.0f) {
+                                canvas.canvasZoomer.changeZoom(activity, 2.5f/canvas.getZoomFactor(), pointer.getX(), pointer.getY());
+                                dragHelped = true;
+                            }
+
                             pointer.moveMouseButtonDown(getX(e), getY(e), meta);
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
@@ -497,11 +518,30 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     case MotionEvent.ACTION_POINTER_DOWN:
                         thirdPointerWasDown = true;
                         secondPointerWasDown = false;
+
+                        gestureX = e.getX(index);
+                        gestureY = e.getY(index);
                         break;
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
                         if (!inScaling && thirdPointerWasDown) {
-                            activity.toggleKeyboard(null);
+                            // the three pointer gestures
+                            if ((e.getY(index) - gestureY) > 150 && Math.abs(e.getX(index) - gestureX) < 100) {
+                                canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
+                            } else if ((e.getX(index) - gestureX) < -150 && Math.abs(e.getY(index) - gestureY) < 100) {
+                                canvas.getKeyboard().onScreenAltOn();
+
+                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
+                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
+
+                                canvas.getKeyboard().onScreenAltOff();
+                            }
+                            else if ((e.getX(index) - gestureX) > 150 && Math.abs(e.getY(index) - gestureY) < 100) {
+                                canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
+                            } else if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
+                                activity.toggleKeyboard(null);
+                            }
+
                             thirdPointerWasDown = false;
                         }
                         break;
@@ -517,34 +557,13 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 secondPointerWasDown = false;
             }
 
-//            int timeCost = (int) (System.currentTimeMillis() - swipeStartTime);
-
-//            if ((inSwiping || immersiveSwipe) && timeCost < 800) {
-//
-//                inertialThread = new Thread(() -> {
-//                    int t = (int) (50 - timeCost / 7);
-//                    // do inertial scrolling
-//                    while (t > 2) {
-//                        t -= 2;
-//                        if (scrollDown) {
-//                            sendScrollEvents(getX(e), getY(e), (int) 255 - t, meta);
-//                        } else if (scrollUp) {
-//                            sendScrollEvents(getX(e), getY(e), (int) t, meta);
-//                        } else {
-//                            break;
-//                        }
-//                    }
-//                }, "inertialRunner");
-//
-//                inertialThread.setDaemon(true);
-//                inertialThread.start();
-//            }
-
             if (!endDragModesAndScrolling()) {
-                // If no non-drag gestures were going on, send a mouse up event.
-                GeneralUtils.debugLog(debugLogging, TAG,
-                        "onTouchEvent: No non-drag gestures detected, sending mouse up event");
                 pointer.releaseButton(getX(e), getY(e), meta);
+
+                if (dragHelped) {
+                    canvas.canvasZoomer.changeZoom(activity, lastZoomFactor / canvas.getZoomFactor(), pointer.getX(), pointer.getY());
+                    dragHelped = false;
+                }
             }
 
             if (pointerID == 0) {

@@ -152,6 +152,10 @@ public abstract class RemoteKeyboard {
         onScreenMetaState = onScreenMetaState & ~ALT_MASK;
     }
 
+    public void onScreenAltOn() {
+        onScreenMetaState = onScreenMetaState | ALT_MASK;
+    }
+
     /**
      * Toggles on-screen Super mask.  Returns true if result is Super enabled, false otherwise.
      *

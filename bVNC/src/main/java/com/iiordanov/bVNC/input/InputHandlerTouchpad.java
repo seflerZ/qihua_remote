@@ -75,6 +75,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             return true;
         }
 
+        if (thirdPointerWasDown) {
+            return true;
+        }
+
         if (!inScrolling && twoFingers) {
             inScrolling = true;
 

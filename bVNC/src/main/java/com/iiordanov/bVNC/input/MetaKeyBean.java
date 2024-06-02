@@ -39,6 +39,7 @@ public class MetaKeyBean extends AbstractMetaKeyBean implements Comparable<MetaK
     public static final HashMap<Integer, MetaKeyBase> keysByMouseButton;
     public static final HashMap<Integer, MetaKeyBase> keysByKeySym;
     public static final MetaKeyBean keyCtrlAltDel;
+    public static final MetaKeyBean keyCtrlEsc;
     public static final MetaKeyBean keyArrowLeft;
     public static final MetaKeyBean keyArrowRight;
     public static final MetaKeyBean keyArrowUp;
@@ -135,6 +136,7 @@ public class MetaKeyBean extends AbstractMetaKeyBean implements Comparable<MetaK
             }
         };
         keyCtrlAltDel = new MetaKeyBean(0, RemoteKeyboard.CTRL_MASK | RemoteKeyboard.ALT_MASK, keysByKeyCode.get(KeyEvent.KEYCODE_DEL));
+        keyCtrlEsc = new MetaKeyBean(0, RemoteKeyboard.CTRL_MASK, keysByKeyCode.get(KeyEvent.KEYCODE_ESCAPE));
         keyArrowLeft = new MetaKeyBean(0, 0, keysByKeySym.get(0xFF51));
         keyArrowUp = new MetaKeyBean(0, 0, keysByKeySym.get(0xFF52));
         keyArrowRight = new MetaKeyBean(0, 0, keysByKeySym.get(0xFF53));
