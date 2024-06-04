@@ -2,6 +2,8 @@ package com.undatech.opaque;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +22,8 @@ import com.undatech.opaque.util.GeneralUtils;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -403,6 +407,37 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             Log.v(TAG, "Sending message: RDP_CONNECT_FAILURE");
             handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
         }
+    }
+
+    @Override
+    public void OnPointerNew(byte[] pdata, int width, int height) {
+        // Reconstruct bitmap headers
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        int offset = 0;
+        for (int h=0; h<height; h++) {
+            for (int w=0; w<width; w++) {
+                int color = 0;
+
+                //set the color from ARGB byte sequence
+                color = pdata[offset] << 24 | color;
+                color = pdata[offset + 1] << 16 | color;
+                color = pdata[offset + 2] << 8 | color;
+                color = pdata[offset + 3] | color;
+
+                offset += 4;
+
+                bitmap.setPixel(w, h, color);
+            }
+        }
+
+        int[] pixels = new int[width * height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        viewable.setSoftCursorPixels(pixels, width, height);
+    }
+
+    @Override
+    public void OnPointerUpdate(byte[] pdata, int width, int height) {
+        OnPointerNew(pdata, width, height);
     }
 
     @Override

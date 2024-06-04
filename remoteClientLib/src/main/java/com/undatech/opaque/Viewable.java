@@ -17,6 +17,8 @@ public interface Viewable {
 
     void setMousePointerPosition(int x, int y);
 
+    void setSoftCursorPixels(int[] pixels, int width, int height);
+
     void mouseMode(boolean relative);
 
     boolean isAbleToPan();

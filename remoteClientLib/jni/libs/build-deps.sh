@@ -596,18 +596,18 @@ build_freerdp() {
     pushd deps
     basedir="$(pwd)"
 
-    missing_artifact="false"
-    for abi in $abis
-    do
-      for f in ${freerdp_artifacts}
-      do
-        if [ ! -f ${freerdp_build}/client/Android/Studio/freeRDPCore/src/main/jniLibs/${abi}/${f} -a \
-             ! -f ${freerdp_build}/client/Android/Studio/freeRDPCore/src/main/jniLibs.DISABLED/${abi}/${f} ]
-        then
-          missing_artifact="true"
-        fi
-      done
-    done
+    missing_artifact="true"
+#    for abi in $abis
+#    do
+#      for f in ${freerdp_artifacts}
+#      do
+#        if [ ! -f ${freerdp_build}/client/Android/Studio/freeRDPCore/src/main/jniLibs/${abi}/${f} -a \
+#             ! -f ${freerdp_build}/client/Android/Studio/freeRDPCore/src/main/jniLibs.DISABLED/${abi}/${f} ]
+#        then
+#          missing_artifact="true"
+#        fi
+#      done
+#    done
 
     if [ $missing_artifact == "true" ]
     then

@@ -1754,27 +1754,11 @@ public class RemoteCanvas extends AppCompatImageView
      * Initializes the data structure which holds the remote pointer data.
      */
     void initializeSoftCursor() {
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cursor);
+    }
 
-        int w = bm.getWidth();
-        int h = bm.getHeight();
-
-        int scaledW = w / 2;
-        int scaledH = h / 2;
-
-        Matrix m = new Matrix();
-        m.postScale(0.5f, 0.5f);// 使用后乘
-        Bitmap newBM = Bitmap.createBitmap(bm, 0, 0, w, h, m, false);
-
-        int[] tempPixels = new int[scaledW * scaledH];
-        newBM.getPixels(tempPixels, 0, scaledW, 0, 0, scaledW, scaledH);
-        // Set cursor rectangle as well.
-        myDrawable.setCursorRect(pointer.getX(), pointer.getY(), scaledW, scaledH, 0, 0);
-        // Set softCursor to whatever the resource is.
-        myDrawable.setSoftCursor(tempPixels);
-
-        newBM.recycle();
-        bm.recycle();
+    public void setSoftCursorPixels(int[] pixels, int width, int height) {
+        myDrawable.setCursorRect(pointer.getX(), pointer.getY(), width, height, 0, 0);
+        myDrawable.setSoftCursor(pixels);
     }
 
     @Override
