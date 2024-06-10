@@ -1701,7 +1701,8 @@ public class RemoteCanvas extends AppCompatImageView
      */
     public void invalidateMousePosition() {
         if (myDrawable != null) {
-            myDrawable.moveCursorRect(pointer.getX(), pointer.getY());
+            // add little offset for the cursor image
+            myDrawable.moveCursorRect(pointer.getX() - 6, pointer.getY() - 2);
             RectF r = myDrawable.getCursorRect();
             reDraw(r.left, r.top, r.width(), r.height());
         }
