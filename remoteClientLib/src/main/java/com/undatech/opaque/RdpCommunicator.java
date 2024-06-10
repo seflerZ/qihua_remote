@@ -419,10 +419,10 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
                 int color = 0;
 
                 //set the color from ARGB byte sequence
-                color = pdata[offset] << 24 | color;
-                color = pdata[offset + 1] << 16 | color;
-                color = pdata[offset + 2] << 8 | color;
-                color = pdata[offset + 3] | color;
+                color = (pdata[offset] & 0xFF) << 24 | color;
+                color = (pdata[offset + 1] & 0xFF) << 16 | color;
+                color = (pdata[offset + 2] & 0xFF) << 8 | color;
+                color = (pdata[offset + 3] & 0xFF) | color;
 
                 offset += 4;
 

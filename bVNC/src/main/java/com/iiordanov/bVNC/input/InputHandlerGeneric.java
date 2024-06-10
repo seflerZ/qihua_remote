@@ -118,6 +118,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     Queue<Float> distXQueue;
     Queue<Float> distYQueue;
     private boolean dragHelped = false;
+    private boolean canEnlarge = true;
 
     InputHandlerGeneric(RemoteCanvasActivity activity, RemoteCanvas canvas, RemotePointer pointer,
                         boolean debugLogging) {
@@ -483,8 +484,12 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 pointer.middleButtonDown(getX(e), getY(e), meta);
                             }
 
+                            if (Math.abs(totalDragX) > 50 || Math.abs(totalDragY) > 50) {
+                                canEnlarge = false;
+                            }
+
                             // If try to drag with long time, enlarge the screen for drag helper. This is very helpful in selecting texts in small screen.
-                            if (System.currentTimeMillis() - lastDragStartTime > 1000
+                            if (System.currentTimeMillis() - lastDragStartTime > 1000 && canEnlarge
                                     && dragMode && (Math.abs(totalDragX) < 50 && Math.abs(totalDragY) < 50)
                                     && lastZoomFactor < 2.0f) {
                                 canvas.canvasZoomer.changeZoom(activity, 2.5f/canvas.getZoomFactor(), pointer.getX(), pointer.getY());
@@ -556,6 +561,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 pointer.releaseButton(getX(e), getY(e), meta);
                 secondPointerWasDown = false;
             }
+
+            canEnlarge = true;
 
             if (!endDragModesAndScrolling()) {
                 pointer.releaseButton(getX(e), getY(e), meta);
