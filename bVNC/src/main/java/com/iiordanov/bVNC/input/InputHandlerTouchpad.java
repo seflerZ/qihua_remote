@@ -194,6 +194,18 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             distanceX = sensitivity * distanceX / displayDensity;
             distanceY = sensitivity * distanceY / displayDensity;
 
+            if (distanceX > 0 && distanceX < 1) {
+                distanceX = (float) Math.ceil(distanceX);
+            } else if (distanceX > -1 && distanceX < 0) {
+                distanceX = (float) Math.floor(distanceX);
+            }
+
+            if (distanceY > 0 && distanceY < 1) {
+                distanceY = (float) Math.ceil(distanceY);
+            } else if (distanceY > -1 && distanceY < 0) {
+                distanceY = (float) Math.floor(distanceY);
+            }
+
             // Compute the absolute new mouse position.
             int newX = Math.round(pointer.getX() + getDelta(-distanceX));
             int newY = Math.round(pointer.getY() + getDelta(-distanceY));

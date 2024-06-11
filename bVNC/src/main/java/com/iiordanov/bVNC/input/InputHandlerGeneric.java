@@ -484,6 +484,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 pointer.middleButtonDown(getX(e), getY(e), meta);
                             }
 
+                            // do not enlarge if the cursor moved away
                             if (Math.abs(totalDragX) > 50 || Math.abs(totalDragY) > 50) {
                                 canEnlarge = false;
                             }
