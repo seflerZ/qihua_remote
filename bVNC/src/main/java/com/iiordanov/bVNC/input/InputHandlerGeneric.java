@@ -26,6 +26,7 @@ import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.widget.Toast;
 
 import androidx.core.view.InputDeviceCompat;
 
@@ -460,7 +461,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
                         immerInitY = dragY;
 
-                        activity.hideKeyboardAndExtraKeys();
+//                        activity.hideKeyboardAndExtraKeys();
 
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
                         detectImmersiveSwipe(dragX);
@@ -532,18 +533,24 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     case MotionEvent.ACTION_UP:
                         if (!inScaling && thirdPointerWasDown) {
                             // the three pointer gestures
-                            if ((e.getY(index) - gestureY) > 150 && Math.abs(e.getX(index) - gestureX) < 100) {
+                            if ((e.getY(index) - gestureY) > 130 && Math.abs(e.getX(index) - gestureX) < 100) {
                                 canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
-                            } else if ((e.getX(index) - gestureX) < -150 && Math.abs(e.getY(index) - gestureY) < 100) {
+
+                                Toast.makeText(pointer.context, "手势：关闭标签", Toast.LENGTH_SHORT).show();
+                            } else if ((e.getX(index) - gestureX) < -130 && Math.abs(e.getY(index) - gestureY) < 100) {
                                 canvas.getKeyboard().onScreenAltOn();
 
                                 canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
                                 canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
 
                                 canvas.getKeyboard().onScreenAltOff();
+
+                                Toast.makeText(pointer.context, "手势：返回", Toast.LENGTH_SHORT).show();
                             }
-                            else if ((e.getX(index) - gestureX) > 150 && Math.abs(e.getY(index) - gestureY) < 100) {
+                            else if ((e.getX(index) - gestureX) > 130 && Math.abs(e.getY(index) - gestureY) < 100) {
                                 canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
+
+                                Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
                             } else if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
                                 activity.toggleKeyboard(null);
                             }
