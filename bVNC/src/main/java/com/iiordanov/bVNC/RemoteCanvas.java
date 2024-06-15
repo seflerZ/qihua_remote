@@ -1638,8 +1638,8 @@ public class RemoteCanvas extends AppCompatImageView
             float shiftedX = x - shiftX;
             float shiftedY = y - shiftY;
             // Make the box slightly larger to avoid artifacts due to truncation errors.
-            postInvalidate((int) ((shiftedX - 1) * scale), (int) ((shiftedY - 1) * scale),
-                    (int) ((shiftedX + w + 1) * scale), (int) ((shiftedY + h + 1) * scale));
+            postInvalidate((int) ((shiftedX - 5) * scale), (int) ((shiftedY - 5) * scale),
+                    (int) ((shiftedX + w + 5) * scale), (int) ((shiftedY + h + 5) * scale));
             lastDraw = timeNow;
         } else {
             handler.removeCallbacks(invalidateCanvasRunnable);
@@ -1658,8 +1658,8 @@ public class RemoteCanvas extends AppCompatImageView
             float shiftedX = x - shiftX;
             float shiftedY = y - shiftY;
             // Make the box slightly larger to avoid artifacts due to truncation errors.
-            postInvalidate((int) ((shiftedX - 1.f) * scale), (int) ((shiftedY - 1.f) * scale),
-                    (int) ((shiftedX + w + 1.f) * scale), (int) ((shiftedY + h + 1.f) * scale));
+            postInvalidate((int) ((shiftedX - 5.f) * scale), (int) ((shiftedY - 5.f) * scale),
+                    (int) ((shiftedX + w + 5.f) * scale), (int) ((shiftedY + h + 5.f) * scale));
             lastDraw = timeNow;
         } else {
             handler.removeCallbacks(invalidateCanvasRunnable);
@@ -1702,7 +1702,7 @@ public class RemoteCanvas extends AppCompatImageView
     public void invalidateMousePosition() {
         if (myDrawable != null) {
             // add little offset for the cursor image
-            myDrawable.moveCursorRect(pointer.getX() - 6, pointer.getY() - 2);
+            myDrawable.moveCursorRect(pointer.getX(), pointer.getY());
             RectF r = myDrawable.getCursorRect();
             reDraw(r.left, r.top, r.width(), r.height());
         }
