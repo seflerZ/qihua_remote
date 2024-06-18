@@ -36,6 +36,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.iiordanov.bVNC.Constants;
+import com.iiordanov.bVNC.NewConnection;
 import com.iiordanov.bVNC.Utils;
 import com.undatech.remoteClientUi.R;
 
@@ -69,6 +70,11 @@ public class LabeledImageApapter extends BaseAdapter {
                 }
             }
         }
+
+        // add the last one to connect
+        this.filteredConnectionsByPosition.add(new NewConnection());
+
+
         doNotShowDesktopThumbnails = Utils.querySharedPreferenceBoolean(context, Constants.doNotShowDesktopThumbnails);
     }
 
@@ -124,8 +130,13 @@ public class LabeledImageApapter extends BaseAdapter {
                 imageView.setImageBitmap(gridImage);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             } else {
-                imageView.setImageResource(R.drawable.ic_screen_black_48dp);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                if (c.getId().equals("NC")) {
+                    imageView.setImageResource(R.drawable.ic_add_connection_48);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER);
+                } else {
+                    imageView.setImageResource(R.drawable.icons8_rdp_connection);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER);
+                }
             }
         }
         gridView.setLayoutParams(lp);

@@ -176,13 +176,13 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         }
         FileUtils.logFilesInPrivateStorage(this);
         FileUtils.deletePrivateFileIfExisting(this, ".config/freerdp/licenses");
-        addNewConnection = findViewById(R.id.addNewConnection);
-        addNewConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewConnection();
-            }
-        });
+//        addNewConnection = findViewById(R.id.addNewConnection);
+//        addNewConnection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addNewConnection();
+//            }
+//        });
 
         editDefaultSettings = findViewById(R.id.actionEditDefaultSettings);
         editDefaultSettings.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +217,13 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
 
         isConnecting = true;
         String runtimeId = (String) ((TextView) v.findViewById(R.id.grid_item_id)).getText();
+
+        // Treat connection with id "$NC" as add new connection button
+        if (runtimeId.equals("$NC")) {
+            addNewConnection();
+            return;
+        }
+
         Intent intent = new Intent(ConnectionGridActivity.this, GeneralUtils.getClassByName("com.iiordanov.bVNC.RemoteCanvasActivity"));
         ConnectionLoader connectionLoader = getConnectionLoader(this);
         if (Utils.isOpaque(this)) {
@@ -228,7 +235,6 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             intent.putExtra(Utils.getConnectionString(appContext), conn.Gen_getValues());
         }
         startActivity(intent);
-
     }
 
     private void editConnection(View v) {

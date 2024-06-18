@@ -13,22 +13,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/addNewConnection"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_weight="0.10"
-            android:contentDescription="@string/action_new_connection"
-            android:title="@string/action_new_connection"
-            app:srcCompat="@drawable/ic_add_connection_48" />
+<!--        <androidx.appcompat.widget.AppCompatImageButton-->
+<!--            android:id="@+id/addNewConnection"-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:layout_weight="0.10"-->
+<!--            android:contentDescription="@string/action_new_connection"-->
+<!--            android:title="@string/action_new_connection"-->
+<!--            app:srcCompat="@drawable/ic_action_new" />-->
 
         <EditText
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="0.90"
             android:hint="@string/search_connections"
             android:paddingBottom="10dp"
@@ -36,12 +36,12 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/actionEditDefaultSettings"
-            android:layout_width="10dp"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="40dp"
-            android:layout_weight="0.10"
-            app:srcCompat="@android:drawable/ic_menu_manage"
-            android:title="@string/action_edit_default_settings" />
+            android:layout_marginEnd="5dp"
+            android:title="@string/action_edit_default_settings"
+            app:srcCompat="@drawable/icon_menu_settings" />
     </LinearLayout>
 
     <GridView
@@ -50,5 +50,6 @@
         android:layout_height="fill_parent"
         android:gravity="top|center"
         android:numColumns="3"
-        android:stretchMode="columnWidth"></GridView>
+        android:stretchMode="columnWidth">
+    </GridView>
 </LinearLayout>

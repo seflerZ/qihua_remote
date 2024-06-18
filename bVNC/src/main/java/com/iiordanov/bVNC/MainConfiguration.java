@@ -177,7 +177,7 @@ public abstract class MainConfiguration extends FragmentActivity {
             public void onItemSelected(AdapterView<?> ad, View view, int itemIndex, long id) {
                 selectedConnType = itemIndex;
                 selected.setConnectionType(selectedConnType);
-                selected.save(MainConfiguration.this);
+//                selected.save(MainConfiguration.this);
                 if (selectedConnType == Constants.CONN_TYPE_PLAIN) {
                     setVisibilityOfSshWidgets(View.GONE);
                 } else if (selectedConnType == Constants.CONN_TYPE_SSH) {

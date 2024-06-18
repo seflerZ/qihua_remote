@@ -534,11 +534,11 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
     public void saveAndWriteRecent(boolean saveEmpty, Context c) {
         android.util.Log.d(TAG, "saveAndWriteRecent called");
         Database database = new Database(c);
-        if ((getConnectionType() == Constants.CONN_TYPE_SSH && getSshServer().equals("")
-                || getAddress().equals("")) && !saveEmpty) {
+        if ((getAddress().split(":")[0].equals("")) && !saveEmpty) {
             android.util.Log.d(TAG, "saveAndWriteRecent not saving due to missing data");
         } else {
             android.util.Log.d(TAG, "saveAndWriteRecent saving connection");
+
             saveAndWriteRecent(database);
             saveToSharedPreferences(c);
         }
