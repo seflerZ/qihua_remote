@@ -1295,7 +1295,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Make sure extra keys stow item is gone if extra keys are disabled and vice versa.
-        setKeyStowDrawableAndVisibility(menu.findItem(R.id.extraKeysToggle));
+//        setKeyStowDrawableAndVisibility(menu.findItem(R.id.extraKeysToggle));
         return true;
     }
 
@@ -1714,7 +1714,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         canvas.requestFocus();
         Utils.showKeyboard(this, canvas);
         softKeyboardUp = true;
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     public void hideKeyboard() {

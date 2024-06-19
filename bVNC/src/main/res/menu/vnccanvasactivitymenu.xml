@@ -6,12 +6,12 @@
         app:actionViewClass="android.widget.ImageButton"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/extraKeysToggle"
-        android:icon="@drawable/showkeys"
-        android:onClick="extraKeysToggle"
-        android:padding="0dp"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/extraKeysToggle"-->
+<!--        android:icon="@drawable/showkeys"-->
+<!--        android:onClick="extraKeysToggle"-->
+<!--        android:padding="0dp"-->
+<!--        app:showAsAction="always" />-->
 
     <item
         android:id="@+id/actionShowKeyboard"

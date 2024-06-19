@@ -1497,20 +1497,23 @@ public class RemoteCanvas extends AppCompatImageView
         // bWidth = black border width
         int bWidth = (int) ((getWidth() - iw * getMinimumScale()) / 2);
 
+        // This is definitely 0 because we have the image top aligned
+        int bHeight = 0;
+
         // newX and newY are in screen's resolution
         int newX = absoluteXPosition;
         int newY = absoluteYPosition;
 
-        if (x + bWidth > w + absoluteXPosition - wthresh) {
-            newX += ((x + bWidth) - (w + absoluteXPosition - wthresh));
+        if ((x + bWidth > w + absoluteXPosition - wthresh) && (absoluteXPosition + w < bWidth + iw)) {
+            newX += (x - (w + absoluteXPosition - wthresh - bWidth));
 
             // left padding x + image_width visible is larger than left black border + image_width
             // which means the right side has been reached, no more space to do right panning now
             if (newX + w > iw + bWidth) {
                 newX = iw - w + bWidth;
             }
-        } else if (x + bWidth < absoluteXPosition + wthresh) {
-            newX += ((x + bWidth) - (absoluteXPosition + wthresh));
+        } else if ((x + bWidth < absoluteXPosition + wthresh) && (x > 0)) {
+            newX += (x - (absoluteXPosition + wthresh - bWidth));
             if (newX < bWidth)
                 newX = bWidth;
         }
@@ -1520,14 +1523,15 @@ public class RemoteCanvas extends AppCompatImageView
             panned = true;
         }
 
-        if (y > h + absoluteYPosition - hthresh) {
-            newY += ((y) - (h + absoluteYPosition - hthresh));
-            if (newY + h > ih)
-                newY = ih - h;
-        } else if (y < absoluteYPosition + hthresh) {
-            newY += ((y) - (absoluteYPosition + hthresh));
-            if (newY < 0)
-                newY = 0;
+        // do not pan when there is space left on the screen
+        if ((y + bHeight > h + absoluteYPosition - hthresh) && (absoluteYPosition + h < bHeight + ih)) {
+            newY += ((y) - (h + absoluteYPosition - hthresh) - bHeight);
+            if (newY + h > ih + bHeight)
+                newY = ih + bHeight - h;
+        } else if ((y + bHeight < absoluteYPosition + hthresh) && y > 0) {
+            newY += (y - (absoluteYPosition + hthresh - bHeight));
+            if (newY < bHeight)
+                newY = bHeight;
         }
 
         if (panY && newY != absoluteYPosition) {
