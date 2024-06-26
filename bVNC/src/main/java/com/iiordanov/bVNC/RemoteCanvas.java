@@ -1706,9 +1706,9 @@ public class RemoteCanvas extends AppCompatImageView
     public void invalidateMousePosition() {
         if (myDrawable != null) {
             // add little offset for the cursor image
-            myDrawable.moveCursorRect(pointer.getX(), pointer.getY());
+            myDrawable.moveCursorRect(pointer.getX() - pointer.getHotspotX(), pointer.getY() - pointer.getHotspotY());
             RectF r = myDrawable.getCursorRect();
-            reDraw(r.left, r.top, r.width(), r.height());
+            reDraw(r.left , r.top , r.width(), r.height());
         }
     }
 
@@ -1761,9 +1761,12 @@ public class RemoteCanvas extends AppCompatImageView
     void initializeSoftCursor() {
     }
 
-    public void setSoftCursorPixels(int[] pixels, int width, int height) {
-        myDrawable.setCursorRect(pointer.getX(), pointer.getY(), width, height, 0, 0);
+    public void setSoftCursorPixels(int[] pixels, int width, int height, int xPos, int yPos) {
+        myDrawable.setCursorRect(pointer.getX() - xPos, pointer.getY() - yPos, width, height, 0, 0);
         myDrawable.setSoftCursor(pixels);
+
+        pointer.setHotspotX(xPos);
+        pointer.setHotspotY(yPos);
     }
 
     @Override

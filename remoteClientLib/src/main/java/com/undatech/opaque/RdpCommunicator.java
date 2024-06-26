@@ -410,7 +410,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
     }
 
     @Override
-    public void OnPointerNew(byte[] pdata, int width, int height) {
+    public void OnPointerNew(byte[] pdata, int width, int height, int xPos, int yPos) {
         // Reconstruct bitmap headers
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         int offset = 0;
@@ -432,12 +432,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
 
         int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        viewable.setSoftCursorPixels(pixels, width, height);
-    }
-
-    @Override
-    public void OnPointerUpdate(byte[] pdata, int width, int height) {
-        OnPointerNew(pdata, width, height);
+        viewable.setSoftCursorPixels(pixels, width, height, xPos, yPos);
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface Viewable {
 
     void setMousePointerPosition(int x, int y);
 
-    void setSoftCursorPixels(int[] pixels, int width, int height);
+    void setSoftCursorPixels(int[] pixels, int width, int height, int xPos, int yPos);
 
     void mouseMode(boolean relative);
 

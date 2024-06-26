@@ -30,6 +30,7 @@ public abstract class RemotePointer {
      * Indicates where the mouse pointer is located.
      */
     protected int pointerX, pointerY;
+    protected int hotspotX, hotspotY;
     protected boolean relativeEvents = false;
     protected float sensitivity = DEFAULT_SENSITIVITY;
     protected boolean accelerated = DEFAULT_ACCELERATED;
@@ -75,6 +76,22 @@ public abstract class RemotePointer {
 
     public void setY(int newY) {
         pointerY = newY;
+    }
+
+    public int getHotspotX() {
+        return hotspotX;
+    }
+
+    public void setHotspotX(int hotspotX) {
+        this.hotspotX = hotspotX;
+    }
+
+    public int getHotspotY() {
+        return hotspotY;
+    }
+
+    public void setHotspotY(int hotspotY) {
+        this.hotspotY = hotspotY;
     }
 
     /**
