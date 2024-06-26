@@ -625,6 +625,7 @@ build_freerdp() {
         # Patch the config
         sed -i -e 's/CMAKE_BUILD_TYPE=.*/CMAKE_BUILD_TYPE=Release/'\
                -e 's/WITH_JPEG=.*/WITH_JPEG=1/'\
+               -e 's/WITH_FFMPEG=.*/WITH_FFMPEG=1/'\
                -e 's/WITH_OPENH264=.*/WITH_OPENH264=1/'\
                -e 's/OPENH264_TAG=.*/OPENH264_TAG=v2.1.1/'\
                -e 's/OPENSSL_TAG=.*/OPENSSL_TAG=openssl-1.1.1w/'\
