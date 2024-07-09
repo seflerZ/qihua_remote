@@ -36,11 +36,12 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/actionEditDefaultSettings"
-            android:layout_width="40dp"
+            android:layout_width="25dp"
             android:layout_height="40dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="5dp"
-            app:srcCompat="@drawable/icon_menu_settings"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/i8_settings"
             android:title="@string/action_edit_default_settings" />
     </LinearLayout>
 
