@@ -389,6 +389,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
+                android:visibility="gone"
                 android:text="@string/prefer_sending_unicode"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -542,6 +543,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/local_device_tweaks"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -550,6 +552,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/dpad_as_arrows"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -558,6 +561,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rotate_dpad"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -566,6 +570,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/position_toolbar_last_used"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -606,6 +611,7 @@
                 android:id="@+id/versionAndCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -615,6 +621,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/copy_logcat"
+            android:visibility="gone"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 </ScrollView>
