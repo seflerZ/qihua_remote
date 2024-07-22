@@ -66,20 +66,20 @@ public class IntroTextDialog extends Dialog {
     }
 
     public static void showIntroTextIfNecessary(Activity context, Database database, boolean show) {
-        PackageInfo pi;
-        try {
-            String packageName = Utils.pName(context);
-            pi = context.getPackageManager().getPackageInfo(packageName, 0);
-        } catch (PackageManager.NameNotFoundException nnfe) {
-            return;
-        }
-        MostRecentBean mr = ConnectionBean.getMostRecent(database.getReadableDatabase());
-        database.close();
-
-        if (dialog == null && show && (mr == null || mr.getShowSplashVersion() != pi.versionCode)) {
-            dialog = new IntroTextDialog(context, pi, database);
-            dialog.show();
-        }
+//        PackageInfo pi;
+//        try {
+//            String packageName = Utils.pName(context);
+//            pi = context.getPackageManager().getPackageInfo(packageName, 0);
+//        } catch (PackageManager.NameNotFoundException nnfe) {
+//            return;
+//        }
+//        MostRecentBean mr = ConnectionBean.getMostRecent(database.getReadableDatabase());
+//        database.close();
+//
+//        if (dialog == null && show && (mr == null || mr.getShowSplashVersion() != pi.versionCode)) {
+//            dialog = new IntroTextDialog(context, pi, database);
+//            dialog.show();
+//        }
     }
 
     /* (non-Javadoc)
@@ -90,9 +90,9 @@ public class IntroTextDialog extends Dialog {
         super.onCreate(savedInstanceState);
 
         String pkgName = Utils.pName(this.getContext());
-        if (pkgName.contains("free")) {
-            donate = true;
-        }
+
+        // do not use original's donate text
+        donate = false;
 
         setContentView(R.layout.intro_dialog);
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
