@@ -98,10 +98,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 0.f;
+    float startSwipeDist = 2.f;
     float baseSwipeDist = 0.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
-    float immersiveSwipeDistance = 70.f;
+    float immersiveSwipeDistance = 60.f;
     boolean immersiveSwipe = false;
     // Some variables indicating what kind of a gesture we're currently in or just finished.
     boolean inScrolling = false;
@@ -546,8 +546,16 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 canvas.getKeyboard().onScreenAltOff();
 
                                 Toast.makeText(pointer.context, "手势：返回", Toast.LENGTH_SHORT).show();
-                            }
-                            else if ((e.getX(index) - gestureX) > 130 && Math.abs(e.getY(index) - gestureY) < 100) {
+                            } else if ((e.getX(index) - gestureX) > 130 && Math.abs(e.getY(index) - gestureY) < 100) {
+                                canvas.getKeyboard().onScreenAltOn();
+
+                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
+                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
+
+                                canvas.getKeyboard().onScreenAltOff();
+
+                                Toast.makeText(pointer.context, "手势：前进", Toast.LENGTH_SHORT).show();
+                            } else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
                                 canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
 
                                 Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
