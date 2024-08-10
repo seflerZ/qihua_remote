@@ -508,6 +508,11 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         return this.OnVerifiyCertificate(commonName, subject, issuer, fingerprint, true);
     }
 
+    private long timest = System.currentTimeMillis();
+    private int fps = 0;
+    private int max = 0;
+    private int avg = 0;
+
     @Override
     public void OnGraphicsUpdate(int x, int y, int width, int height) {
         //android.util.Log.v(TAG, "OnGraphicsUpdate called: " + x +", " + y + " + " + width + "x" + height );
