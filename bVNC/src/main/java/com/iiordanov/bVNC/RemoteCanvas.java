@@ -204,13 +204,7 @@ public class RemoteCanvas extends AppCompatImageView
             Utils.showErrorMessage(getContext(), String.valueOf(screenMessage));
         }
     };
-    Runnable invalidateCanvasRunnable = new Runnable() {
-        @Override
-        public void run() {
-            //Log.d(TAG, "invalidateCanvasRunnable");
-            postInvalidate();
-        }
-    };
+
     private RdpCommunicator rdpcomm = null;
     // Internal bitmap data
     private int capacity;
@@ -1636,17 +1630,15 @@ public class RemoteCanvas extends AppCompatImageView
      */
     public void reDraw(int x, int y, int w, int h) {
         //android.util.Log.i(TAG, "reDraw called: " + x +", " + y + " + " + w + "x" + h);
-        long timeNow = System.currentTimeMillis();
-        if (timeNow - lastDraw > 10) {
+        long cur = System.currentTimeMillis();
+        if (cur - lastDraw > 10) {
             float scale = getZoomFactor();
             float shiftedX = x - shiftX;
             float shiftedY = y - shiftY;
 
-            postInvalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
+            invalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
                     (int) ((shiftedX + w) * scale), (int) ((shiftedY + h) * scale));
             lastDraw = System.currentTimeMillis();
-        } else {
-            handler.removeCallbacks(invalidateCanvasRunnable);
         }
     }
 
@@ -1736,9 +1728,9 @@ public class RemoteCanvas extends AppCompatImageView
             // Move the cursor.
             myDrawable.moveCursorRect(x, y);
             // Show the cursor.
-            RectF r = myDrawable.getCursorRect();
-            reDraw(r.left, r.top, r.width(), r.height());
-            reDraw(prevR.left, prevR.top, prevR.width(), prevR.height());
+//            RectF r = myDrawable.getCursorRect();
+//            reDraw(r.left, r.top, r.width(), r.height());
+//            reDraw(prevR.left, prevR.top, prevR.width(), prevR.height());
         }
     }
 
