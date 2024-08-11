@@ -411,16 +411,16 @@
                     android:id="@+id/radioRemoteSoundOnServer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="remoteSoundTypeToggled"
                     android:text="@string/remote_sound_on_server"
+                    android:enabled="false"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <RadioButton
                     android:id="@+id/radioRemoteSoundOnDevice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="remoteSoundTypeToggled"
                     android:text="@string/remote_sound_on_device"
+                    android:enabled="false"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
             </RadioGroup>
 

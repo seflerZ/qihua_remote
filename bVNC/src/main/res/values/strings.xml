@@ -686,8 +686,8 @@ When you add or edit a connection, you will see a connection configuration page.
     <string name="rdp_username_hint">RDP Username</string>
 
     <string name="remote_sound_disabled">Sound Disabled</string>
-    <string name="remote_sound_on_device">Sound On Device</string>
-    <string name="remote_sound_on_server">Sound On Server</string>
+    <string name="remote_sound_on_device">Sound On Device(Pro versions only)</string>
+    <string name="remote_sound_on_server">Sound On Server(Pro versions only)</string>
 
     <string name="repeater_button">UltraVNC Repeater</string>
     <string name="repeater_caption">IMPORTANT: If using a UltraVNC repeater, enter its address and port outside this dialog. Here, enter the address and port of the actual VNC server. Separate the VNC server\'s address and port with a colon, e.g. 192.168.0.100:5900.</string>
