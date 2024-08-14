@@ -117,8 +117,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         SelectTextElementFragment.OnFragmentDismissedListener {
 
     public static final int[] inputModeIds = {R.id.itemInputTouchpad,
-            R.id.itemInputTouchPanZoomMouse,
-            R.id.itemInputDragPanZoomMouse,
+//            R.id.itemInputTouchPanZoomMouse,
+//            R.id.itemInputDragPanZoomMouse,
             R.id.itemInputSingleHanded};
     public static final Map<Integer, String> inputModeMap;
     private final static String TAG = "RemoteCanvasActivity";
@@ -128,8 +128,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     static {
         Map<Integer, String> temp = new HashMap<>();
         temp.put(R.id.itemInputTouchpad, InputHandlerTouchpad.ID);
-        temp.put(R.id.itemInputDragPanZoomMouse, InputHandlerDirectDragPan.ID);
-        temp.put(R.id.itemInputTouchPanZoomMouse, InputHandlerDirectSwipePan.ID);
+//        temp.put(R.id.itemInputDragPanZoomMouse, InputHandlerDirectDragPan.ID);
+//        temp.put(R.id.itemInputTouchPanZoomMouse, InputHandlerDirectSwipePan.ID);
         temp.put(R.id.itemInputSingleHanded, InputHandlerSingleHanded.ID);
         inputModeMap = Collections.unmodifiableMap(temp);
     }
@@ -1393,11 +1393,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         for (int i = 0; i < inputModeIds.length; ++i) {
             if (inputModeIds[i] == id) {
                 if (inputModeHandlers[i] == null) {
-                    if (id == R.id.itemInputTouchPanZoomMouse) {
-                        inputModeHandlers[i] = new InputHandlerDirectSwipePan(this, canvas, canvas.getPointer(), App.debugLog);
-                    } else if (id == R.id.itemInputDragPanZoomMouse) {
-                        inputModeHandlers[i] = new InputHandlerDirectDragPan(this, canvas, canvas.getPointer(), App.debugLog);
-                    } else if (id == R.id.itemInputTouchpad) {
+                    if (id == R.id.itemInputTouchpad) {
                         inputModeHandlers[i] = new InputHandlerTouchpad(this, canvas, canvas.getPointer(), App.debugLog);
                     } else if (id == R.id.itemInputSingleHanded) {
                         inputModeHandlers[i] = new InputHandlerSingleHanded(this, canvas, canvas.getPointer(), App.debugLog);
@@ -1431,7 +1427,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             }
         }
         if (result == null) {
-            result = getInputHandlerById(R.id.itemInputTouchPanZoomMouse);
+            result = getInputHandlerById(R.id.itemInputTouchpad);
         }
         return result;
     }
@@ -1441,7 +1437,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             if (handler == getInputHandlerById(id))
                 return id;
         }
-        return R.id.itemInputTouchPanZoomMouse;
+        return R.id.itemInputTouchpad;
     }
 
     @Override
