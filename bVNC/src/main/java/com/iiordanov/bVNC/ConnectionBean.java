@@ -28,6 +28,7 @@ import android.widget.ImageView.ScaleType;
 
 import com.antlersoft.android.dbimpl.NewInstance;
 import com.iiordanov.bVNC.input.InputHandlerDirectSwipePan;
+import com.iiordanov.bVNC.input.InputHandlerTouchpad;
 import com.undatech.opaque.Connection;
 import com.undatech.remoteClientUi.R;
 
@@ -63,7 +64,7 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
     private boolean showOnlyConnectionNicknames = false;
 
     public ConnectionBean(Context context) {
-        String inputMode = InputHandlerDirectSwipePan.ID;
+        String inputMode = InputHandlerTouchpad.ID;
         Boolean preferSendingUnicode = false;
 
         if (context == null) {
