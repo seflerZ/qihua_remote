@@ -2,8 +2,6 @@ package com.undatech.opaque;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,8 +20,6 @@ import com.undatech.opaque.util.GeneralUtils;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -510,8 +506,8 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
 
     private int lastCopyX = 0;
     private int lastCopyY = 0;
-    private int lastCopyWidth = 1;
-    private int lastCopyHeight = 1;
+    private int lastCopyRightX = 1;
+    private int lastCopyRightY = 1;
 
     @Override
     public void OnGraphicsUpdate(int x, int y, int width, int height) {
@@ -519,17 +515,23 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         if (viewable != null && session != null) {
             Bitmap bitmap = viewable.getBitmap();
             if (bitmap != null) {
+                // We need to clear the box of current frame and the last
+                int newX = Math.min(x, lastCopyX);
+                int newY = Math.min(y, lastCopyY);
+                int newWidth = Math.max(lastCopyRightX, x + width) - x;
+                int newHeight = Math.max(lastCopyRightY, y + height) - y;
+
                 LibFreeRDP.updateGraphics(session.getInstance(), bitmap
-                        , Math.min(x, lastCopyX)
-                        , Math.min(y,lastCopyY)
-                        , Math.max(width, lastCopyWidth)
-                        , Math.max(height, lastCopyHeight));
-                viewable.reDraw(x, y, width, height);
+                        , newX
+                        , newY
+                        , newWidth
+                        , newHeight);
+                viewable.reDraw(newX, newY, newWidth, newHeight);
 
                 lastCopyX = x;
                 lastCopyY = y;
-                lastCopyWidth = width;
-                lastCopyHeight = height;
+                lastCopyRightX = x + width;
+                lastCopyRightY = y + height;
             }
         }
     }
