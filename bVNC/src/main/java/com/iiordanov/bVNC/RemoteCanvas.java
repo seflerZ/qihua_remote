@@ -1636,7 +1636,7 @@ public class RemoteCanvas extends AppCompatImageView
             float shiftedX = x - shiftX;
             float shiftedY = y - shiftY;
 
-            invalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
+            postInvalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
                     (int) ((shiftedX + w) * scale), (int) ((shiftedY + h) * scale));
             lastDraw = System.currentTimeMillis();
         }
