@@ -1630,16 +1630,12 @@ public class RemoteCanvas extends AppCompatImageView
      */
     public void reDraw(int x, int y, int w, int h) {
         //android.util.Log.i(TAG, "reDraw called: " + x +", " + y + " + " + w + "x" + h);
-        long cur = System.currentTimeMillis();
-        if (cur - lastDraw > 13) {
-            float scale = getZoomFactor();
-            float shiftedX = x - shiftX;
-            float shiftedY = y - shiftY;
+        float scale = getZoomFactor();
+        float shiftedX = x - shiftX;
+        float shiftedY = y - shiftY;
 
-            postInvalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
-                    (int) ((shiftedX + w) * scale), (int) ((shiftedY + h) * scale));
-            lastDraw = System.currentTimeMillis();
-        }
+        postInvalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
+                (int) ((shiftedX + w) * scale), (int) ((shiftedY + h) * scale));
     }
 
     /**
