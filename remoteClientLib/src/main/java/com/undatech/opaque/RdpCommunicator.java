@@ -512,28 +512,22 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
     @Override
     public void OnGraphicsUpdate(int x, int y, int width, int height) {
         //android.util.Log.v(TAG, "OnGraphicsUpdate called: " + x +", " + y + " + " + width + "x" + height );
-        if (viewable != null && session != null) {
-            Bitmap bitmap = viewable.getBitmap();
-            if (bitmap != null) {
-                // We need to clear the box of current frame and the last
-                int newX = Math.min(x, lastCopyX);
-                int newY = Math.min(y, lastCopyY);
-                int newWidth = Math.max(lastCopyRightX, x + width) - x;
-                int newHeight = Math.max(lastCopyRightY, y + height) - y;
-
-                LibFreeRDP.updateGraphics(session.getInstance(), bitmap
-                        , newX
-                        , newY
-                        , newWidth
-                        , newHeight);
-                viewable.reDraw(newX, newY, newWidth, newHeight);
-
-                lastCopyX = x;
-                lastCopyY = y;
-                lastCopyRightX = x + width;
-                lastCopyRightY = y + height;
-            }
+        if (viewable == null || session == null) {
+            return;
         }
+
+        Bitmap bitmap = viewable.getBitmap();
+        if (bitmap == null) {
+            return;
+        }
+
+        LibFreeRDP.updateGraphics(session.getInstance(), bitmap
+                , x
+                , y
+                , width
+                , height);
+
+        viewable.reDraw(x, y, width, height);
     }
 
     @Override

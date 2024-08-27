@@ -427,13 +427,13 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 return true;
         }
 
-        if (action == MotionEvent.ACTION_UP) {
+//        if (action == MotionEvent.ACTION_UP) {
             // Turn filtering back on and invalidate to make things pretty.
-            canvas.myDrawable.paint.setFilterBitmap(true);
-            canvas.invalidate();
-        }
+//            canvas.myDrawable.paint.setFilterBitmap(true);
+//            canvas.invalidate();
+//        }
 
-        int endX, endY = 0;
+//        int endX, endY = 0;
 
         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: pointerID: " + pointerID);
         switch (pointerID) {
