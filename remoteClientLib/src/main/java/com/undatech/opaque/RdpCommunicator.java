@@ -521,6 +521,11 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             return;
         }
 
+        x = Math.max(0, x);
+        y = Math.max(0, y);
+        width = Math.min(width, viewable.getDesiredWidth());
+        height = Math.min(height, viewable.getDesiredHeight());
+
         LibFreeRDP.updateGraphics(session.getInstance(), bitmap
                 , x
                 , y

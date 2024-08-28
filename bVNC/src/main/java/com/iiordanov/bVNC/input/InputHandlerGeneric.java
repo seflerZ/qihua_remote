@@ -414,18 +414,19 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         final int pointerID = e.getPointerId(index);
         final int meta = e.getMetaState();
 
-        float f = e.getPressure();
-        if (f > 2.f)
-            f = f / 50.f;
-        if (f > .92f) {
-            disregardNextOnFling = true;
-        }
+//        float f = e.getPressure();
+//        if (f > 2.f)
+//            f = f / 50.f;
+//        if (f > .92f) {
+//            disregardNextOnFling = true;
+//        }
 
-        if (android.os.Build.VERSION.SDK_INT >= 14) {
+//        if (android.os.Build.VERSION.SDK_INT >= 14) {
             // Handle and consume actions performed by a (e.g. USB or bluetooth) mouse.
-            if (handleMouseActions(e))
-                return true;
+        if (handleMouseActions(e)) {
+            return true;
         }
+//        }
 
 //        if (action == MotionEvent.ACTION_UP) {
             // Turn filtering back on and invalidate to make things pretty.
