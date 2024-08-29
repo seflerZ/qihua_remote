@@ -1629,6 +1629,10 @@ public class RemoteCanvas extends AppCompatImageView
      * Causes a redraw of the myDrawable to happen at the indicated coordinates.
      */
     public void reDraw(int x, int y, int w, int h) {
+        if (System.currentTimeMillis() - lastDraw < 5) {
+            return;
+        }
+
         //android.util.Log.i(TAG, "reDraw called: " + x +", " + y + " + " + w + "x" + h);
         float scale = getZoomFactor();
         float shiftedX = x - shiftX;
@@ -1636,6 +1640,8 @@ public class RemoteCanvas extends AppCompatImageView
 
         postInvalidate((int) ((shiftedX) * scale), (int) ((shiftedY) * scale),
                 (int) ((shiftedX + w) * scale), (int) ((shiftedY + h) * scale));
+
+        lastDraw = System.currentTimeMillis();
     }
 
     /**

@@ -504,10 +504,10 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         return this.OnVerifiyCertificate(commonName, subject, issuer, fingerprint, true);
     }
 
-    private int lastCopyX = 0;
-    private int lastCopyY = 0;
-    private int lastCopyRightX = 1;
-    private int lastCopyRightY = 1;
+    private long max = 0;
+    private long cur = 0;
+    private long avg = 0;
+    private long lastRefTime = 0;
 
     @Override
     public void OnGraphicsUpdate(int x, int y, int width, int height) {
@@ -521,18 +521,26 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             return;
         }
 
-        x = Math.max(0, x);
-        y = Math.max(0, y);
-        width = Math.min(width, viewable.getDesiredWidth());
-        height = Math.min(height, viewable.getDesiredHeight());
-
         LibFreeRDP.updateGraphics(session.getInstance(), bitmap
                 , x
                 , y
                 , width
                 , height);
-
+//
         viewable.reDraw(x, y, width, height);
+
+//        if (System.currentTimeMillis() - lastRefTime > 1000) {
+//            avg = (avg + cur) / 2;
+//            if (cur > max) {
+//                max = cur;
+//            }
+//
+//            cur = 0;
+//
+//            lastRefTime = System.currentTimeMillis();
+//        }
+//
+//        cur += 1;
     }
 
     @Override
