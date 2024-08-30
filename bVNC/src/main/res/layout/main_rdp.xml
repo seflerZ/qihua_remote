@@ -411,16 +411,16 @@
                     android:id="@+id/radioRemoteSoundOnServer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="remoteSoundTypeToggled"
                     android:text="@string/remote_sound_on_server"
+                    android:enabled="false"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioButton
                     android:id="@+id/radioRemoteSoundOnDevice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="remoteSoundTypeToggled"
                     android:text="@string/remote_sound_on_device"
+                    android:enabled="false"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </RadioGroup>
 
@@ -439,6 +439,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/rdp_adv_console_mode"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
@@ -577,12 +578,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cursor_mode"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <RadioGroup
                 android:id="@+id/radioCursor"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <RadioButton

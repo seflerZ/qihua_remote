@@ -241,8 +241,8 @@
     <string name="delete_key_list">删除密钥列表</string>
     <string name="disconnect">切断</string>
     <string name="dpad_as_arrows">将D-Pad用于箭头键，将D-Pad单击用于Ctrl。</string>
-    <string name="enable_recording">使录像有效</string>
-    <string name="enable_sound">使声音有效</string>
+    <string name="enable_recording">摄像头重定向</string>
+    <string name="enable_sound">声音重定向</string>
     <string name="enter_text">发送文字</string>
     <string name="enter_text_title">输入发送用文字</string>
     <string name="error_anon_dh_unsupported">VNC服务器正在尝试使用匿名Diffie Hellman密码，但您的Android设备不支持的。如果使用GNOME的Vino VNC服务器，就可以通过在终端中运行以下命令然后重新启动来禁用AnonTLS：\" gsettings set org.gnome.Vino require-encryption false \"。如果运行x11vnc，就可以添加以下选项：\"-vencrypt nodh：only -ssl \"。</string>
