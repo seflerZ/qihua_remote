@@ -414,6 +414,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         final int pointerID = e.getPointerId(index);
         final int meta = e.getMetaState();
 
+        if (scalingGestureDetector.onTouchEvent(e) || inScaling) {
+            return true;
+        }
+
 //        float f = e.getPressure();
 //        if (f > 2.f)
 //            f = f / 50.f;
@@ -502,9 +506,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             pointer.moveMouseButtonDown(getX(e), getY(e), meta);
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
-                            break;
+
+                            return true;
                         }
                 }
+
                 break;
             case 1:
                 switch (action) {
@@ -590,23 +596,20 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 }
             }
 
-            if (pointerID == 0) {
-                singleHandedGesture = false;
-                singleHandedJustEnded = true;
-
-                // If this is the end of a swipe that showed the nav bar, consume.
-                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
-                    endDragModesAndScrolling();
-                    return true;
-                }
-            }
+//            if (pointerID == 0) {
+//                singleHandedGesture = false;
+//                singleHandedJustEnded = true;
+//
+//                // If this is the end of a swipe that showed the nav bar, consume.
+//                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
+//                    endDragModesAndScrolling();
+//                    return true;
+//                }
+//            }
         }
 
-        if (!scalingGestureDetector.onTouchEvent(e) && !inScaling) {
-            gestureDetector.onTouchEvent(e);
-        }
 
-        return true;
+        return gestureDetector.onTouchEvent(e);
     }
 
     /*
@@ -755,6 +758,4 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         sendScrollEvents(getX(e1), getY(e1), -1, meta);
         return true;
     }
-
-    private Thread inertialThread;
 }
