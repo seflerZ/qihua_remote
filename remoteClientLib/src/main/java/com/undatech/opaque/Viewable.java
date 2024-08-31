@@ -19,6 +19,8 @@ public interface Viewable {
 
     void setSoftCursorPixels(int[] pixels, int width, int height, int xPos, int yPos);
 
+    void setSoftCursorBitmap(Bitmap bitmap, int width, int height, int xPos, int yPos);
+
     void mouseMode(boolean relative);
 
     boolean isAbleToPan();

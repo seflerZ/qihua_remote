@@ -94,6 +94,13 @@ public class AbstractBitmapDrawable extends DrawableContainer {
         oldSoftCursor.recycle();
     }
 
+    void setSoftCursor(Bitmap bitmap) {
+        Bitmap oldSoftCursor = softCursor;
+        softCursor = bitmap;
+        softCursorInit = true;
+        oldSoftCursor.recycle();
+    }
+
     /* (non-Javadoc)
      * @see android.graphics.drawable.DrawableContainer#getIntrinsicHeight()
      */
