@@ -79,6 +79,11 @@ abstract public class AbstractBitmapData {
             drawable.setSoftCursor(newSoftCursorPixels);
     }
 
+    void setSoftCursor(Bitmap bitmap) {
+        if (drawable != null)
+            drawable.setSoftCursor(bitmap);
+    }
+
     RectF getCursorRect() {
         if (drawable != null)
             return drawable.cursorRect;

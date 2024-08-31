@@ -1750,6 +1750,14 @@ public class RemoteCanvas extends AppCompatImageView
         pointer.setHotspotY(yPos);
     }
 
+    public void setSoftCursorBitmap(Bitmap bitmap, int width, int height, int xPos, int yPos) {
+        myDrawable.setCursorRect(pointer.getX() - xPos, pointer.getY() - yPos, width, height, 0, 0);
+        myDrawable.setSoftCursor(bitmap);
+
+        pointer.setHotspotX(xPos);
+        pointer.setHotspotY(yPos);
+    }
+
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         android.util.Log.d(TAG, "onCreateInputConnection called");

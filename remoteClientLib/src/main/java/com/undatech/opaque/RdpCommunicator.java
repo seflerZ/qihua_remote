@@ -429,9 +429,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             }
         }
 
-        int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        viewable.setSoftCursorPixels(pixels, width, height, xPos, yPos);
+        viewable.setSoftCursorBitmap(bitmap, width, height, xPos, yPos);
     }
 
     @Override
