@@ -533,37 +533,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
                         if (!inScaling && thirdPointerWasDown) {
-                            // the three pointer gestures
-                            if ((e.getY(index) - gestureY) > 130 && Math.abs(e.getX(index) - gestureX) < 100) {
-                                canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
-
-                                Toast.makeText(pointer.context, "手势：关闭标签", Toast.LENGTH_SHORT).show();
-                            } else if ((e.getX(index) - gestureX) < -130 && Math.abs(e.getY(index) - gestureY) < 100) {
-                                canvas.getKeyboard().onScreenAltOn();
-
-                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
-                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
-
-                                canvas.getKeyboard().onScreenAltOff();
-
-                                Toast.makeText(pointer.context, "手势：返回", Toast.LENGTH_SHORT).show();
-                            } else if ((e.getX(index) - gestureX) > 130 && Math.abs(e.getY(index) - gestureY) < 100) {
-                                canvas.getKeyboard().onScreenAltOn();
-
-                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
-                                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
-
-                                canvas.getKeyboard().onScreenAltOff();
-
-                                Toast.makeText(pointer.context, "手势：前进", Toast.LENGTH_SHORT).show();
-                            } else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
-                                canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
-
-                                Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
-                            } else if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
-                                activity.toggleKeyboard(null);
-                            }
-
                             thirdPointerWasDown = false;
                         }
                         break;
