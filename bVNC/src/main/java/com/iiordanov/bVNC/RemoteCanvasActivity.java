@@ -1117,7 +1117,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         super.onResume();
         Log.i(TAG, "onResume called.");
         try {
-            canvas.postInvalidateDelayed(1000);
+            canvas.postInvalidateDelayed(2500);
         } catch (NullPointerException e) {
         }
     }
