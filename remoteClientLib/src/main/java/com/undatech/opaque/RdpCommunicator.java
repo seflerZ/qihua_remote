@@ -386,10 +386,6 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         } else if (!disconnectRequested && !myself.isInNormalProtocol()) {
             Log.v(TAG, "Sending message: RDP_UNABLE_TO_CONNECT");
             handler.sendEmptyMessage(RemoteClientLibConstants.RDP_UNABLE_TO_CONNECT);
-        } else if (!disconnectRequested) {
-            myself.setIsInNormalProtocol(false);
-            Log.v(TAG, "Sending message: RDP_CONNECT_FAILURE");
-            handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
         }
     }
 
@@ -401,7 +397,14 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             handler.sendEmptyMessage(RemoteClientLibConstants.RDP_UNABLE_TO_CONNECT);
         } else {
             Log.v(TAG, "Sending message: RDP_CONNECT_FAILURE");
-            handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
+            // Auto reconnect first
+            try {
+                initSession(username, domain, password);
+                connect();
+            } catch (Exception e) {
+                // resume failed, display error message
+                handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
+            }
         }
     }
 
@@ -504,11 +507,6 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         return this.OnVerifiyCertificate(commonName, subject, issuer, fingerprint, true);
     }
 
-    private long max = 0;
-    private long cur = 0;
-    private long avg = 0;
-    private long lastRefTime = 0;
-
     @Override
     public void OnGraphicsUpdate(int x, int y, int width, int height) {
         //android.util.Log.v(TAG, "OnGraphicsUpdate called: " + x +", " + y + " + " + width + "x" + height );
@@ -526,21 +524,8 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
                 , y
                 , width
                 , height);
-//
-        viewable.reDraw(x, y, width, height);
 
-//        if (System.currentTimeMillis() - lastRefTime > 1000) {
-//            avg = (avg + cur) / 2;
-//            if (cur > max) {
-//                max = cur;
-//            }
-//
-//            cur = 0;
-//
-//            lastRefTime = System.currentTimeMillis();
-//        }
-//
-//        cur += 1;
+        viewable.reDraw(x, y, width, height);
     }
 
     @Override
