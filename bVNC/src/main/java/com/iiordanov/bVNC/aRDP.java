@@ -292,12 +292,8 @@ public class aRDP extends MainConfiguration {
      */
     public void toggleEnableRecording(View view) {
         CheckBox b = (CheckBox) view;
-        if (Utils.isFree(this)) {
-            IntroTextDialog.showIntroTextIfNecessary(this, database, true);
-            b.setChecked(false);
-        } else {
-            PermissionsManager.requestPermissions(this, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
-        }
+        PermissionsManager.requestPermissions(this, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
+
         selected.setEnableRecording(b.isChecked());
     }
 

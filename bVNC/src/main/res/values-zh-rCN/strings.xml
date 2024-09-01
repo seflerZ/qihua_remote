@@ -241,7 +241,8 @@
     <string name="delete_key_list">删除密钥列表</string>
     <string name="disconnect">切断</string>
     <string name="dpad_as_arrows">将D-Pad用于箭头键，将D-Pad单击用于Ctrl。</string>
-    <string name="enable_recording">摄像头重定向</string>
+    <string name="enable_recording">启用音频录制</string>
+    <string name="enable_gesture">启用手势（仅限专业版）</string>
     <string name="enable_sound">声音重定向</string>
     <string name="enter_text">发送文字</string>
     <string name="enter_text_title">输入发送用文字</string>
@@ -538,9 +539,9 @@ bVNC对应的功能如下：
     <string name="rdp_geom_native_portrait">源设备纵向</string>
     <string name="rdp_geom_full_hd">1080p</string>
     <string-array name="rdp_geometry">
+        <item>@string/rdp_geom_full_hd</item>
         <item>@string/rdp_geom_native_landscape</item>
         <item>@string/rdp_geom_native_portrait</item>
-        <item>@string/rdp_geom_full_hd</item>
         <item>@string/rdp_geom_custom</item>
     </string-array>
     <string-array name="vnc_geometry">
