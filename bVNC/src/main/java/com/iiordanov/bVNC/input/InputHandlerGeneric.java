@@ -594,20 +594,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     canvas.canvasZoomer.changeZoom(activity, lastZoomFactor / canvas.getZoomFactor(), pointer.getX(), pointer.getY());
                     dragHelped = false;
                 }
+
+                gestureDetector.cancel();
+                return true;
             }
-
-//            if (pointerID == 0) {
-//                singleHandedGesture = false;
-//                singleHandedJustEnded = true;
-//
-//                // If this is the end of a swipe that showed the nav bar, consume.
-//                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
-//                    endDragModesAndScrolling();
-//                    return true;
-//                }
-//            }
         }
-
 
         return gestureDetector.onTouchEvent(e);
     }

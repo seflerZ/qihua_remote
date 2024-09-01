@@ -384,7 +384,7 @@ public class MyGestureDectector
         return handled;
     }
 
-    private void cancel()
+    public void cancel()
     {
         mHandler.removeMessages(SHOW_PRESS);
         mHandler.removeMessages(LONG_PRESS);
