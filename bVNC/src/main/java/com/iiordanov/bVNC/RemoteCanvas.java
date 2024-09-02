@@ -1182,7 +1182,7 @@ public class RemoteCanvas extends AppCompatImageView
         }
 
         if (!isVnc) {
-            myDrawable = new UltraCompactBitmapData(rfbconn, this, isSpice | isOpaque);
+            myDrawable = new UltraCompactBitmapData(rfbconn, this, isSpice | isOpaque | isRdp);
             android.util.Log.i(TAG, "Using UltraCompactBufferBitmapData.");
         } else if (!useFull) {
             myDrawable = new LargeBitmapData(rfbconn, this, dx, dy, capacity);
