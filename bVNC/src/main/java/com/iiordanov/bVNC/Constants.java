@@ -138,11 +138,11 @@ public class Constants {
     public final static String MV_DMRC_BACK = " ; [ -O ${HOME}/.dmrc.$$ ] && mv ${HOME}/.dmrc.$$ ${HOME}/.dmrc";
     public final static int AUTOX_GEOM_SELECT_NATIVE = 0;
     public final static int AUTOX_GEOM_SELECT_CUSTOM = 1;
-    public final static int RDP_GEOM_SELECT_NATIVE_LANDSCAPE = 0;
-    public final static int RDP_GEOM_SELECT_NATIVE_PORTRAIT = 1;
+    public final static int RDP_GEOM_SELECT_NATIVE_LANDSCAPE = 1;
+    public final static int RDP_GEOM_SELECT_NATIVE_PORTRAIT = 2;
     public final static int RDP_GEOM_SELECT_CUSTOM = 3;
     public final static int RDP_GEOM_SELECT_AUTO = 3;
-    public final static int RDP_GEOM_FULL_HD = 2;
+    public final static int RDP_GEOM_FULL_HD = 0;
     public final static int VNC_GEOM_SELECT_DISABLED = 0;
     public final static int VNC_GEOM_SELECT_AUTOMATIC = 1;
     public final static int VNC_GEOM_SELECT_NATIVE_LANDSCAPE = 2;
