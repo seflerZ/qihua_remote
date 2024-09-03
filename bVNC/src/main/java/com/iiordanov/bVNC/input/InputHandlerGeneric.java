@@ -307,12 +307,15 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
         GeneralUtils.debugLog(debugLogging, TAG, "onSingleTapConfirmed, e: " + e);
+        if (dragMode) {
+            return true;
+        }
 
         int metaState = e.getMetaState();
         pointer.leftButtonDown(getX(e), getY(e), metaState);
         SystemClock.sleep(50);
         pointer.releaseButton(getX(e), getY(e), metaState);
-        canvas.movePanToMakePointerVisible();
+//        canvas.movePanToMakePointerVisible();
         return true;
     }
 
@@ -418,27 +421,12 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             return true;
         }
 
-//        float f = e.getPressure();
-//        if (f > 2.f)
-//            f = f / 50.f;
-//        if (f > .92f) {
-//            disregardNextOnFling = true;
-//        }
-
 //        if (android.os.Build.VERSION.SDK_INT >= 14) {
-            // Handle and consume actions performed by a (e.g. USB or bluetooth) mouse.
+        // Handle and consume actions performed by a (e.g. USB or bluetooth) mouse.
         if (e.getDeviceId() > 15 && handleMouseActions(e)) {
             return true;
         }
 //        }
-
-//        if (action == MotionEvent.ACTION_UP) {
-            // Turn filtering back on and invalidate to make things pretty.
-//            canvas.myDrawable.paint.setFilterBitmap(true);
-//            canvas.invalidate();
-//        }
-
-//        int endX, endY = 0;
 
         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: pointerID: " + pointerID);
         switch (pointerID) {
@@ -506,11 +494,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             pointer.moveMouseButtonDown(getX(e), getY(e), meta);
                             canvas.movePanToMakePointerVisible();
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
-
-                            return true;
+                            break;
                         }
                 }
-
                 break;
             case 1:
                 switch (action) {
@@ -594,10 +580,18 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     canvas.canvasZoomer.changeZoom(activity, lastZoomFactor / canvas.getZoomFactor(), pointer.getX(), pointer.getY());
                     dragHelped = false;
                 }
-
-                gestureDetector.cancel();
-                return true;
             }
+
+//            if (pointerID == 0) {
+//                singleHandedGesture = false;
+//                singleHandedJustEnded = true;
+//
+//                // If this is the end of a swipe that showed the nav bar, consume.
+//                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
+//                    endDragModesAndScrolling();
+//                    return true;
+//                }
+//            }
         }
 
         return gestureDetector.onTouchEvent(e);
