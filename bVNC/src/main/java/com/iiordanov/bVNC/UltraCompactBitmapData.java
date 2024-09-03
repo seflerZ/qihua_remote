@@ -154,6 +154,8 @@ class UltraCompactBitmapData extends AbstractBitmapData {
         }
     }
 
+    private long last = 0;
+
     @Override
     void syncScroll() {
         // Don't need anything here either
@@ -165,12 +167,39 @@ class UltraCompactBitmapData extends AbstractBitmapData {
             super(UltraCompactBitmapData.this);
         }
 
+        private int fps = 0;
+        private int avg = 0;
+        private int max = 0;
+        private final boolean showFps = false;
+
         @Override
         public void draw(Canvas canvas) {
             try {
+                if (showFps && System.currentTimeMillis() - last > 1000) {
+
+
+                    if (fps > max) {
+                        max = fps;
+                    }
+
+                    avg = (avg + fps)/ 2;
+
+                    fps = 0;
+                    last = System.currentTimeMillis();
+                }
+
                 synchronized (this) {
                     canvas.drawBitmap(data.mbitmap, 0.0f, 0.0f, _defaultPaint);
                     canvas.drawBitmap(softCursor, cursorRect.left, cursorRect.top, _defaultPaint);
+
+                    if (showFps) {
+                        char[] text = String.valueOf("FPS:" + avg).toCharArray();
+                        canvas.drawText(text, 0, text.length, 100f, 100f, _textPaint);
+                    }
+                }
+
+                if (showFps) {
+                    fps += 1;
                 }
             } catch (Throwable ignored) {
             }
