@@ -525,6 +525,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
                         if (!inScaling && thirdPointerWasDown) {
+                            if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
+                                activity.toggleKeyboard(null);
+                            }
+
                             thirdPointerWasDown = false;
                         }
                         break;

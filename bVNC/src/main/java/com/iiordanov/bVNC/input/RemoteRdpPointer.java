@@ -149,7 +149,7 @@ public class RemoteRdpPointer extends RemotePointer {
             prevPointerMask = pointerMask;
         }
 
-        canvas.invalidateMousePosition();
+//        canvas.invalidateMousePosition();
         pointerX = x;
         pointerY = y;
 
