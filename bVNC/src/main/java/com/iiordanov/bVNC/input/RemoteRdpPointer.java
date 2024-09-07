@@ -149,7 +149,7 @@ public class RemoteRdpPointer extends RemotePointer {
             prevPointerMask = pointerMask;
         }
 
-//        canvas.invalidateMousePosition();
+        canvas.invalidateMousePosition();
         pointerX = x;
         pointerY = y;
 
@@ -164,7 +164,7 @@ public class RemoteRdpPointer extends RemotePointer {
         } else if (pointerY >= canvas.getImageHeight()) {
             pointerY = canvas.getImageHeight() - 1;
         }
-        canvas.invalidateMousePosition();
+//        canvas.invalidateMousePosition();
         GeneralUtils.debugLog(this.debugLogging, TAG, "Sending absolute mouse event at: " + pointerX +
                 ", " + pointerY + ", pointerMask: " + pointerMask);
         protocomm.writePointerEvent(pointerX, pointerY, combinedMetaState, pointerMask, false);
