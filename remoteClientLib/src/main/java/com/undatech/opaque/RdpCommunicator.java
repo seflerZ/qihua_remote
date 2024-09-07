@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.freerdp.freerdpcore.application.GlobalApp;
@@ -141,10 +142,8 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         if ((pointerMask & RemotePointer.POINTER_DOWN_MASK) != 0) {
             sendModifierKeys(true);
         }
-//        try {
-//            Thread.sleep(5);
-//        } catch (InterruptedException e) {
-//        }
+        // If we don't wait, will crash. No idea why
+        SystemClock.sleep(1);
         LibFreeRDP.sendCursorEvent(session.getInstance(), x, y, pointerMask);
         if ((pointerMask & RemotePointer.POINTER_DOWN_MASK) == 0) {
             sendModifierKeys(false);
