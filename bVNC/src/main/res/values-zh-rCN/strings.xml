@@ -415,7 +415,7 @@ bVNC对应的功能如下：
     <string name="intro_title">bVNC：又直观又安全的VNC客户端</string>
     <string name="intro_version_text" />
     <string name="keep_password_button">保存</string>
-    <string name="keep_screen_awake_enable">使休眠模式无效</string>
+    <string name="keep_screen_awake_enable">保持屏幕常亮</string>
     <string name="keys_caption">键</string>
     <string name="landscape_force">强行横放设定</string>
     <string name="left_handed_mode">左手模式</string>
