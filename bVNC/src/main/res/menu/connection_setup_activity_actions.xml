@@ -14,12 +14,12 @@
         app:showAsAction="always"
         tools:ignore="AppCompatResource" />
 
-    <item
-        android:id="@+id/actionHelp"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:onClick="showConnectionScreenHelp"
-        android:showAsAction="always"
-        android:title="@string/help"
-        app:showAsAction="always"
-        tools:ignore="AppCompatResource" />
+<!--    <item-->
+<!--        android:id="@+id/actionHelp"-->
+<!--        android:icon="@android:drawable/ic_menu_info_details"-->
+<!--        android:onClick="showConnectionScreenHelp"-->
+<!--        android:showAsAction="always"-->
+<!--        android:title="@string/help"-->
+<!--        app:showAsAction="always"-->
+<!--        tools:ignore="AppCompatResource" />-->
 </menu>
