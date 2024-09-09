@@ -20,9 +20,9 @@
 
 package com.undatech.opaque;
 
-import static com.iiordanov.bVNC.Utils.createMainScreenDialog;
-import static com.iiordanov.bVNC.Utils.setClipboard;
-import static com.iiordanov.bVNC.Utils.startUriIntent;
+import static com.qihua.bVNC.Utils.createMainScreenDialog;
+import static com.qihua.bVNC.Utils.setClipboard;
+import static com.qihua.bVNC.Utils.startUriIntent;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -57,18 +57,18 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.iiordanov.bVNC.App;
-import com.iiordanov.bVNC.ConnectionBean;
-import com.iiordanov.bVNC.Constants;
-import com.iiordanov.bVNC.Database;
-import com.iiordanov.bVNC.RemoteCanvasActivity;
-import com.iiordanov.bVNC.Utils;
-import com.iiordanov.bVNC.dialogs.GetTextFragment;
-import com.iiordanov.bVNC.dialogs.ImportExportDialog;
-import com.iiordanov.bVNC.dialogs.IntroTextDialog;
-import com.iiordanov.bVNC.dialogs.RateOrShareFragment;
-import com.iiordanov.bVNC.input.InputHandlerDirectSwipePan;
-import com.iiordanov.util.MasterPasswordDelegate;
+import com.qihua.bVNC.App;
+import com.qihua.bVNC.ConnectionBean;
+import com.qihua.bVNC.Constants;
+import com.qihua.bVNC.Database;
+import com.qihua.bVNC.RemoteCanvasActivity;
+import com.qihua.bVNC.Utils;
+import com.qihua.bVNC.dialogs.GetTextFragment;
+import com.qihua.bVNC.dialogs.ImportExportDialog;
+import com.qihua.bVNC.dialogs.IntroTextDialog;
+import com.qihua.bVNC.dialogs.RateOrShareFragment;
+import com.qihua.bVNC.input.InputHandlerDirectSwipePan;
+import com.qihua.util.MasterPasswordDelegate;
 import com.undatech.opaque.util.ConnectionLoader;
 import com.undatech.opaque.util.FileUtils;
 import com.undatech.opaque.util.GeneralUtils;
@@ -224,7 +224,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             return;
         }
 
-        Intent intent = new Intent(ConnectionGridActivity.this, GeneralUtils.getClassByName("com.iiordanov.bVNC.RemoteCanvasActivity"));
+        Intent intent = new Intent(ConnectionGridActivity.this, GeneralUtils.getClassByName("com.qihua.bVNC.RemoteCanvasActivity"));
         ConnectionLoader connectionLoader = getConnectionLoader(this);
         if (Utils.isOpaque(this)) {
             ConnectionSettings cs = (ConnectionSettings) connectionLoader.getConnectionsById().get(runtimeId);
@@ -381,7 +381,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             startActivityForResult(intent, RemoteClientLibConstants.DEFAULT_SETTINGS);
         } else {
             Intent intent = new Intent();
-            intent.setClassName(this, "com.iiordanov.bVNC.GlobalPreferencesActivity");
+            intent.setClassName(this, "com.qihua.bVNC.GlobalPreferencesActivity");
             startActivity(intent);
         }
     }
@@ -602,7 +602,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     }
 
     public void reportBug(View item) {
-        startUriIntent(this, "https://github.com/iiordanov/remote-desktop-clients/issues");
+        startUriIntent(this, "https://github.com/qihua/remote-desktop-clients/issues");
     }
 
     public void rateApp(View item) {
@@ -626,6 +626,6 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     }
 
     public void previousVersions(View item) {
-        startUriIntent(this, "https://github.com/iiordanov/remote-desktop-clients/releases");
+        startUriIntent(this, "https://github.com/qihua/remote-desktop-clients/releases");
     }
 }

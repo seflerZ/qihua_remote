@@ -31,7 +31,7 @@
         android:text="@string/touch_hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <com.iiordanov.pubkeygenerator.EntropyView
+    <com.qihua.pubkeygenerator.EntropyView
         android:id="@+id/entropy"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

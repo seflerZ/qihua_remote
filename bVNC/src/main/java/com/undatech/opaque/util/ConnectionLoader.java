@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.iiordanov.bVNC.ConnectionBean;
-import com.iiordanov.bVNC.Database;
+import com.qihua.bVNC.ConnectionBean;
+import com.qihua.bVNC.Database;
 import com.undatech.opaque.Connection;
 import com.undatech.opaque.ConnectionSettings;
 

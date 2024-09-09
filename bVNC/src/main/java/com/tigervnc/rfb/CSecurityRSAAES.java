@@ -23,7 +23,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.iiordanov.bVNC.RfbProto;
+import com.qihua.bVNC.RfbProto;
 import com.tigervnc.rdr.AESInStream;
 import com.tigervnc.rdr.AESOutStream;
 import com.tigervnc.rdr.InStream;

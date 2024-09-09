@@ -27,7 +27,7 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.iiordanov.bVNC.Constants;
+import com.qihua.bVNC.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;

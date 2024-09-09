@@ -120,7 +120,7 @@ All Input Methods:
     <string name="error_vm_lookup_failed">Could not find a virtual machine with the name specified assigned to your user. Please erase the VM name specified to see a list of VMs assigned to the user.</string>
     <string name="error_vv_download_timeout">Timeout downloading vv file.</string>
     <string name="message_please_wait">Please wait</string>
-    <string name="message_please_install_bvnc">Please install &lt;a href="market://details?id=com.iiordanov.bVNC">bVNC&lt;/a> from Google Play to connect to the VNC console of this VM.</string>
+    <string name="message_please_install_bvnc">Please install &lt;a href="market://details?id=com.qihua.bVNC">bVNC&lt;/a> from Google Play to connect to the VNC console of this VM.</string>
     <string name="ssl_strict">Require common name to match cert (recommended)</string>
     <string name="usb">USB (plug in OTG cable first)</string>
 

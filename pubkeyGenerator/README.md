@@ -1,6 +1,6 @@
 PubkeyGenerator
 ===============
-Copyright (c) 2012 Iordan Iordanov, <iiordanov gmail com>
+Copyright (c) 2012 Iordan Iordanov, <qihua gmail com>
 
 Based on ﻿VX ConnectBot
 ======================
@@ -39,11 +39,11 @@ the LICENSE-com.trilead.ssh2 file.
 
 ## Download
 
-[PubkeyGenerator git repository](https://github.com/iiordanov/bVNC)
+[PubkeyGenerator git repository](https://github.com/qihua/bVNC)
 
 [VX Connectbot Homepage](http://connectbot.vx.sk)
 
-[VX Connectbot on Android Market](https://market.android.com/details?id=com.iiordanov.bssh)
+[VX Connectbot on Android Market](https://market.android.com/details?id=com.qihua.bssh)
 
 ## Credits
 

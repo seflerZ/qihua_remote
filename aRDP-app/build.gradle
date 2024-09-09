@@ -7,6 +7,7 @@ android {
         targetSdkVersion targetApi
         minSdkVersion project.getProperties().get("SDK_VERSION")
         multiDexEnabled true
+        applicationId "com.qihua.aRDP"
     }
 
     buildTypes {
@@ -23,6 +24,17 @@ android {
 
     lintOptions {
         disable "Instantiatable"
+    }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("pro") {
+            applicationIdSuffix ".pro"
+        }
+
+        create("free") {
+            applicationIdSuffix ".free"
+        }
     }
 }
 

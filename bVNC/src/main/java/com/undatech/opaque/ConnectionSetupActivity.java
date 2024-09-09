@@ -40,7 +40,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iiordanov.bVNC.Utils;
+import com.qihua.bVNC.Utils;
 import com.undatech.remoteClientUi.R;
 
 import java.util.Arrays;

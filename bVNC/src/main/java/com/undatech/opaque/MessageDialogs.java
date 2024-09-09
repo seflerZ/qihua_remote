@@ -32,7 +32,7 @@ import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iiordanov.bVNC.Utils;
+import com.qihua.bVNC.Utils;
 
 public class MessageDialogs {
     private static final String TAG = "MessageDialogs";

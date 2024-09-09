@@ -1,6 +1,6 @@
 I. bVNC VNC client:
 
-  Copyright (C) 2012-2015 Iordan Iordanov, i (at) iiordanov (dot) com
+  Copyright (C) 2012-2015 Iordan Iordanov, i (at) qihua (dot) com
 
   All parts of bVNC are licensed under GPL v3, except for the RdpKeyboardMapper
   file derived from FreeRDP, which is MPL licensed, and code directly derived

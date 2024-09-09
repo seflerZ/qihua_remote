@@ -35,9 +35,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.iiordanov.bVNC.Constants;
-import com.iiordanov.bVNC.NewConnection;
-import com.iiordanov.bVNC.Utils;
+import com.qihua.bVNC.Constants;
+import com.qihua.bVNC.NewConnection;
+import com.qihua.bVNC.Utils;
 import com.undatech.remoteClientUi.R;
 
 import java.io.File;
