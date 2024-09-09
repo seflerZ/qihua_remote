@@ -27,7 +27,7 @@
 
     <application>
         <activity
-            android:name="com.iiordanov.pubkeygenerator.GeneratePubkeyActivity"
+            android:name="com.qihua.pubkeygenerator.GeneratePubkeyActivity"
             android:configChanges="keyboardHidden|orientation"
             android:resizeableActivity="true"
             android:screenOrientation="unspecified"
@@ -59,7 +59,7 @@
             tools:node="remove" />
 
         <activity
-            android:name="com.iiordanov.bVNC.GlobalPreferencesActivity"
+            android:name="com.qihua.bVNC.GlobalPreferencesActivity"
             android:theme="@style/Theme.AppCompat" />
 
         <meta-data

@@ -38,9 +38,9 @@ import android.widget.ToggleButton;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.iiordanov.bVNC.Constants;
-import com.iiordanov.util.PermissionGroups;
-import com.iiordanov.util.PermissionsManager;
+import com.qihua.bVNC.Constants;
+import com.qihua.util.PermissionGroups;
+import com.qihua.util.PermissionsManager;
 import com.undatech.opaque.dialogs.ManageCustomCaFragment;
 import com.undatech.opaque.util.FileUtils;
 import com.undatech.remoteClientUi.R;

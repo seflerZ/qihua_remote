@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.iiordanov.aSPICE"
+    package="com.qihua.aSPICE"
     android:installLocation="auto"
     android:versionCode="115135"
     android:versionName="v5.1.3">
@@ -29,7 +29,7 @@
         android:required="false" />
 
     <application
-        android:name="com.iiordanov.bVNC.App"
+        android:name="com.qihua.bVNC.App"
         android:allowBackup="false"
         android:banner="@drawable/banner_aspice"
         android:icon="@drawable/icon_aspice"
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iiordanov.bVNC.aSPICE"
+            android:name="com.qihua.bVNC.aSPICE"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/aspice_app_name"
             android:resizeableActivity="true"
@@ -60,7 +60,7 @@
             android:theme="@android:style/Theme.DeviceDefault"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.iiordanov.bVNC.RemoteCanvasActivity"
+            android:name="com.qihua.bVNC.RemoteCanvasActivity"
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true"
             android:resizeableActivity="true"
@@ -95,7 +95,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iiordanov.bVNC.ConnectionListActivity"
+            android:name="com.qihua.bVNC.ConnectionListActivity"
             android:exported="true"
             android:label="@string/shortcut_label_spice"
             android:resizeableActivity="true"

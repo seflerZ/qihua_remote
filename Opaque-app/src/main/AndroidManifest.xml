@@ -26,7 +26,7 @@
         android:required="false" />
 
     <application
-        android:name="com.iiordanov.bVNC.App"
+        android:name="com.qihua.bVNC.App"
         android:allowBackup="true"
         android:banner="@drawable/banner_opaque"
         android:icon="@drawable/ic_launcher"
@@ -63,7 +63,7 @@
             android:resizeableActivity="true"
             android:theme="@android:style/Theme.DeviceDefault" />
         <activity
-            android:name="com.iiordanov.bVNC.RemoteCanvasActivity"
+            android:name="com.qihua.bVNC.RemoteCanvasActivity"
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true"
             android:launchMode="singleTask"

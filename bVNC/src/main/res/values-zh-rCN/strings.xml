@@ -118,7 +118,7 @@
     <string name="error_vm_lookup_failed">无法找到分配给您用户的具有指定名称的虚拟机。请删除指定的虚拟机名称，並查看分配给该用户的虚拟机列表。</string>
     <string name="error_vv_download_timeout">下载vv文件超时了。</string>
     <string name="message_please_wait">请稍候</string>
-    <string name="message_please_install_bvnc">请从谷歌商店安装<a href="market://details?id=com.iiordanov.bVNC">bVNC</a>，以便连接到该虚拟机的VNC控制台。</string>
+    <string name="message_please_install_bvnc">请从谷歌商店安装<a href="market://details?id=com.qihua.bVNC">bVNC</a>，以便连接到该虚拟机的VNC控制台。</string>
     <string name="ssl_strict">要求通用名称与证书相符（建议）。</string>
     <string name="usb">USB（先插上OTG线）</string>
 
