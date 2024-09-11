@@ -295,7 +295,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="5dip">
+            android:padding="5dip"
+            android:visibility="gone">
 
             <ToggleButton
                 android:id="@+id/toggleAdvancedSettings"
@@ -317,13 +318,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dip"
-            android:visibility="gone">
+            android:padding="5dip">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="fill_parent"
