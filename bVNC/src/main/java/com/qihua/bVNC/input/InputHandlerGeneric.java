@@ -333,6 +333,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         dragMode = true;
 
+        activity.sendShortVibration();
+
         // These are for drag helper
         lastZoomFactor = canvas.getZoomFactor();
         lastDragStartTime = System.currentTimeMillis();
