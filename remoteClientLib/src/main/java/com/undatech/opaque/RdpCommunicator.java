@@ -199,10 +199,10 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
                 int modifier = modifierMap.get(modifierMask);
                 GeneralUtils.debugLog(this.debugLogging, TAG, "sendModifierKeys, modifierMask:" +
                         modifierMask + ", sending: " + modifier + ", down: " + down);
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                }
+//                try {
+//                    Thread.sleep(5);
+//                } catch (InterruptedException e) {
+//                }
                 LibFreeRDP.sendKeyEvent(session.getInstance(), modifier, down);
                 remoteKeyboardState.updateRemoteMetaState(modifierMask, down);
             }
@@ -219,10 +219,10 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         if (down) {
             sendModifierKeys(true);
         }
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-        }
+//        try {
+//            Thread.sleep(5);
+//        } catch (InterruptedException e) {
+//        }
 
         GeneralUtils.debugLog(this.debugLogging, TAG, "processVirtualKey: " +
                 "Sending VK key: " + virtualKeyCode + ". Is it down: " + down);
@@ -242,10 +242,10 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         if (down && !suppressMetaState) {
             sendModifierKeys(true);
         }
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-        }
+//        try {
+//            Thread.sleep(5);
+//        } catch (InterruptedException e) {
+//        }
         GeneralUtils.debugLog(this.debugLogging, TAG, "processUnicodeKey: " +
                 "Sending unicode key: " + unicodeKey + ", down: " + down + ", metaState: " + metaState);
         LibFreeRDP.sendUnicodeKeyEvent(session.getInstance(), unicodeKey, down);
