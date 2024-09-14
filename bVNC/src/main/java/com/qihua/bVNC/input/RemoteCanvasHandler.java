@@ -27,7 +27,6 @@ import com.undatech.opaque.RemoteClientLibConstants;
 import com.undatech.opaque.dialogs.ChoiceFragment;
 import com.undatech.opaque.dialogs.MessageFragment;
 import com.undatech.opaque.dialogs.SelectTextElementFragment;
-import com.undatech.opaque.util.GooglePlayUtils;
 import com.undatech.opaque.util.SslUtils;
 import com.undatech.remoteClientUi.R;
 
@@ -553,11 +552,11 @@ public class RemoteCanvasHandler extends Handler {
             case RemoteClientLibConstants.LAUNCH_VNC_VIEWER:
                 android.util.Log.d(TAG, "Trying to launch VNC viewer");
 
-                if (!GooglePlayUtils.isPackageInstalled(context, "com.qihua.bVNC") &&
-                        !GooglePlayUtils.isPackageInstalled(context, "com.qihua.freebVNC")) {
-                    displayMessageAndFinish(R.string.info_dialog_title, R.string.message_please_install_bvnc, R.string.ok);
-                    return;
-                }
+//                if (!GooglePlayUtils.isPackageInstalled(context, "com.qihua.bVNC") &&
+//                        !GooglePlayUtils.isPackageInstalled(context, "com.qihua.freebVNC")) {
+//                    displayMessageAndFinish(R.string.info_dialog_title, R.string.message_please_install_bvnc, R.string.ok);
+//                    return;
+//                }
 
                 String address = msg.getData().getString("address");
                 String port = msg.getData().getString("port");

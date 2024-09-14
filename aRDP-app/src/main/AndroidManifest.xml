@@ -6,7 +6,7 @@
     android:versionCode="2408"
     android:versionName="v1.0.0">
 
-    <uses-permission tools:node="removeAll" />
+<!--    <uses-permission tools:node="removeAll" />-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
