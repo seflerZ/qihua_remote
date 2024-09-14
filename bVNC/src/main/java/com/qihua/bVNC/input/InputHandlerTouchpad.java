@@ -291,9 +291,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         } else if (accelerated && delta <= 25.0f) {
             delta = delta * 1.5f;
         } else if (accelerated && delta <= 40.0f) {
-            delta = delta * 2.4f;
+            delta = delta * 3.0f;
         } else if (accelerated) {
-            delta = delta * 4.0f;
+            delta = delta * 4.5f;
         }
         return origSign * delta;
     }
