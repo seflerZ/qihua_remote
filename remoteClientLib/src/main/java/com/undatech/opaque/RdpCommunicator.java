@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.freerdp.freerdpcore.application.GlobalApp;
 import com.freerdp.freerdpcore.application.SessionState;
@@ -181,6 +182,12 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         long instance = session.getInstance();
         DisconnectThread d = new DisconnectThread(instance);
         d.start();
+    }
+
+    @Override
+    public void reconnect() {
+        initSession(username, domain, password);
+        connect();
     }
 
     @Override
@@ -385,6 +392,11 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         } else if (!disconnectRequested && !myself.isInNormalProtocol()) {
             Log.v(TAG, "Sending message: RDP_UNABLE_TO_CONNECT");
             handler.sendEmptyMessage(RemoteClientLibConstants.RDP_UNABLE_TO_CONNECT);
+        } else if (!disconnectRequested) {
+            myself.setIsInNormalProtocol(false);
+//            initSession(username, domain, password);
+//            connect();
+            handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
         }
     }
 
@@ -396,14 +408,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             handler.sendEmptyMessage(RemoteClientLibConstants.RDP_UNABLE_TO_CONNECT);
         } else {
             Log.v(TAG, "Sending message: RDP_CONNECT_FAILURE");
-            // Auto reconnect first
-            try {
-                initSession(username, domain, password);
-                connect();
-            } catch (Exception e) {
-                // resume failed, display error message
-                handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
-            }
+            handler.sendEmptyMessage(RemoteClientLibConstants.RDP_CONNECT_FAILURE);
         }
     }
 

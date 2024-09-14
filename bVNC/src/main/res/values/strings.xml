@@ -944,4 +944,5 @@ Below that is where you configure your connection.
     <string name="pref_keyboard_type_label_VISIBLE_PASSWORD">Text/Numbers No Suggestions (VISIBLE_PASSWORD)</string>
     <string name="pref_keyboard_type_label_TYPE_CLASS_TEXT">Text With Suggestions (TYPE_CLASS_TEXT)</string>
     <string name="rdp_geom_full_hd">1080p</string>
+    <string name="warn_disconnect_will_reconnect">Connection lost due to network error or logged in from another computer, will reconnect now.</string>
 </resources>

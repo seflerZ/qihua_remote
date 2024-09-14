@@ -1115,6 +1115,15 @@ public class RemoteCanvas extends AppCompatImageView
         });
     }
 
+    public void showToastAndReconnect(final String warn) {
+        reConnect();
+        handler.post(new Runnable() {
+            public void run() {
+                Toast.makeText(getContext(), warn, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     /**
      * If necessary, initializes an SSH tunnel and returns local forwarded port, or
      * if SSH tunneling is not needed, returns the given port.
@@ -1402,6 +1411,10 @@ public class RemoteCanvas extends AppCompatImageView
         disposeDrawable();
 
         onDestroy();
+    }
+
+    public void reConnect() {
+        rfbconn.reconnect();
     }
 
     /**

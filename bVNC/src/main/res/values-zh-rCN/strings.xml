@@ -900,4 +900,5 @@ aSPICE对应的功能如下：
     <string name="prefer_sending_unicode">Unicode输入(仅限Windows)</string>
     <string name="hide_connection_thumbnails">隐藏缩略图</string>
     <string name="show_only_connection_nicknames">只显示昵称</string>
+    <string name="warn_disconnect_will_reconnect">连接异常断开（用户从其他主机登录或网络中断），重连中。</string>
 </resources>

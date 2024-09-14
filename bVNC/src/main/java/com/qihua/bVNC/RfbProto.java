@@ -418,6 +418,11 @@ public class RfbProto extends RfbConnectable {
         closeSocket();
     }
 
+    @Override
+    public void reconnect() {
+
+    }
+
     //
     // Perform standard VNC Authentication.
     //
