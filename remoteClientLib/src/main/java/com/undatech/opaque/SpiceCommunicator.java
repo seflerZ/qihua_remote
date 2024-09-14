@@ -429,6 +429,11 @@ public class SpiceCommunicator extends RfbConnectable {
     }
 
     @Override
+    public void reconnect() {
+
+    }
+
+    @Override
     public boolean isCertificateAccepted() {
         // TODO Auto-generated method stub
         return false;

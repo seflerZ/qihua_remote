@@ -80,6 +80,8 @@ public abstract class RfbConnectable {
 
     public abstract void close();
 
+    public abstract void reconnect();
+
     public abstract boolean isCertificateAccepted();
 
     public abstract void setCertificateAccepted(boolean certificateAccepted);

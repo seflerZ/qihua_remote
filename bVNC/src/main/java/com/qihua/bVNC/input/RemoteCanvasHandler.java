@@ -463,9 +463,9 @@ public class RemoteCanvasHandler extends Handler {
                 break;
             case RemoteClientLibConstants.RDP_CONNECT_FAILURE:
                 if (c.maintainConnection) {
-                    c.showFatalMessageAndQuit(context.getString(R.string.error_rdp_connection_failed));
+                    c.showToastAndReconnect(context.getString(R.string.warn_disconnect_will_reconnect));
                 }
-                break;
+                return;
             case RemoteClientLibConstants.RDP_UNABLE_TO_CONNECT:
                 if (c.maintainConnection) {
                     c.showFatalMessageAndQuit(context.getString(R.string.error_rdp_unable_to_connect));
