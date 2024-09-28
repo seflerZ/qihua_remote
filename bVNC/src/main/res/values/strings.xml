@@ -3,7 +3,7 @@
     <string name="audio_will_be_initialized">Audio will be initialized in about 15 seconds, please stop any running video or audio playback before then</string>
     <string name="audio_initialized">Audio initialized</string>
     <string name="action_import_settings">Import Settings</string>
-    <string name="action_new_connection">New Connection ✚</string>
+    <string name="action_new_connection">Add New Connection</string>
     <string name="action_edit_default_settings">Edit Default Settings</string>
     <string name="action_export_settings">Export Settings</string>
     <string name="action_delete_connection">Delete Connection</string>

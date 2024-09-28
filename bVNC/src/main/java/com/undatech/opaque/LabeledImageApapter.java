@@ -83,6 +83,7 @@ public class LabeledImageApapter extends BaseAdapter {
         Connection c = filteredConnectionsByPosition.get(position);
 
         String label = c.getLabel();
+
         android.util.Log.d(TAG, "Now setting label at position: " + position + " to: " + label);
 
         GridView gView = (GridView) ((Activity) context).findViewById(R.id.gridView);
@@ -117,6 +118,11 @@ public class LabeledImageApapter extends BaseAdapter {
         } else {
             textView.setText(label);
         }
+
+        if (label.equals("$NEW$")) {
+            textView.setVisibility(View.GONE);
+        }
+
         String screenshotFilePath = context.getFilesDir() + "/" + c.getScreenshotFilename();
         AppCompatImageView imageView = gridView.findViewById(R.id.grid_item_image);
         if (doNotShowDesktopThumbnails) {
