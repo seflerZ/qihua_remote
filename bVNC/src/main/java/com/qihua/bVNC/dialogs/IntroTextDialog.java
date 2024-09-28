@@ -134,7 +134,7 @@ public class IntroTextDialog extends Dialog {
             sb.append(getContext().getResources().getString(R.string.ad_donate_text3));
             sb.append(" <a href=\"market://details?id=com.qihua.bVNC\">VNC</a>");
             sb.append(", ");
-            sb.append("<a href=\"market://details?id=com.qihua.aRDP\">RDP</a>");
+            sb.append("<a href=\"market://details?id=com.qihua.rmt\">RDP</a>");
             sb.append(", ");
             sb.append("<a href=\"market://details?id=com.qihua.aSPICE\">SPICE</a>");
             sb.append(", ");

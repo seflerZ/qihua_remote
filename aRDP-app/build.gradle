@@ -7,7 +7,7 @@ android {
         targetSdkVersion targetApi
         minSdkVersion project.getProperties().get("SDK_VERSION")
         multiDexEnabled true
-        applicationId "com.qihua.aRDP"
+        applicationId "com.qihua.rmt"
     }
 
     buildTypes {

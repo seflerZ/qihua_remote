@@ -134,7 +134,7 @@
     <string name="address_caption_ssh">SSH服务器</string>
     <string name="address_caption_ssh_hint">SSH服务器</string>
     <string name="alt_check">Alt</string>
-    <string name="ardp_app_name">奇花远程 RDP</string>
+    <string name="ardp_app_name">奇花远程桌面</string>
     <string name="arrow_down">向下箭头</string>
     <string name="arrow_left">向左箭头</string>
     <string name="arrow_right">向右箭头</string>
