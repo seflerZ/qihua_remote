@@ -15,25 +15,40 @@
 
     <item
         android:id="@+id/actionShowKeyboard"
-        android:icon="@drawable/ic_keyboard_gray_48dp"
+        android:icon="@drawable/keyboard_v"
         android:onClick="toggleKeyboard"
         android:padding="0dp"
         app:showAsAction="always" />
+
+<!--    <item-->
+<!--        android:id="@+id/actionShowKeyboard"-->
+<!--        android:icon="@drawable/copy"-->
+<!--        android:onClick="sendCopy"-->
+<!--        android:padding="0dp"-->
+<!--        app:showAsAction="ifRoom" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/actionShowKeyboard"-->
+<!--        android:icon="@drawable/paste"-->
+<!--        android:onClick="sendPaste"-->
+<!--        android:padding="0dp"-->
+<!--        app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/itemInputMode"
         android:alphabeticShortcut="p"
         android:icon="@android:drawable/ic_input_get"
         android:numericShortcut="5"
-        android:title="@string/input_mode">
+        android:title="@string/input_mode"
+        android:visible="false">
         <menu>
             <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/itemInputTouchPanZoomMouse"
-                    android:title="@string/input_method_direct_swipe_pan" />
-                <item
-                    android:id="@+id/itemInputDragPanZoomMouse"
-                    android:title="@string/input_method_direct_drag_pan" />
+<!--                <item-->
+<!--                    android:id="@+id/itemInputTouchPanZoomMouse"-->
+<!--                    android:title="@string/input_method_direct_swipe_pan" />-->
+<!--                <item-->
+<!--                    android:id="@+id/itemInputDragPanZoomMouse"-->
+<!--                    android:title="@string/input_method_direct_drag_pan" />-->
                 <item
                     android:id="@+id/itemInputTouchpad"
                     android:title="@string/input_method_touchpad" />
@@ -119,6 +134,7 @@
     <item
         android:id="@+id/itemHelpInputMode"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="@string/input_mode_help" />
+        android:title="@string/input_mode_help"
+        android:visible="false"/>
     <!-- <item android:id="@+id/itemOpenDoc" android:title="@string/open_doc" android:icon="@android:drawable/ic_menu_help"/> -->
 </menu>

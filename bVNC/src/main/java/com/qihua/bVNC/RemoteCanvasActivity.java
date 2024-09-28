@@ -509,8 +509,10 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         toolbar = (RemoteToolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
+        toolbar.setRotation(90);
         toolbar.getBackground().setAlpha(64);
         toolbar.setLayoutParams(params);
+
         setSupportActionBar(toolbar);
         showToolbar();
     }
@@ -1718,6 +1720,15 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             showKeyboardAndExtraKeys();
         }
     }
+
+//    public void sendCopy(MenuItem menuItem) {
+//        canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
+//    }
+//
+//    public void sendPaste(MenuItem menuItem) {
+//        canvas.getKeyboard().sendUnicode('v', KeyEvent.META_CTRL_LEFT_ON);
+//    }
+
 
     public void showKeyboard() {
         android.util.Log.i(TAG, "Showing keyboard and hiding action bar");
