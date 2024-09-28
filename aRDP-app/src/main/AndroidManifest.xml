@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.qihua.aRDP"
+    package="com.qihua.rmt"
     android:installLocation="auto"
     android:versionCode="115135"
     android:versionName="v5.1.3">

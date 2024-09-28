@@ -85,7 +85,7 @@ public class Utils {
     private static final Intent docIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/android-vnc-viewer/wiki/Documentation"));
     public static String[] standardPackageNames = {
             "com.qihua.bVNC", "com.qihua.freebVNC",
-            "com.qihua.aRDP", "com.qihua.freeaRDP",
+            "com.qihua.rmt", "com.qihua.freeaRDP",
             "com.qihua.aSPICE", "com.qihua.freeaSPICE"
     };
     private static AlertDialog alertDialog;
@@ -260,7 +260,7 @@ public class Utils {
 
     public static boolean isRdp(Context context) {
         String packageName = Utils.pName(context);
-        return packageName.toLowerCase().contains("rdp");
+        return packageName.toLowerCase().contains("rmt");
     }
 
     public static boolean isSpice(Context context) {
