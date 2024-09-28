@@ -3,7 +3,7 @@
     <string name="audio_will_be_initialized">音频将在大约15秒后初始化，请在这之前停止任何正在运行的视频或音频播放。</string>
     <string name="audio_initialized">音频初始化</string>
     <string name="action_import_settings">导入设定</string>
-    <string name="action_new_connection">新连接</string>
+    <string name="action_new_connection">创建新连接</string>
     <string name="action_edit_default_settings">编辑默认设定</string>
     <string name="action_export_settings">导出设定</string>
     <string name="action_delete_connection">删除连接设定</string>
