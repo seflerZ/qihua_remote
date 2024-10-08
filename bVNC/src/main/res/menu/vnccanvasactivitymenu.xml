@@ -37,9 +37,9 @@
                 <item
                     android:id="@+id/itemInputTouchpad"
                     android:title="@string/input_method_touchpad" />
-                <item
-                    android:id="@+id/itemInputSingleHanded"
-                    android:title="@string/input_method_single_handed" />
+<!--                <item-->
+<!--                    android:id="@+id/itemInputSingleHanded"-->
+<!--                    android:title="@string/input_method_single_handed" />-->
             </group>
         </menu>
     </item>
@@ -48,7 +48,8 @@
         android:alphabeticShortcut="z"
         android:icon="@android:drawable/ic_menu_zoom"
         android:numericShortcut="4"
-        android:title="@string/scaling">
+        android:title="@string/scaling"
+        android:visible="false">
         <menu>
             <group
                 android:id="@+id/groupScaling"
@@ -72,43 +73,43 @@
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:numericShortcut="7"
         android:title="@string/disconnect"></item>
-    <item
-        android:id="@+id/itemSpecialKeys"
-        android:alphabeticShortcut="k"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:numericShortcut="1"
-        android:title="@string/special_keys" />
-    <item
-        android:id="@+id/itemSendKeyAgain"
-        android:alphabeticShortcut="g"
-        android:title="@string/send_key_again" />
-    <item
-        android:id="@+id/itemCtrlAltDel"
-        android:alphabeticShortcut="r"
-        android:icon="@android:drawable/ic_menu_share"
-        android:numericShortcut="8"
-        android:title="@string/ctrl_alt_del" />
-    <item
-        android:id="@+id/itemEnterText"
-        android:alphabeticShortcut="e"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/enter_text" />
+<!--    <item-->
+<!--        android:id="@+id/itemSpecialKeys"-->
+<!--        android:alphabeticShortcut="k"-->
+<!--        android:icon="@android:drawable/ic_dialog_dialer"-->
+<!--        android:numericShortcut="1"-->
+<!--        android:title="@string/special_keys" />-->
+<!--    <item-->
+<!--        android:id="@+id/itemSendKeyAgain"-->
+<!--        android:alphabeticShortcut="g"-->
+<!--        android:title="@string/send_key_again" />-->
+<!--    <item-->
+<!--        android:id="@+id/itemCtrlAltDel"-->
+<!--        android:alphabeticShortcut="r"-->
+<!--        android:icon="@android:drawable/ic_menu_share"-->
+<!--        android:numericShortcut="8"-->
+<!--        android:title="@string/ctrl_alt_del" />-->
+<!--    <item-->
+<!--        android:id="@+id/itemEnterText"-->
+<!--        android:alphabeticShortcut="e"-->
+<!--        android:icon="@android:drawable/ic_menu_edit"-->
+<!--        android:title="@string/enter_text" />-->
     <!-- <group android:checkableBehavior="all">
         <item android:numericShortcut="6" android:alphabeticShortcut="f" android:id="@+id/itemFollowMouse" android:title="@string/pan_follow_mouse"/>
         <item android:title="@string/mouse_follow_pan" android:id="@+id/itemFollowPan"/>
     </group> -->
-    <item
-        android:id="@+id/itemColorMode"
-        android:alphabeticShortcut="c"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:numericShortcut="3"
-        android:title="@string/color_mode"></item>
-    <item
-        android:id="@+id/itemCenterMouse"
-        android:alphabeticShortcut="m"
-        android:icon="@android:drawable/ic_menu_mylocation"
-        android:numericShortcut="2"
-        android:title="@string/center_mouse" />
+<!--    <item-->
+<!--        android:id="@+id/itemColorMode"-->
+<!--        android:alphabeticShortcut="c"-->
+<!--        android:icon="@android:drawable/ic_menu_preferences"-->
+<!--        android:numericShortcut="3"-->
+<!--        android:title="@string/color_mode"></item>-->
+<!--    <item-->
+<!--        android:id="@+id/itemCenterMouse"-->
+<!--        android:alphabeticShortcut="m"-->
+<!--        android:icon="@android:drawable/ic_menu_mylocation"-->
+<!--        android:numericShortcut="2"-->
+<!--        android:title="@string/center_mouse" />-->
     <item
         android:id="@+id/itemInfo"
         android:alphabeticShortcut="i"
