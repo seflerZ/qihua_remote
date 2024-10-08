@@ -1454,39 +1454,39 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         if (itemId == R.id.itemInfo) {
             canvas.showConnectionInfo();
             return true;
-        } else if (itemId == R.id.itemSpecialKeys) {
-            showDialog(R.layout.metakey);
-            return true;
-        } else if (itemId == R.id.itemColorMode) {
-            selectColorModel();
-            return true;
-            // Following sets one of the scaling options
+//        } else if (itemId == R.id.itemSpecialKeys) {
+//            showDialog(R.layout.metakey);
+//            return true;
+//        } else if (itemId == R.id.itemColorMode) {
+//            selectColorModel();
+//            return true;
+//            // Following sets one of the scaling options
         } else if (itemId == R.id.itemZoomable || itemId == R.id.itemOneToOne || itemId == R.id.itemFitToScreen) {
             AbstractScaling.getById(item.getItemId()).setScaleTypeForActivity(this);
             item.setChecked(true);
             showPanningState(false);
             return true;
-        } else if (itemId == R.id.itemCenterMouse) {
-            canvas.getPointer().movePointer(canvas.absoluteXPosition + canvas.getVisibleDesktopWidth() / 2,
-                    canvas.absoluteYPosition + canvas.getVisibleDesktopHeight() / 2);
-            return true;
+//        } else if (itemId == R.id.itemCenterMouse) {
+//            canvas.getPointer().movePointer(canvas.absoluteXPosition + canvas.getVisibleDesktopWidth() / 2,
+//                    canvas.absoluteYPosition + canvas.getVisibleDesktopHeight() / 2);
+//            return true;
         } else if (itemId == R.id.itemDisconnect) {
             canvas.closeConnection();
             Utils.justFinish(this);
             return true;
-        } else if (itemId == R.id.itemEnterText) {
-            showDialog(R.layout.entertext);
-            return true;
-        } else if (itemId == R.id.itemCtrlAltDel) {
-            canvas.getKeyboard().sendMetaKey(MetaKeyBean.keyCtrlAltDel);
-            return true;
-        } else if (itemId == R.id.itemSendKeyAgain) {
-            sendSpecialKeyAgain();
-            return true;
-            // Disabling Manual/Wiki Menu item as the original does not correspond to this project anymore.
-            //case R.id.itemOpenDoc:
-            //    Utils.showDocumentation(this);
-            //    return true;
+//        } else if (itemId == R.id.itemEnterText) {
+//            showDialog(R.layout.entertext);
+//            return true;
+//        } else if (itemId == R.id.itemCtrlAltDel) {
+//            canvas.getKeyboard().sendMetaKey(MetaKeyBean.keyCtrlAltDel);
+//            return true;
+//        } else if (itemId == R.id.itemSendKeyAgain) {
+//            sendSpecialKeyAgain();
+//            return true;
+//            // Disabling Manual/Wiki Menu item as the original does not correspond to this project anymore.
+//            //case R.id.itemOpenDoc:
+//            //    Utils.showDocumentation(this);
+//            //    return true;
         } else if (itemId == R.id.itemHelpInputMode) {
             showDialog(R.id.itemHelpInputMode);
             return true;
