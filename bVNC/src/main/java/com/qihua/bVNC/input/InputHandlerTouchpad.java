@@ -30,6 +30,8 @@ import com.undatech.remoteClientUi.R;
 public class InputHandlerTouchpad extends InputHandlerGeneric {
     public static final String ID = "TOUCHPAD_MODE";
     static final String TAG = "InputHandlerTouchpad";
+    private float cumulatedY = 0;
+    private float cumulatedX = 0;
 
     public InputHandlerTouchpad(RemoteCanvasActivity activity, RemoteCanvas canvas,
                                 RemotePointer pointer, boolean debugLogging) {
@@ -114,9 +116,41 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
                 scrollLeft = true;
             }
 
+            if (cumulatedY * distanceY < 0) {
+                cumulatedY = 0;
+            }
+
+            float ratioY = distanceY / (40 * canvas.getZoomFactor());
+            if (Math.abs(ratioY) < 1) {
+                ratioY = ratioY + cumulatedY;
+                if (Math.abs(ratioY) < 1) {
+                    cumulatedY += ratioY;
+                    ratioY = 0;
+                } else {
+                    cumulatedY = 0;
+                }
+            } else {
+                ratioY = distanceY / 2;
+                cumulatedY = 0;
+            }
+
+            float ratioX = distanceX / (40 * canvas.getZoomFactor());
+            if (Math.abs(ratioX) < 1) {
+                ratioX = ratioX + cumulatedX;
+                if (Math.abs(ratioX) < 1) {
+                    cumulatedX += ratioX;
+                    ratioX = 0;
+                } else {
+                    cumulatedX = 0;
+                }
+            } else {
+                ratioX = distanceX / 2;
+                cumulatedX = 0;
+            }
+
             // The direction is just up side down.
-            int newY = (int)-(distanceY / (canvas.getZoomFactor()));
-            int newX = (int)(distanceX / (canvas.getZoomFactor()));
+            int newY = (int)-(ratioY);
+            int newX = (int)(ratioX);
             int delta = 0;
 
             if (Math.abs(distanceY) >= Math.abs(distanceX)) {
@@ -162,11 +196,15 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
             if (scrollRight || scrollLeft){
                 if (distanceX < 0 && newX == 0) {
-                    delta = -1;
+                    delta = 0;
                 } else if (distanceX > 0 && newX == 0) {
-                    delta = 1;
+                    delta = 0;
                 } else {
                     delta = newX;
+                }
+
+                if (delta == 0) {
+                    return true;
                 }
 
                 if (delta > 255) {
