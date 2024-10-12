@@ -120,33 +120,13 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
                 cumulatedY = 0;
             }
 
-            float ratioY = distanceY / (40 * canvas.getZoomFactor());
-            if (Math.abs(ratioY) < 1) {
-                ratioY = ratioY + cumulatedY;
-                if (Math.abs(ratioY) < 1) {
-                    cumulatedY += ratioY;
-                    ratioY = 0;
-                } else {
-                    cumulatedY = 0;
-                }
-            } else {
-                ratioY = distanceY / 2;
-                cumulatedY = 0;
-            }
-
-            float ratioX = distanceX / (40 * canvas.getZoomFactor());
-            if (Math.abs(ratioX) < 1) {
-                ratioX = ratioX + cumulatedX;
-                if (Math.abs(ratioX) < 1) {
-                    cumulatedX += ratioX;
-                    ratioX = 0;
-                } else {
-                    cumulatedX = 0;
-                }
-            } else {
-                ratioX = distanceX / 2;
+            if (cumulatedX * distanceX < 0) {
                 cumulatedX = 0;
             }
+
+            // get the relative moving distance compared to one step
+            float ratioY = getRatio(distanceY, true);
+            float ratioX = getRatio(distanceX, false);
 
             // The direction is just up side down.
             int newY = (int)-(ratioY);
@@ -254,6 +234,54 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         }
 
         return true;
+    }
+
+    private float getRatio(float distance, boolean isY) {
+        float ratio = 0;
+        float cumulated = cumulatedX;
+        if (isY) {
+            cumulated = cumulatedY;
+        }
+
+        if (Math.abs(distance / (12 * canvas.getZoomFactor())) < 1) {
+            ratio = distance / (12 * canvas.getZoomFactor());
+            ratio = ratio + cumulated;
+            if (Math.abs(ratio) < 1) {
+                cumulated += ratio;
+                ratio = 0;
+            } else {
+                cumulated = 0;
+            }
+        } else if (Math.abs(distance / (24 * canvas.getZoomFactor())) < 1) {
+            ratio = distance / (24 * canvas.getZoomFactor());
+            ratio = ratio + cumulated;
+            if (Math.abs(ratio) < 1) {
+                cumulated += ratio * 2;
+                ratio = 0;
+            } else {
+                cumulated = 0;
+            }
+        } else if (Math.abs(distance / (36 * canvas.getZoomFactor())) < 1) {
+            ratio = distance / (36 * canvas.getZoomFactor());
+            ratio = ratio + cumulated;
+            if (Math.abs(ratio) < 1) {
+                cumulated += ratio * 4;
+                ratio = 0;
+            } else {
+                cumulated = 0;
+            }
+        } else {
+            ratio = distance;
+            cumulated = 0;
+        }
+
+        if (isY) {
+            cumulatedY = cumulated;
+        } else {
+            cumulatedX = cumulated;
+        }
+
+        return ratio;
     }
 
     /*
