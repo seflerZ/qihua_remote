@@ -243,8 +243,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             cumulated = cumulatedY;
         }
 
-        if (Math.abs(distance / (12 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (12 * canvas.getZoomFactor());
+        float zoomFactor = canvas.getZoomFactor() * 0.8f;
+        if (Math.abs(distance / (12 * zoomFactor)) < 1) {
+            ratio = distance / (12 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
                 cumulated += ratio;
@@ -252,8 +253,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else {
                 cumulated = 0;
             }
-        } else if (Math.abs(distance / (24 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (24 * canvas.getZoomFactor());
+        } else if (Math.abs(distance / (24 * zoomFactor)) < 1) {
+            ratio = distance / (24 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
                 cumulated += ratio * 2;
@@ -261,8 +262,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else {
                 cumulated = 0;
             }
-        } else if (Math.abs(distance / (36 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (36 * canvas.getZoomFactor());
+        } else if (Math.abs(distance / (36 * zoomFactor)) < 1) {
+            ratio = distance / (36 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
                 cumulated += ratio * 4;
@@ -352,12 +353,14 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         float origSign = getSign(delta);
         delta = Math.abs(delta);
         boolean accelerated = pointer.isAccelerated();
-        if (delta <= 15) {
+        if (delta <= 8) {
             delta = delta * 0.75f;
-        } else if (accelerated && delta <= 25.0f) {
+        } else if (accelerated && delta <= 15.0f) {
+            delta = delta * 1f;
+        } else if (accelerated && delta <= 20.0f) {
             delta = delta * 1.5f;
         } else if (accelerated && delta <= 40.0f) {
-            delta = delta * 3.0f;
+            delta = delta * 3.5f;
         } else if (accelerated) {
             delta = delta * 4.5f;
         }
