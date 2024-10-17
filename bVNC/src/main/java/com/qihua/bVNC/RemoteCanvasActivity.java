@@ -134,7 +134,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         inputModeMap = Collections.unmodifiableMap(temp);
     }
 
-    final long hideToolbarDelay = 2500;
+    final long hideToolbarDelay = 1500;
     InputHandler inputHandler;
     Panner panner;
     Handler handler;
@@ -1688,6 +1688,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         getSupportActionBar().show();
         handler.removeCallbacks(toolbarHider);
         handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
+    }
+
+    public void hideToolbar() {
+        getSupportActionBar().hide();
+        handler.removeCallbacks(toolbarHider);
+        handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
+    }
+
+    public boolean isToolbarShowing() {
+        return getSupportActionBar().isShowing();
     }
 
     @Override

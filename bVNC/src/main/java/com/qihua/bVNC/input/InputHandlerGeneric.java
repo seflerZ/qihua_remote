@@ -21,6 +21,7 @@
 package com.qihua.bVNC.input;
 
 import static com.qihua.bVNC.input.MetaKeyBean.keysByKeyCode;
+import static com.qihua.bVNC.input.MetaKeyBean.keysByKeySym;
 
 import android.os.SystemClock;
 import android.view.KeyEvent;
@@ -454,6 +455,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         dragX = e.getX();
                         dragY = e.getY();
 
+                        gestureX = e.getX(index);
+                        gestureY = e.getY(index);
+
                         immerInitY = dragY;
 
 //                        activity.hideKeyboardAndExtraKeys();
@@ -462,6 +466,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         detectImmersiveSwipe(dragX);
                         break;
                     case MotionEvent.ACTION_MOVE:
+                        // do not move when toolbar is showing, instead do the gesture recognition
+                        if (activity.isToolbarShowing()) {
+                            break;
+                        }
+
                         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE");
                         // Send scroll up/down events if swiping is happening.
                         if (panMode) {
@@ -498,35 +507,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
                             break;
                         }
-                }
-                break;
-            case 1:
-                switch (action) {
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        // We re-calculate the initial focal point to be between the 1st and 2nd pointer index.
-                        xInitialFocus = (e.getX(pointerID));
-                        yInitialFocus = (e.getY(pointerID));
-
-                        // Permit sending mouse-down event on long-tap again.
-                        secondPointerWasDown = true;
-                        // Permit right-clicking again.
-                        thirdPointerWasDown = false;
                         break;
-                }
-                break;
-
-            case 2:
-                switch (action) {
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        thirdPointerWasDown = true;
-                        secondPointerWasDown = false;
-
-                        gestureX = e.getX(index);
-                        gestureY = e.getY(index);
-                        break;
-                    case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
-                        if (!inScaling && thirdPointerWasDown) {
+                        if (activity.isToolbarShowing()){
                             // the three pointer gestures
                             if ((e.getY(index) - gestureY) > 130 && Math.abs(e.getX(index) - gestureX) < 100) {
                                 canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
@@ -550,13 +533,51 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 canvas.getKeyboard().onScreenAltOff();
 
                                 Toast.makeText(pointer.context, "手势：前进", Toast.LENGTH_SHORT).show();
+                            } else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY < -130) {
+
+                            } else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY > 130) {
+
+                            } else if ((e.getX(index) - gestureX) < -130 && e.getY(index) - gestureY < -130) {
+//                                canvas.getKeyboard().sendUnicode('z', KeyEvent.META_CTRL_LEFT_ON);
+//
+//                                Toast.makeText(pointer.context, "手势：撤消", Toast.LENGTH_SHORT).show();
                             } else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
                                 canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
 
                                 Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
-                            } else if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
-                                activity.toggleKeyboard(null);
                             }
+
+                            activity.hideToolbar();
+                        }
+                        break;
+                }
+                break;
+            case 1:
+                switch (action) {
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        // We re-calculate the initial focal point to be between the 1st and 2nd pointer index.
+                        xInitialFocus = (e.getX(pointerID));
+                        yInitialFocus = (e.getY(pointerID));
+
+                        // Permit sending mouse-down event on long-tap again.
+                        secondPointerWasDown = true;
+                        // Permit right-clicking again.
+                        thirdPointerWasDown = false;
+                        break;
+                }
+                break;
+
+            case 2:
+                switch (action) {
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        thirdPointerWasDown = true;
+                        secondPointerWasDown = false;
+
+                        break;
+                    case MotionEvent.ACTION_POINTER_UP:
+                    case MotionEvent.ACTION_UP:
+                        if (!inScaling && thirdPointerWasDown) {
+                            activity.toggleKeyboard(null);
 
                             thirdPointerWasDown = false;
                         }
@@ -583,17 +604,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     dragHelped = false;
                 }
             }
-
-//            if (pointerID == 0) {
-//                singleHandedGesture = false;
-//                singleHandedJustEnded = true;
-//
-//                // If this is the end of a swipe that showed the nav bar, consume.
-//                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
-//                    endDragModesAndScrolling();
-//                    return true;
-//                }
-//            }
         }
 
         return gestureDetector.onTouchEvent(e);

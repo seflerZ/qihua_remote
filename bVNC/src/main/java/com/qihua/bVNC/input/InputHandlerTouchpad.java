@@ -20,10 +20,13 @@
 
 package com.qihua.bVNC.input;
 
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.qihua.bVNC.RemoteCanvas;
 import com.qihua.bVNC.RemoteCanvasActivity;
+import com.undatech.opaque.input.RemoteKeyboard;
 import com.undatech.opaque.util.GeneralUtils;
 import com.undatech.remoteClientUi.R;
 
@@ -63,6 +66,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         GeneralUtils.debugLog(debugLogging, TAG, "onScroll, e1: " + e1 + ", e2:" + e2);
+
+        if (activity.isToolbarShowing()) {
+            return true;
+        }
 
         final int meta = e2.getMetaState();
 
