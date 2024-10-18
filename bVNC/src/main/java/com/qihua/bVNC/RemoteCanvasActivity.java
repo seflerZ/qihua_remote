@@ -317,12 +317,12 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         KeyBoardListenerHelper helper = new KeyBoardListenerHelper(this);
         helper.setOnKeyBoardChangeListener((isShow, keyBoardHeight) -> {
-            int diff = (int) (canvas.getImageHeight() * canvas.getZoomFactor() - canvas.getHeight());
-            if ( diff < 0 ) {
-                canvas.absolutePan(canvas.getAbsX(), 0);
-            } else {
-                canvas.absolutePan(canvas.getAbsX(), (int) (diff / canvas.getZoomFactor()));
-            }
+//            int diff = (int) (canvas.getImageHeight() * canvas.getZoomFactor() - canvas.getHeight());
+//            if ( diff < 0 ) {
+//                canvas.absolutePan(canvas.getAbsX(), 0);
+//            } else {
+//                canvas.absolutePan(canvas.getAbsX(), (int) (diff / canvas.getZoomFactor()));
+//            }
 
             if (!isShow && !extraKeysHidden) {
                 hideKeyboardAndExtraKeys();
