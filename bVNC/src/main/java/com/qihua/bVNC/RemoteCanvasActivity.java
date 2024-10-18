@@ -1735,7 +1735,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         canvas.requestFocus();
         Utils.showKeyboard(this, canvas);
         softKeyboardUp = true;
-//        Objects.requireNonNull(getSupportActionBar()).hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     public void hideKeyboard() {

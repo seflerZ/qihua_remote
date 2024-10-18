@@ -596,14 +596,18 @@ public class Utils {
     public static void hideKeyboard(Context context, View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         }
     }
 
     public static void showKeyboard(Context context, View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, 0);
+            if (imm != null) {
+                imm.showSoftInput(view, 0);
+            }
         }
     }
 
