@@ -134,7 +134,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         inputModeMap = Collections.unmodifiableMap(temp);
     }
 
-    final long hideToolbarDelay = 1500;
+    final long hideToolbarDelay = 1000;
     InputHandler inputHandler;
     Panner panner;
     Handler handler;
@@ -1695,7 +1695,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     public void hideToolbar() {
         getSupportActionBar().hide();
         handler.removeCallbacks(toolbarHider);
-        handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
     }
 
     public boolean isToolbarShowing() {
@@ -1732,18 +1731,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     public void showKeyboard() {
         android.util.Log.i(TAG, "Showing keyboard and hiding action bar");
-        canvas.requestFocus();
+
         Utils.showKeyboard(this, canvas);
         softKeyboardUp = true;
-        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     public void hideKeyboard() {
         android.util.Log.i(TAG, "Hiding keyboard and hiding action bar");
-        canvas.requestFocus();
-        Utils.hideKeyboard(this, getCurrentFocus());
+
+        Utils.hideKeyboard(this, canvas);
         softKeyboardUp = false;
-        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     public void hideKeyboardAndExtraKeys() {
