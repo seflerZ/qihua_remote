@@ -20,8 +20,6 @@
 
 package com.qihua.bVNC.input;
 
-import static com.qihua.bVNC.input.MetaKeyBean.keysByKeyCode;
-
 import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -101,7 +99,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     float startSwipeDist = 2.f;
     float baseSwipeDist = 0.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
-    float immersiveSwipeDistance = 60.f;
+    float immersiveSwipeDistance = 65.f;
     boolean immersiveSwipe = false;
     // Some variables indicating what kind of a gesture we're currently in or just finished.
     boolean inScrolling = false;
@@ -521,15 +519,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         thirdPointerWasDown = true;
                         secondPointerWasDown = false;
 
-                        gestureX = e.getX(index);
-                        gestureY = e.getY(index);
                         break;
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
                         if (!inScaling && thirdPointerWasDown) {
-                            if (Math.abs(e.getY(index) - gestureY) < 50 && Math.abs(e.getX(index) - gestureX) < 50){
-                                activity.toggleKeyboard(null);
-                            }
+                            activity.toggleKeyboard(null);
 
                             thirdPointerWasDown = false;
                         }
@@ -543,6 +537,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 pointer.rightButtonDown(getX(e), getY(e), meta);
                 SystemClock.sleep(50);
                 pointer.releaseButton(getX(e), getY(e), meta);
+
                 secondPointerWasDown = false;
             }
 
@@ -556,17 +551,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     dragHelped = false;
                 }
             }
-
-//            if (pointerID == 0) {
-//                singleHandedGesture = false;
-//                singleHandedJustEnded = true;
-//
-//                // If this is the end of a swipe that showed the nav bar, consume.
-//                if (immersiveSwipe && Math.abs(dragY - e.getY()) > immersiveSwipeDistance) {
-//                    endDragModesAndScrolling();
-//                    return true;
-//                }
-//            }
         }
 
         return gestureDetector.onTouchEvent(e);

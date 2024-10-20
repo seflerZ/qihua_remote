@@ -6,7 +6,7 @@
         android:title="@string/right_alt_as_iso_l3_shift" />
     <PreferenceCategory android:title="@string/applies_to_new_connections_only">
         <SwitchPreferenceCompat
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="preferSendingUnicode"
             android:title="@string/prefer_sending_unicode" />
     </PreferenceCategory>

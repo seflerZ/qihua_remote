@@ -243,8 +243,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             cumulated = cumulatedY;
         }
 
-        if (Math.abs(distance / (12 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (12 * canvas.getZoomFactor());
+        float zoomFactor = canvas.getZoomFactor() * 0.5f;
+
+        if (Math.abs(distance / (10 * zoomFactor)) < 1) {
+            ratio = distance / (10 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
                 cumulated += ratio;
@@ -252,8 +254,17 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else {
                 cumulated = 0;
             }
-        } else if (Math.abs(distance / (24 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (24 * canvas.getZoomFactor());
+        } else if (Math.abs(distance / (20 * zoomFactor)) < 1) {
+            ratio = distance / (20 * zoomFactor);
+            ratio = ratio + cumulated;
+            if (Math.abs(ratio) < 1) {
+                cumulated += ratio * 1.5f;
+                ratio = 0;
+            } else {
+                cumulated = 0;
+            }
+        } else if (Math.abs(distance / (30 * zoomFactor)) < 1) {
+            ratio = distance / (30 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
                 cumulated += ratio * 2;
@@ -261,11 +272,11 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             } else {
                 cumulated = 0;
             }
-        } else if (Math.abs(distance / (36 * canvas.getZoomFactor())) < 1) {
-            ratio = distance / (36 * canvas.getZoomFactor());
+        } else if (Math.abs(distance / (40 * zoomFactor)) < 1) {
+            ratio = distance / (40 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 4;
+                cumulated += ratio * 2.5f;
                 ratio = 0;
             } else {
                 cumulated = 0;
@@ -352,15 +363,18 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         float origSign = getSign(delta);
         delta = Math.abs(delta);
         boolean accelerated = pointer.isAccelerated();
-        if (delta <= 15) {
-            delta = delta * 0.85f;
-        } else if (accelerated && delta <= 25.0f) {
-            delta = delta * 1.9f;
-        } else if (accelerated && delta <= 40.0f) {
+        if (delta <= 6 * canvas.getZoomFactor()) {
+            delta = delta * 0.8f;
+        } else if (accelerated && delta <= 15.0f) {
+            delta = delta * 1.1f;
+        } else if (accelerated && delta <= 20.0f) {
+            delta = delta * 1.5f;
+        } else if (accelerated && delta <= 30.0f) {
             delta = delta * 3.0f;
-        } else if (accelerated) {
+        } else {
             delta = delta * 4.5f;
         }
+
         return origSign * delta;
     }
 }
