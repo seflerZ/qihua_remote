@@ -360,7 +360,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         float origSign = getSign(delta);
         delta = Math.abs(delta);
         boolean accelerated = pointer.isAccelerated();
-        if (delta <= 8) {
+        if (delta <= 8 * canvas.getZoomFactor()) {
             delta = delta * 0.75f;
         } else if (accelerated && delta <= 15.0f) {
             delta = delta * 1f;
