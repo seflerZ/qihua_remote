@@ -102,7 +102,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     float startSwipeDist = 2.f;
     float baseSwipeDist = 0.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
-    float immersiveSwipeDistance = 60.f;
+    float immersiveSwipeDistance = 65.f;
     boolean immersiveSwipe = false;
     // Some variables indicating what kind of a gesture we're currently in or just finished.
     boolean inScrolling = false;
@@ -543,7 +543,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
                                 Toast.makeText(pointer.context, "手势：粘贴", Toast.LENGTH_SHORT).show();
 
-                            } else if ((e.getX(index) - gestureX) < -130 && e.getY(index) - gestureY < -130) {
+                            } else if ((e.getX(index) - gestureX) < -130 && e.getY(index) - gestureY > 130) {
                                 canvas.getKeyboard().sendUnicode('z', KeyEvent.META_CTRL_LEFT_ON);
 
                                 Toast.makeText(pointer.context, "手势：撤消", Toast.LENGTH_SHORT).show();
