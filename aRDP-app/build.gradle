@@ -33,7 +33,7 @@ android {
         }
 
         create("free") {
-            applicationIdSuffix ".free"
+            applicationIdSuffix ""
         }
     }
 }
