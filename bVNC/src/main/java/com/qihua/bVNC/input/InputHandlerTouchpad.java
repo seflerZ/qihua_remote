@@ -243,7 +243,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             cumulated = cumulatedY;
         }
 
-        float zoomFactor = canvas.getZoomFactor() * 0.5f;
+        float zoomFactor = canvas.getZoomFactor() * 0.6f;
 
         if (Math.abs(distance / (10 * zoomFactor)) < 1) {
             ratio = distance / (10 * zoomFactor);
