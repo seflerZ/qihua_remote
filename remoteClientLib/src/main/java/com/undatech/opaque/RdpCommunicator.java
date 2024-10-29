@@ -144,7 +144,7 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
             sendModifierKeys(true);
         }
         // If we don't wait, will crash. No idea why
-        SystemClock.sleep(1);
+//        SystemClock.sleep(1);
         LibFreeRDP.sendCursorEvent(session.getInstance(), x, y, pointerMask);
         if ((pointerMask & RemotePointer.POINTER_DOWN_MASK) == 0) {
             sendModifierKeys(false);
