@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -36,13 +35,10 @@ import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.qihua.bVNC.ConnectionBean;
+import com.qihua.bVNC.Constants;
 import com.qihua.bVNC.Database;
-import com.qihua.bVNC.MostRecentBean;
 import com.qihua.bVNC.Utils;
 import com.undatech.remoteClientUi.R;
-
-import net.sqlcipher.database.SQLiteDatabase;
 
 /**
  * @author Michael A. MacDonald
@@ -58,28 +54,19 @@ public class IntroTextDialog extends Dialog {
     /**
      * @param context -- Containing dialog
      */
-    private IntroTextDialog(Activity context, PackageInfo pi, Database database) {
+    private IntroTextDialog(Activity context, Database database) {
         super(context);
         setOwnerActivity(context);
-        packageInfo = pi;
         this.database = database;
     }
 
     public static void showIntroTextIfNecessary(Activity context, Database database, boolean show) {
-//        PackageInfo pi;
-//        try {
-//            String packageName = Utils.pName(context);
-//            pi = context.getPackageManager().getPackageInfo(packageName, 0);
-//        } catch (PackageManager.NameNotFoundException nnfe) {
-//            return;
-//        }
-//        MostRecentBean mr = ConnectionBean.getMostRecent(database.getReadableDatabase());
-//        database.close();
-//
-//        if (dialog == null && show && (mr == null || mr.getShowSplashVersion() != pi.versionCode)) {
-//            dialog = new IntroTextDialog(context, pi, database);
-//            dialog.show();
-//        }
+        boolean hidePrivacyTag = Utils.querySharedPreferenceBoolean(context, Constants.hidePrivacyTag);
+
+        if (dialog == null && show && !hidePrivacyTag) {
+            dialog = new IntroTextDialog(context, database);
+            dialog.show();
+        }
     }
 
     /* (non-Javadoc)
@@ -99,58 +86,13 @@ public class IntroTextDialog extends Dialog {
 
         Context context = this.getContext();
         String title = getContext().getResources().getString(R.string.intro_title);
-        if (Utils.isRdp(context)) {
-            title = getContext().getResources().getString(R.string.rdp_intro_title);
-        } else if (Utils.isSpice(context)) {
-            title = getContext().getResources().getString(R.string.spice_intro_title);
-        }
+
         StringBuilder sb = new StringBuilder(title);
         setTitle(sb);
         sb.delete(0, sb.length());
-        if (pkgName.contains("SPICE")) {
-            sb.append(getContext().getResources().getString(R.string.ad_donate_text_spice));
-            sb.append("<br>");
-            sb.append("<br>");
-        } else if (pkgName.contains("RDP")) {
-            sb.append(getContext().getResources().getString(R.string.ad_donate_text_rdp));
-            sb.append("<br>");
-            sb.append("<br>");
-        }
-        sb.append(getContext().getResources().getString(R.string.ad_donate_text0));
-        sb.append("<br>");
-        sb.append("<br>");
 
-        if (donate) {
-            sb.append("<a href=\"");
-            sb.append(Utils.getDonationPackageLink(getContext()));
-            sb.append("\">");
-            sb.append(getContext().getResources().getString(R.string.ad_donate_text1));
-            sb.append("</a>");
-            sb.append("<br>");
-            sb.append("<br>");
-            sb.append(getContext().getResources().getString(R.string.ad_donate_text2));
-            sb.append("<br>");
-            sb.append("<br>");
-            sb.append(getContext().getResources().getString(R.string.ad_donate_text3));
-            sb.append(" <a href=\"market://details?id=com.qihua.bVNC\">VNC</a>");
-            sb.append(", ");
-            sb.append("<a href=\"market://details?id=com.qihua.rmt\">RDP</a>");
-            sb.append(", ");
-            sb.append("<a href=\"market://details?id=com.qihua.aSPICE\">SPICE</a>");
-            sb.append(", ");
-            sb.append("<a href=\"market://details?id=com.undatech.opaque\">oVirt/RHEV/Proxmox</a>");
-            sb.append("<br>");
-            sb.append("<br>");
-        }
+        sb.append(getContext().getResources().getString(R.string.rdp_intro_text));
 
-        sb.append(getContext().getResources().getString(R.string.intro_header));
-        if (Utils.isVnc(context)) {
-            sb.append(getContext().getResources().getString(R.string.intro_text));
-        } else if (Utils.isRdp(context)) {
-            sb.append(getContext().getResources().getString(R.string.rdp_intro_text));
-        } else if (Utils.isSpice(context)) {
-            sb.append(getContext().getResources().getString(R.string.spice_intro_text));
-        }
         sb.append("\n");
         sb.append(getContext().getResources().getString(R.string.intro_version_text));
         TextView introTextView = (TextView) findViewById(R.id.textIntroText);
@@ -163,15 +105,16 @@ public class IntroTextDialog extends Dialog {
              */
             @Override
             public void onClick(View v) {
-                showAgain(true);
+                System.exit(0);
+//                showAgain(true);
             }
 
         });
 
         Button buttonCloseIntroDontShow = (Button) findViewById(R.id.buttonCloseIntroDontShow);
-        if (donate) {
-            buttonCloseIntroDontShow.setVisibility(View.GONE);
-        } else {
+//        if (donate) {
+//            buttonCloseIntroDontShow.setVisibility(View.GONE);
+//        } else {
             buttonCloseIntroDontShow.setOnClickListener(new View.OnClickListener() {
 
                 /* (non-Javadoc)
@@ -183,7 +126,7 @@ public class IntroTextDialog extends Dialog {
                 }
 
             });
-        }
+//        }
     }
 
     /* (non-Javadoc)
@@ -234,17 +177,7 @@ public class IntroTextDialog extends Dialog {
     }
 
     private void showAgain(boolean show) {
-        SQLiteDatabase db = database.getWritableDatabase();
-        MostRecentBean mostRecent = ConnectionBean.getMostRecent(db);
-        if (mostRecent != null) {
-            int value = -1;
-            if (!show) {
-                value = packageInfo.versionCode;
-            }
-            mostRecent.setShowSplashVersion(value);
-            mostRecent.Gen_update(db);
-        }
-        database.close();
+        Utils.setSharedPreferenceBoolean(getContext(), Constants.hidePrivacyTag, !show);
         dismiss();
         dialog = null;
     }

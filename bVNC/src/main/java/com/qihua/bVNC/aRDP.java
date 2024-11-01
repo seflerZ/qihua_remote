@@ -309,9 +309,9 @@ public class aRDP extends MainConfiguration {
      * @param view
      */
     public void remoteSoundTypeToggled(View view) {
-        if (Utils.isFree(this)) {
-            IntroTextDialog.showIntroTextIfNecessary(this, database, true);
-        }
+//        if (Utils.isFree(this)) {
+//            IntroTextDialog.showIntroTextIfNecessary(this, database, true);
+//        }
     }
 
     /**
@@ -320,10 +320,10 @@ public class aRDP extends MainConfiguration {
      */
     public void setRemoteSoundTypeFromView(View view) {
         RadioGroup g = (RadioGroup) view;
-        if (Utils.isFree(this)) {
-            IntroTextDialog.showIntroTextIfNecessary(this, database, true);
-            g.check(R.id.radioRemoteSoundDisabled);
-        }
+//        if (Utils.isFree(this)) {
+//            IntroTextDialog.showIntroTextIfNecessary(this, database, true);
+//            g.check(R.id.radioRemoteSoundDisabled);
+//        }
 
         int id = g.getCheckedRadioButtonId();
         int soundType = Constants.REMOTE_SOUND_DISABLED;

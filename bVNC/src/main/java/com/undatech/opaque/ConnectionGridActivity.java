@@ -303,8 +303,9 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             showGetTextFragment(getPassword);
         } else {
             loadSavedConnections();
-            IntroTextDialog.showIntroTextIfNecessary(this, database, Utils.isFree(this) && isStarting);
+            IntroTextDialog.showIntroTextIfNecessary(this, database, isStarting);
         }
+
         isStarting = false;
     }
 
@@ -527,7 +528,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             showDialog(R.layout.importexport);
         } else if (itemId == R.id.itemMasterPassword) {
             if (Utils.isFree(this)) {
-                IntroTextDialog.showIntroTextIfNecessary(this, database, true);
+//                IntroTextDialog.showIntroTextIfNecessary(this, database, true);
             } else {
                 togglingMasterPassword = true;
                 if (Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag)) {

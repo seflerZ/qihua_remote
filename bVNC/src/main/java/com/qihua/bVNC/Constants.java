@@ -176,6 +176,7 @@ public class Constants {
     public static final String generalSettingsTag = "generalSettings";
     public static final String masterPasswordEnabledTag = "masterPasswordEnabled";
     public static final String keepScreenOnTag = "keepScreenOn";
+    public static final String hidePrivacyTag = "showPrivacyOn";
     public static final String disableImmersiveTag = "disableImmersive";
     public static final String forceLandscapeTag = "forceLandscape";
     public static final String rAltAsIsoL3ShiftTag = "rAltAsIsoL3Shift";

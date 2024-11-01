@@ -181,8 +181,10 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
     public static MostRecentBean getMostRecent(SQLiteDatabase db) {
         ArrayList<MostRecentBean> recents = new ArrayList<MostRecentBean>(1);
         MostRecentBean.getAll(db, MostRecentBean.GEN_TABLE_NAME, recents, MostRecentBean.GEN_NEW);
-        if (recents.size() == 0)
+        if (recents.isEmpty()) {
             return null;
+        }
+
         return recents.get(0);
     }
 

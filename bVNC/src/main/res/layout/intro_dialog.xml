@@ -22,10 +22,10 @@
         android:padding="0sp">
 
         <Button
-            android:id="@+id/buttonCloseIntroDontShow"
+            android:id="@+id/buttonCloseIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/intro_dont_show"
+            android:text="@string/intro_close"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
@@ -40,10 +40,10 @@
                 android:padding="0sp">
 
                 <Button
-                    android:id="@+id/buttonCloseIntro"
+                    android:id="@+id/buttonCloseIntroDontShow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/intro_close"
+                    android:text="@string/intro_dont_show"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
         </LinearLayout>
