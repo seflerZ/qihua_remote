@@ -68,6 +68,7 @@ import com.qihua.bVNC.dialogs.ImportExportDialog;
 import com.qihua.bVNC.dialogs.IntroTextDialog;
 import com.qihua.bVNC.dialogs.RateOrShareFragment;
 import com.qihua.bVNC.input.InputHandlerDirectSwipePan;
+import com.qihua.bVNC.input.InputHandlerTouchpad;
 import com.qihua.util.MasterPasswordDelegate;
 import com.undatech.opaque.util.ConnectionLoader;
 import com.undatech.opaque.util.FileUtils;
@@ -489,7 +490,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             inputModeMenuItems[i] = inputMenu.findItem(RemoteCanvasActivity.inputModeIds[i]);
         }
         String defaultInputHandlerId = Utils.querySharedPreferenceString(
-                this, Constants.defaultInputMethodTag, InputHandlerDirectSwipePan.ID);
+                this, Constants.defaultInputMethodTag, InputHandlerTouchpad.ID);
         android.util.Log.d(TAG, "Default Input Mode Item: " + defaultInputHandlerId);
 
         try {
