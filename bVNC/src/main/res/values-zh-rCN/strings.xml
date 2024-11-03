@@ -4,7 +4,7 @@
     <string name="audio_initialized">音频初始化</string>
     <string name="action_import_settings">导入设定</string>
     <string name="action_new_connection">创建新连接</string>
-    <string name="action_edit_default_settings">编辑默认设定</string>
+    <string name="action_edit_default_settings">编辑默认设置</string>
     <string name="action_export_settings">导出设定</string>
     <string name="action_delete_connection">删除连接设定</string>
     <string name="opaque_app_name">Opaque</string>
@@ -494,8 +494,8 @@ bVNC对应的功能如下：
         <item>@string/rdp_geom_custom</item>
     </string-array>
     <string name="rdp_intro_text">
-使用此软件您必须同意本隐私政策才能继续， 若您不同意，请关闭此软件。&lt;br&gt;
-        &lt;h1&gt;隐私政策&lt;/h1&gt;
+&lt;em&gt;使用此软件您必须同意本隐私政策才能继续， 若您不同意，请关闭此软件。&lt;/em&gt;
+&lt;br&gt;&lt;br&gt;
 更新日期：2024/10/21&lt;br&gt;
 生效日期：2024/10/21&lt;br&gt;
 &lt;br&gt;
@@ -858,4 +858,5 @@ aSPICE对应的功能如下：
     <string name="hide_connection_thumbnails">隐藏缩略图</string>
     <string name="show_only_connection_nicknames">只显示昵称</string>
     <string name="warn_disconnect_will_reconnect">连接异常断开（用户从其他主机登录或网络中断），重连中。</string>
+    <string name="show_privacy_policy">查看隐私政策</string>
 </resources>

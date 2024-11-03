@@ -25,6 +25,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -60,13 +61,24 @@ public class IntroTextDialog extends Dialog {
         this.database = database;
     }
 
-    public static void showIntroTextIfNecessary(Activity context, Database database, boolean show) {
+    public static boolean showIntroTextIfNecessary(Activity context, Database database, boolean show) {
         boolean hidePrivacyTag = Utils.querySharedPreferenceBoolean(context, Constants.hidePrivacyTag);
 
-        if (dialog == null && show && !hidePrivacyTag) {
-            dialog = new IntroTextDialog(context, database);
+        dialog = new IntroTextDialog(context, database);
+        if (show && !hidePrivacyTag) {
             dialog.show();
+            return true;
         }
+
+        return false;
+    }
+
+    public static void showIntroText(Activity context, Database database) {
+        if (dialog == null) {
+            dialog = new IntroTextDialog(context, database);
+        }
+
+        dialog.show();
     }
 
     /* (non-Javadoc)
@@ -105,8 +117,11 @@ public class IntroTextDialog extends Dialog {
              */
             @Override
             public void onClick(View v) {
-                System.exit(0);
-//                showAgain(true);
+                showAgain(true);
+
+                SystemClock.sleep(200);
+
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
 
         });

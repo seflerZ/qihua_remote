@@ -47,6 +47,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -210,6 +211,10 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     private void launchConnection(View v) {
         Utils.hideKeyboard(this, getCurrentFocus());
         android.util.Log.i(TAG, "Launch Connection");
+
+        if (IntroTextDialog.showIntroTextIfNecessary(this, database, true)) {
+            return;
+        }
 
         ActivityManager.MemoryInfo info = Utils.getMemoryInfo(this);
         if (info.lowMemory)
@@ -387,6 +392,10 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         }
     }
 
+    public void showPrivacyPolicy(MenuItem menuItem) {
+        IntroTextDialog.showIntroText(this, database);
+    }
+
     /**
      * Linked with android:onClick to share or rate action bar item.
      * @param menuItem
@@ -402,7 +411,7 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.grid_view_activity_actions, menu);
-        inflater.inflate(R.menu.input_mode_menu_item, menu);
+//        inflater.inflate(R.menu.input_mode_menu_item, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -472,12 +481,12 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         android.util.Log.d(TAG, "onMenuOpened");
-        try {
-            updateInputMenu(menu.findItem(R.id.itemInputMode).getSubMenu());
-            MenuItem itemMasterPassword = menu.findItem(R.id.itemMasterPassword);
-            itemMasterPassword.setChecked(Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag));
-        } catch (NullPointerException e) {
-        }
+//        try {
+//            updateInputMenu(menu.findItem(R.id.itemInputMode).getSubMenu());
+//            MenuItem itemMasterPassword = menu.findItem(R.id.itemMasterPassword);
+//            itemMasterPassword.setChecked(Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag));
+//        } catch (NullPointerException e) {
+//        }
         return true;
     }
 
@@ -526,22 +535,23 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         int itemId = item.getItemId();
         if (itemId == R.id.itemExportImport) {
             showDialog(R.layout.importexport);
-        } else if (itemId == R.id.itemMasterPassword) {
-            if (Utils.isFree(this)) {
-//                IntroTextDialog.showIntroTextIfNecessary(this, database, true);
-            } else {
-                togglingMasterPassword = true;
-                if (Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag)) {
-                    showGetTextFragment(getPassword);
-                } else {
-                    showGetTextFragment(getNewPassword);
-                }
-            }
-        } else if (item.getGroupId() == R.id.itemInputModeGroup) {
-            Log.d(TAG, RemoteCanvasActivity.inputModeMap.get(item.getItemId()));
-            Utils.setSharedPreferenceString(this, Constants.defaultInputMethodTag,
-                    RemoteCanvasActivity.inputModeMap.get(item.getItemId()));
         }
+//        else if (itemId == R.id.itemMasterPassword) {
+//            if (Utils.isFree(this)) {
+        IntroTextDialog.showIntroTextIfNecessary(this, database, true);
+//            } else {
+//                togglingMasterPassword = true;
+//                if (Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag)) {
+//                    showGetTextFragment(getPassword);
+//                } else {
+//                    showGetTextFragment(getNewPassword);
+//                }
+//            }
+//        } else if (item.getGroupId() == R.id.itemInputModeGroup) {
+//            Log.d(TAG, RemoteCanvasActivity.inputModeMap.get(item.getItemId()));
+//            Utils.setSharedPreferenceString(this, Constants.defaultInputMethodTag,
+//                    RemoteCanvasActivity.inputModeMap.get(item.getItemId()));
+//        }
         return true;
     }
 

@@ -6,33 +6,40 @@
         android:id="@+id/itemExportImport"
         android:title="@string/import_export_settings"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/itemMasterPassword"
-        android:checkable="true"
-        android:title="@string/master_password_enable"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/copyLogcat"
-        android:onClick="copyLogcat"
-        android:title="@string/copy_logcat"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/itemMasterPassword"-->
+<!--        android:checkable="true"-->
+<!--        android:title="@string/master_password_enable"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/copyLogcat"-->
+<!--        android:onClick="copyLogcat"-->
+<!--        android:title="@string/copy_logcat"-->
+<!--        app:showAsAction="never" />-->
 
     <!-- New Connection, should appear as action button -->
+<!--    <item-->
+<!--        android:id="@+id/actionNewConnection"-->
+<!--        android:icon="@drawable/ic_baseline_add_to_queue_24"-->
+<!--        android:onClick="addNewConnection"-->
+<!--        android:showAsAction="never"-->
+<!--        android:title="@string/action_new_connection"-->
+<!--        app:showAsAction="never"-->
+<!--        tools:ignore="AppCompatResource" />-->
+
     <item
-        android:id="@+id/actionNewConnection"
-        android:icon="@drawable/ic_baseline_add_to_queue_24"
-        android:onClick="addNewConnection"
+        android:id="@+id/actionEditDefaultSettings"
+        android:onClick="editDefaultSettings"
         android:showAsAction="never"
-        android:title="@string/action_new_connection"
+        android:title="@string/action_edit_default_settings"
         app:showAsAction="never"
         tools:ignore="AppCompatResource" />
 
     <item
-        android:id="@+id/actionEditDefaultSettings"
-        android:icon="@drawable/i8_settings"
-        android:onClick="editDefaultSettings"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_edit_default_settings"
-        app:showAsAction="ifRoom"
+        android:id="@+id/actionShowPrivacyPolicy"
+        android:onClick="showPrivacyPolicy"
+        android:showAsAction="never"
+        android:title="@string/show_privacy_policy"
+        app:showAsAction="never"
         tools:ignore="AppCompatResource" />
 </menu>

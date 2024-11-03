@@ -31,7 +31,7 @@
         android:banner="@drawable/banner_ardp"
         android:icon="@drawable/icon_ardp"
         android:label="@string/ardp_app_name"
-        android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+        android:theme="@android:style/Theme.DeviceDefault"
         tools:replace="android:label,android:theme">
         <activity
             android:name="com.undatech.opaque.ConnectionGridActivity"
@@ -39,7 +39,7 @@
             android:exported="true"
             android:label="@string/ardp_app_name"
             android:resizeableActivity="true"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+            android:theme="@android:style/Theme.DeviceDefault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
