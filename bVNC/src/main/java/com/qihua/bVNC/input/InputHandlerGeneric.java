@@ -457,7 +457,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 //                        activity.hideKeyboardAndExtraKeys();
 
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
-                        detectImmersiveSwipe(dragX);
+                        // No single finger scrolling in free edition
+//                        detectImmersiveSwipe(dragX);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE");
