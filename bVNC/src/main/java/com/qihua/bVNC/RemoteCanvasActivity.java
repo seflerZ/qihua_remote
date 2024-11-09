@@ -1705,12 +1705,33 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         }
     }
 
+    public void fillScreen(MenuItem menuItem) {
+        float zoomRatio;
+        float diff = (float) canvas.getWidth() / canvas.getHeight() - (float) canvas.getImageWidth() / canvas.getImageHeight();
+        if (diff > 0) {
+            zoomRatio = (float) canvas.getWidth() / canvas.getImageWidth();
+        } else {
+            zoomRatio = (float) canvas.getHeight() / canvas.getImageHeight();
+        }
+
+        // Because the zoom action is relative, we should divide the current zoom factor
+        canvas.canvasZoomer.changeZoom(this, zoomRatio / canvas.canvasZoomer.getZoomFactor(), (float) canvas.getWidth() / 2, 0);
+    }
+
+//    public void sendCopy(MenuItem menuItem) {
+//        canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
+//    }
+//
+//    public void sendPaste(MenuItem menuItem) {
+//        canvas.getKeyboard().sendUnicode('v', KeyEvent.META_CTRL_LEFT_ON);
+//    }
+
+
     public void showKeyboard() {
         android.util.Log.i(TAG, "Showing keyboard and hiding action bar");
         canvas.requestFocus();
         Utils.showKeyboard(this, canvas);
         softKeyboardUp = true;
-//        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     public void hideKeyboard() {
