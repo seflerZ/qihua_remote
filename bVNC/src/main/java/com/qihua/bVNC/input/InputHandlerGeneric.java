@@ -396,10 +396,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         e.setLocation(x, y);
     }
 
-    private void detectImmersiveSwipe(float x) {
+    private void detectImmersiveSwipe(float x, float y) {
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
         if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
-                (x <= immersiveSwipeDistance || canvas.getWidth() - x <= immersiveSwipeDistance)) {
+                (x <= immersiveSwipeDistance || canvas.getWidth() - x <= immersiveSwipeDistance
+                        || canvas.getHeight() - y <= immersiveSwipeDistance)) {
             inSwiping = true;
             immersiveSwipe = true;
         } else if (!singleHandedGesture) {
@@ -463,7 +464,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 //                        activity.hideKeyboardAndExtraKeys();
 
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
-                        detectImmersiveSwipe(dragX);
+                        detectImmersiveSwipe(dragX, dragY);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         // do not move when toolbar is showing, instead do the gesture recognition
