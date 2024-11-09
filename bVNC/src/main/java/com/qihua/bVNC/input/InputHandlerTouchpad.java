@@ -362,14 +362,16 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         boolean accelerated = pointer.isAccelerated();
         if (delta <= 8 * canvas.getZoomFactor()) {
             delta = delta * 0.75f;
-        } else if (accelerated && delta <= 15.0f) {
+        } else if (accelerated && delta <= 15.0f * canvas.getZoomFactor()) {
             delta = delta * 1f;
-        } else if (accelerated && delta <= 20.0f) {
+        } else if (accelerated && delta <= 20.0f * canvas.getZoomFactor()) {
             delta = delta * 1.5f;
-        } else if (accelerated && delta <= 40.0f) {
-            delta = delta * 3.5f;
+        } else if (accelerated && delta <= 40.0f * canvas.getZoomFactor()) {
+            delta = delta * 2.5f;
+        } else if (accelerated && delta <= 60.0f * canvas.getZoomFactor()) {
+            delta = delta * 3f;
         } else if (accelerated) {
-            delta = delta * 4.5f;
+            delta = delta * 4f;
         }
         return origSign * delta;
     }

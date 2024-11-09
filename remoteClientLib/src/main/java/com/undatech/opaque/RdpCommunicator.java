@@ -143,9 +143,8 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         if ((pointerMask & RemotePointer.POINTER_DOWN_MASK) != 0) {
             sendModifierKeys(true);
         }
-        // If we don't wait, will crash. No idea why
-//        SystemClock.sleep(1);
         LibFreeRDP.sendCursorEvent(session.getInstance(), x, y, pointerMask);
+        SystemClock.sleep(3);
         if ((pointerMask & RemotePointer.POINTER_DOWN_MASK) == 0) {
             sendModifierKeys(false);
         }
@@ -206,10 +205,6 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
                 int modifier = modifierMap.get(modifierMask);
                 GeneralUtils.debugLog(this.debugLogging, TAG, "sendModifierKeys, modifierMask:" +
                         modifierMask + ", sending: " + modifier + ", down: " + down);
-//                try {
-//                    Thread.sleep(5);
-//                } catch (InterruptedException e) {
-//                }
                 LibFreeRDP.sendKeyEvent(session.getInstance(), modifier, down);
                 remoteKeyboardState.updateRemoteMetaState(modifierMask, down);
             }
