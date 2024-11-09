@@ -503,11 +503,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         e.setLocation(x, y);
     }
 
-    private void detectImmersiveSwipe(float x) {
+    private void detectImmersiveSwipe(float x, float y) {
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
-
-        if (x <= canvas.getWidth() * immersiveSwipeRatio
-                || touchpad.getWidth() - x <= canvas.getWidth() * immersiveSwipeRatio) {
+        if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
+                (x <= immersiveSwipeDistance || canvas.getWidth() - x <= immersiveSwipeDistance
+                        || canvas.getHeight() - y <= immersiveSwipeDistance)) {
             inSwiping = true;
             immersiveSwipe = true;
         } else if (!singleHandedGesture) {
@@ -582,9 +582,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         // No single finger scrolling in free edition
 //                        detectImmersiveSwipe(dragX);
 
-                        // Stop inertia srolling
+                        // Stop inertia scrolling
                         inertiaStartTime = System.currentTimeMillis();
 
+                        detectImmersiveSwipe(dragX, dragY);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         long timeElapsed = System.currentTimeMillis() - inertiaStartTime;
