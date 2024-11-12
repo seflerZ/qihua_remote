@@ -368,11 +368,51 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             delta = delta * 1.5f;
         } else if (accelerated && delta <= 40.0f * canvas.getZoomFactor()) {
             delta = delta * 2.5f;
-        } else if (accelerated && delta <= 60.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 55.0f * canvas.getZoomFactor()) {
             delta = delta * 3f;
+            autoZoomOut();
         } else if (accelerated) {
             delta = delta * 4f;
+            autoZoomOut();
         }
         return origSign * delta;
+    }
+
+    private float lastZoomFactor;
+
+    private Runnable zoomBackRunnable = new Runnable() {
+        @Override
+        public void run() {
+            autoZoomBack();
+        }
+    };
+
+    private void autoZoomBack() {
+        canvas.canvasZoomer.changeZoom(activity, lastZoomFactor
+                / canvas.getZoomFactor(), pointer.getX(), 0f);
+
+        lastZoomFactor = 0f;
+    }
+
+    private void autoZoomOut() {
+        // if current zoom factor is not big enough, skip this
+        if (canvas.getZoomFactor() < canvas.getMinimumScale() * 1.2f) {
+            return;
+        }
+
+        // already zoomed out
+        if (lastZoomFactor > 0) {
+            // just increase the zoom back delay
+            canvas.handler.removeCallbacks(zoomBackRunnable);
+            canvas.handler.postDelayed(zoomBackRunnable, 1800);
+
+            return;
+        }
+
+        lastZoomFactor = canvas.getZoomFactor();
+        canvas.canvasZoomer.changeZoom(activity, canvas.getMinimumScale()
+                / canvas.getZoomFactor(), pointer.getX(), 0f);
+
+        canvas.handler.postDelayed(zoomBackRunnable, 1800);
     }
 }
