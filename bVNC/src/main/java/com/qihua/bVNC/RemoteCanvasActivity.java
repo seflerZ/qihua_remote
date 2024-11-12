@@ -154,6 +154,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyDown;
     ImageButton keyLeft;
     ImageButton keyRight;
+    ImageButton keyPrev;
+    ImageButton keyNext;
     ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
     boolean extraKeysHidden = true;
@@ -935,6 +937,58 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         // TODO: Evaluate whether I should instead be using:
         // vncCanvas.sendMetaKey(MetaKeyBean.keyArrowLeft);
+
+        keyNext = (ImageButton) findViewById(R.id.keyNext);
+        keyNext.setImageResource(R.drawable.nextoff);
+
+        keyNext.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+
+
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_DPAD_RIGHT;
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    canvas.getKeyboard().onScreenCtrlOn();
+                    sendShortVibration();
+                    keyNext.setImageResource(R.drawable.nexton);
+                    k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
+                    return true;
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                    keyNext.setImageResource(R.drawable.nextoff);
+                    k.stopRepeatingKeyEvent();
+                    canvas.getKeyboard().onScreenCtrlOff();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        keyPrev = (ImageButton) findViewById(R.id.keyPrev);
+        keyPrev.setImageResource(R.drawable.prevoff);
+
+        keyPrev.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+
+
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_DPAD_LEFT;
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    canvas.getKeyboard().onScreenCtrlOn();
+                    sendShortVibration();
+                    keyPrev.setImageResource(R.drawable.prevon);
+                    k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
+                    return true;
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                    keyPrev.setImageResource(R.drawable.prevoff);
+                    k.stopRepeatingKeyEvent();
+                    canvas.getKeyboard().onScreenCtrlOff();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // Define action of arrow keys.
         keyUp = (ImageButton) findViewById(R.id.keyUpArrow);

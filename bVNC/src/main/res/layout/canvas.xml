@@ -175,11 +175,23 @@
                 android:padding="0sp">
 
                 <ImageButton
+                    android:id="@+id/keyPrev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/prevoff" />
+
+                <ImageButton
                     android:id="@+id/keyUpArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:background="@drawable/upoff" />
+
+                <ImageButton
+                    android:id="@+id/keyNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/nextoff" />
 
 <!--                <ImageButton-->
 <!--                    android:id="@+id/copy"-->

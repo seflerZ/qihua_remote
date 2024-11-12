@@ -130,7 +130,7 @@ public abstract class RemoteKeyboard {
     }
 
     public void onScreenCtrlOn() {
-        onScreenMetaState = onScreenMetaState & CTRL_MASK;
+        onScreenMetaState = onScreenMetaState | CTRL_MASK;
     }
 
     /**
