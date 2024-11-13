@@ -625,7 +625,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // If the toolbar is already shown, disconnect
             if (activity.getSupportActionBar().isShowing()) {
-                activity.getCanvas().disconnectWithoutMessage();
+                // Save current zoom factor
+                canvas.saveZoomFactor(canvas.getZoomFactor());
+                canvas.disconnectWithoutMessage();
+
                 return true;
             }
 

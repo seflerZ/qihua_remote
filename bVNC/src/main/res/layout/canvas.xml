@@ -175,11 +175,23 @@
                 android:padding="0sp">
 
                 <ImageButton
+                    android:id="@+id/keyHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/homeoff" />
+
+                <ImageButton
                     android:id="@+id/keyUpArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:background="@drawable/upoff" />
+
+                <ImageButton
+                    android:id="@+id/keyEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/endoff" />
 
 <!--                <ImageButton-->
 <!--                    android:id="@+id/copy"-->

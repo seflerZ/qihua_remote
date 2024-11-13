@@ -6,7 +6,7 @@ package com.qihua.bVNC;
 public abstract class AbstractConnectionBean extends com.antlersoft.android.dbimpl.IdImplementationBase implements IConnectionBean {
 
     public static final String GEN_TABLE_NAME = "CONNECTION_BEAN";
-    public static final int GEN_COUNT = 82;
+    public static final int GEN_COUNT = 83;
 
     // Field constants
     public static final String GEN_FIELD__ID = "_id";
@@ -176,6 +176,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
 
     public static final String GEN_FIELD_PREFERSENDINGUNICODE = "PREFERSENDINGUNICODE";
     public static final int GEN_ID_PREFERSENDINGUNICODE = 81;
+    public static final String GEN_FIELD_LASTZOOMFACTOR = "LASTZOOMFACTOR";
+    public static final int GEN_ID_LASTZOOMFACTOR = 82;
 
     // SQL Command for creating the table
     public static String GEN_CREATE = "CREATE TABLE CONNECTION_BEAN (" +
@@ -260,7 +262,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
             "SCREENSHOTFILENAME TEXT," +
             "ENABLEGFX INTEGER," +
             "ENABLEGFXH264 INTEGER," +
-            "PREFERSENDINGUNICODE INTEGER" +
+            "PREFERSENDINGUNICODE INTEGER," +
+            "LASTZOOMFACTOR FLOAT" +
             ")";
 
     // Members corresponding to defined fields
@@ -338,6 +341,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
     private boolean gen_enableSound;
     private boolean gen_enableRecording;
     private int gen_remoteSoundType;
+    private float gen_lastZoomFactor;
     private boolean gen_viewOnly;
     private java.lang.String gen_layoutMap;
 
@@ -1012,6 +1016,18 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_preferSendingUnicode = arg_preferSendingUnicode;
     }
 
+    public void setGenFieldLastzoomfactor(float arg_lastZoomFactor) {
+        gen_lastZoomFactor = arg_lastZoomFactor;
+    }
+
+    public float getLastZoomFactor() {
+        return gen_lastZoomFactor;
+    }
+
+    public void setLastZoomFactor(float arg_lastZoomFactor) {
+        gen_lastZoomFactor = arg_lastZoomFactor;
+    }
+
     public android.content.ContentValues Gen_getValues() {
         android.content.ContentValues values = new android.content.ContentValues();
         values.put(GEN_FIELD__ID, Long.toString(this.gen__Id));
@@ -1099,6 +1115,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         values.put(GEN_FIELD_ENABLEGFXH264, (this.gen_enableGfxH264 ? "1" : "0"));
 
         values.put(GEN_FIELD_PREFERSENDINGUNICODE, (this.gen_preferSendingUnicode ? "1" : "0"));
+        values.put(GEN_FIELD_LASTZOOMFACTOR, Float.toString(this.gen_lastZoomFactor));
 
         return values;
     }
@@ -1200,6 +1217,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         result[80] = cursor.getColumnIndex(GEN_FIELD_ENABLEGFXH264);
 
         result[81] = cursor.getColumnIndex(GEN_FIELD_PREFERSENDINGUNICODE);
+        result[82] = cursor.getColumnIndex(GEN_FIELD_LASTZOOMFACTOR);
         return result;
     }
 
@@ -1455,6 +1473,9 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         if (columnIndices[GEN_ID_PREFERSENDINGUNICODE] >= 0 && !cursor.isNull(columnIndices[GEN_ID_PREFERSENDINGUNICODE])) {
             gen_preferSendingUnicode = (cursor.getInt(columnIndices[GEN_ID_PREFERSENDINGUNICODE]) != 0);
         }
+        if (columnIndices[GEN_ID_LASTZOOMFACTOR] >= 0 && !cursor.isNull(columnIndices[GEN_ID_LASTZOOMFACTOR])) {
+            gen_lastZoomFactor = cursor.getFloat(columnIndices[GEN_ID_LASTZOOMFACTOR]);
+        }
     }
 
     /**
@@ -1546,5 +1567,6 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_enableGfxH264 = (values.getAsInteger(GEN_FIELD_ENABLEGFXH264) != 0);
 
         gen_preferSendingUnicode = (values.getAsInteger(GEN_FIELD_PREFERSENDINGUNICODE) != 0);
+        gen_lastZoomFactor = (values.getAsFloat(GEN_FIELD_LASTZOOMFACTOR));
     }
 }

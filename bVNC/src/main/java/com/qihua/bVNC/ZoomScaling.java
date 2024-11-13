@@ -191,7 +191,13 @@ class ZoomScaling extends AbstractScaling {
         canvasYOffset = 0;
 
         minimumScale = canvas.getMinimumScale();
-        scaling = minimumScale;
+
+        float lastZoomFactor = canvas.connection.getLastZoomFactor();
+        if (lastZoomFactor > 0 && canvas.connection.getUseLastPositionToolbar()) {
+            scaling = lastZoomFactor;
+        } else {
+            scaling = minimumScale;
+        }
         resolveZoom(canvas);
     }
 

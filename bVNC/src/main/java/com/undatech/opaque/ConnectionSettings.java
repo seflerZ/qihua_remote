@@ -83,6 +83,7 @@ public class ConnectionSettings implements Connection, Serializable {
     private boolean useLastPositionToolbar = true;
     private int useLastPositionToolbarX;
     private int useLastPositionToolbarY;
+    private float lastZoomFactor;
     private boolean useLastPositionToolbarMoved = false;
 
     public ConnectionSettings(String filename) {
@@ -482,6 +483,16 @@ public class ConnectionSettings implements Connection, Serializable {
     @Override
     public void setUseLastPositionToolbarX(int useLastPositionToolbarX) {
         this.useLastPositionToolbarX = useLastPositionToolbarX;
+    }
+
+    @Override
+    public void setLastZoomFactor(float lastZoomFactor) {
+        this.lastZoomFactor = lastZoomFactor;
+    }
+
+    @Override
+    public float getLastZoomFactor() {
+        return this.lastZoomFactor;
     }
 
     @Override

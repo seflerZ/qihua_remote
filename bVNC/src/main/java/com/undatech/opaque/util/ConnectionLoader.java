@@ -3,6 +3,7 @@ package com.undatech.opaque.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 
 import com.qihua.bVNC.ConnectionBean;
 import com.qihua.bVNC.Database;
@@ -47,6 +48,7 @@ public class ConnectionLoader {
         SQLiteDatabase db = database.getWritableDatabase();
 
         ArrayList<ConnectionBean> connections = new ArrayList<ConnectionBean>();
+
         ConnectionBean.getAll(db, ConnectionBean.GEN_TABLE_NAME, connections, ConnectionBean.newInstance);
         Collections.sort(connections);
         numConnections = connections.size();

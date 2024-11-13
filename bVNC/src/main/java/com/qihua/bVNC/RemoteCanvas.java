@@ -251,12 +251,15 @@ public class RemoteCanvas extends AppCompatImageView
         isOpaque = Utils.isOpaque(getContext());
 
         final Display display = ((Activity) context).getWindow().getWindowManager().getDefaultDisplay();
+
+        // TODO resolve deprecated
         displayWidth = display.getWidth();
         displayHeight = display.getHeight();
         DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics);
         displayDensity = metrics.density;
 
+        // TODO find out why progress dialog not showing
         // Startup the connection thread with a progress dialog
         pd = ProgressDialog.show(getContext(), getContext().getString(R.string.info_progress_dialog_connecting),
                 getContext().getString(R.string.info_progress_dialog_establishing),
@@ -344,6 +347,11 @@ public class RemoteCanvas extends AppCompatImageView
                 Utils.justFinish(getContext());
             }
         });
+    }
+
+    public void saveZoomFactor(float zoomFactor) {
+        connection.setLastZoomFactor(zoomFactor);
+        connection.saveAndWriteRecent(false, getContext());
     }
 
     /**

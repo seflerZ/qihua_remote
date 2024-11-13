@@ -1000,6 +1000,16 @@ public class NewConnection implements Connection {
     }
 
     @Override
+    public float getLastZoomFactor() {
+        return 0;
+    }
+
+    @Override
+    public void setLastZoomFactor(float lastScaleFactor) {
+
+    }
+
+    @Override
     public int getUseLastPositionToolbarY() {
         return 0;
     }

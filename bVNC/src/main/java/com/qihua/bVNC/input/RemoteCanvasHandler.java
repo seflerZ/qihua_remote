@@ -487,6 +487,12 @@ public class RemoteCanvasHandler extends Handler {
                     c.reinitializeCanvas();
                 }
                 break;
+            case RemoteClientLibConstants.REPORT_SCALE_FACTOR:
+                int lastScaleFactor = Utils.getIntFromMessage(msg, "lastScaleFactor");
+                connection.setUseLastPositionToolbarX(lastScaleFactor);
+                connection.saveAndWriteRecent(false, context);
+
+                break;
             case RemoteClientLibConstants.REPORT_TOOLBAR_POSITION:
                 android.util.Log.d(TAG, "Handling message, REPORT_TOOLBAR_POSITION");
                 if (connection.getUseLastPositionToolbar()) {

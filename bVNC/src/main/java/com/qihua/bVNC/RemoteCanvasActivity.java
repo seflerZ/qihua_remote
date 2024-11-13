@@ -38,7 +38,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -109,7 +108,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -154,6 +152,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyDown;
     ImageButton keyLeft;
     ImageButton keyRight;
+    ImageButton keyHome;
+    ImageButton keyEnd;
     ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
     boolean extraKeysHidden = true;
@@ -934,6 +934,54 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         // TODO: Evaluate whether I should instead be using:
         // vncCanvas.sendMetaKey(MetaKeyBean.keyArrowLeft);
 
+        keyEnd = (ImageButton) findViewById(R.id.keyEnd);
+        keyEnd.setImageResource(R.drawable.endoff);
+
+        keyEnd.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+
+
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_MOVE_END;
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    sendShortVibration();
+                    keyEnd.setImageResource(R.drawable.endon);
+                    k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
+                    return true;
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                    keyEnd.setImageResource(R.drawable.endoff);
+                    k.stopRepeatingKeyEvent();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        keyHome = (ImageButton) findViewById(R.id.keyHome);
+        keyHome.setImageResource(R.drawable.homeoff);
+
+        keyHome.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+
+
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_MOVE_HOME;
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    sendShortVibration();
+                    keyHome.setImageResource(R.drawable.homeon);
+                    k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
+                    return true;
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                    keyHome.setImageResource(R.drawable.homeoff);
+                    k.stopRepeatingKeyEvent();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         // Define action of arrow keys.
         keyUp = (ImageButton) findViewById(R.id.keyUpArrow);
         keyUp.setImageResource(R.drawable.upoff);
@@ -1208,6 +1256,11 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private void correctAfterRotation() throws Exception {
         Log.d(TAG, "correctAfterRotation");
         canvas.waitUntilInflated();
+
+        if (canvas.canvasZoomer == null) {
+            return;
+        }
+
         // Its quite common to see NullPointerExceptions here when this function is called
         // at the point of disconnection. Hence, we catch and ignore the error.
         float oldScale = canvas.canvasZoomer.getZoomFactor();
