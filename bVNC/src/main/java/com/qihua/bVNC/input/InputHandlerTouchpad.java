@@ -368,7 +368,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             delta = delta * 1.5f;
         } else if (accelerated && delta <= 40.0f * canvas.getZoomFactor()) {
             delta = delta * 2.5f;
-        } else if (accelerated && delta <= 60.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 55.0f * canvas.getZoomFactor()) {
             delta = delta * 3f;
         } else if (accelerated) {
             delta = delta * 4f;
