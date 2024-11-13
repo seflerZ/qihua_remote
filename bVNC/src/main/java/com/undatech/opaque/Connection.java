@@ -421,6 +421,10 @@ public interface Connection {
 
     int getUseLastPositionToolbarY();
 
+    void setLastZoomFactor(float lastZoomFactor);
+
+    float getLastZoomFactor();
+
     void setUseLastPositionToolbarY(int useLastPositionToolbarY);
 
     boolean getUseLastPositionToolbarMoved();

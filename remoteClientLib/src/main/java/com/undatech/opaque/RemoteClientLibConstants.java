@@ -45,7 +45,7 @@ public class RemoteClientLibConstants {
     public static final int GET_RDP_CREDENTIALS = 19;
     public static final int GET_SPICE_PASSWORD = 20;
     public static final int REPORT_TOOLBAR_POSITION = 21;
-
+    public static final int REPORT_SCALE_FACTOR = 22;
     public static final int LAUNCH_VNC_VIEWER = 23;
     public static final int VM_LAUNCHED = 24;
     public static final int OVIRT_AUTH_FAILURE = 25;

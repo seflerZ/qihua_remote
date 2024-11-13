@@ -167,10 +167,10 @@
                 android:padding="0sp">
 
                 <ImageButton
-                    android:id="@+id/keyPrev"
+                    android:id="@+id/keyHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/prevoff" />
+                    android:background="@drawable/homeoff" />
 
                 <ImageButton
                     android:id="@+id/keyLeftArrow"
@@ -198,10 +198,10 @@
                     android:background="@drawable/rightoff" />
 
                 <ImageButton
-                    android:id="@+id/keyNext"
+                    android:id="@+id/keyEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/nextoff" />
+                    android:background="@drawable/endoff" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

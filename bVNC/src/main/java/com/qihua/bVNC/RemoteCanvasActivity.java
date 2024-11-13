@@ -38,7 +38,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -109,7 +108,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -154,8 +152,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyDown;
     ImageButton keyLeft;
     ImageButton keyRight;
-    ImageButton keyPrev;
-    ImageButton keyNext;
+    ImageButton keyHome;
+    ImageButton keyEnd;
     ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
     boolean extraKeysHidden = true;
@@ -938,52 +936,48 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         // TODO: Evaluate whether I should instead be using:
         // vncCanvas.sendMetaKey(MetaKeyBean.keyArrowLeft);
 
-        keyNext = (ImageButton) findViewById(R.id.keyNext);
-        keyNext.setImageResource(R.drawable.nextoff);
+        keyEnd = (ImageButton) findViewById(R.id.keyEnd);
+        keyEnd.setImageResource(R.drawable.endoff);
 
-        keyNext.setOnTouchListener(new OnTouchListener() {
+        keyEnd.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
 
 
                 RemoteKeyboard k = canvas.getKeyboard();
-                int key = KeyEvent.KEYCODE_DPAD_RIGHT;
+                int key = KeyEvent.KEYCODE_MOVE_END;
                 if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                    canvas.getKeyboard().onScreenCtrlOn();
                     sendShortVibration();
-                    keyNext.setImageResource(R.drawable.nexton);
+                    keyEnd.setImageResource(R.drawable.endon);
                     k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
                     return true;
                 } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                    keyNext.setImageResource(R.drawable.nextoff);
+                    keyEnd.setImageResource(R.drawable.endoff);
                     k.stopRepeatingKeyEvent();
-                    canvas.getKeyboard().onScreenCtrlOff();
                     return true;
                 }
                 return false;
             }
         });
 
-        keyPrev = (ImageButton) findViewById(R.id.keyPrev);
-        keyPrev.setImageResource(R.drawable.prevoff);
+        keyHome = (ImageButton) findViewById(R.id.keyHome);
+        keyHome.setImageResource(R.drawable.homeoff);
 
-        keyPrev.setOnTouchListener(new OnTouchListener() {
+        keyHome.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent e) {
 
 
                 RemoteKeyboard k = canvas.getKeyboard();
-                int key = KeyEvent.KEYCODE_DPAD_LEFT;
+                int key = KeyEvent.KEYCODE_MOVE_HOME;
                 if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                    canvas.getKeyboard().onScreenCtrlOn();
                     sendShortVibration();
-                    keyPrev.setImageResource(R.drawable.prevon);
+                    keyHome.setImageResource(R.drawable.homeon);
                     k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
                     return true;
                 } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                    keyPrev.setImageResource(R.drawable.prevoff);
+                    keyHome.setImageResource(R.drawable.homeoff);
                     k.stopRepeatingKeyEvent();
-                    canvas.getKeyboard().onScreenCtrlOff();
                     return true;
                 }
                 return false;
@@ -1264,6 +1258,11 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private void correctAfterRotation() throws Exception {
         Log.d(TAG, "correctAfterRotation");
         canvas.waitUntilInflated();
+
+        if (canvas.canvasZoomer == null) {
+            return;
+        }
+
         // Its quite common to see NullPointerExceptions here when this function is called
         // at the point of disconnection. Hence, we catch and ignore the error.
         float oldScale = canvas.canvasZoomer.getZoomFactor();

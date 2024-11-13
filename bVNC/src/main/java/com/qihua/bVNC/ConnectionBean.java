@@ -157,6 +157,7 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
         setEnableGfx(false);
         setEnableGfxH264(false);
         setPreferSendingUnicode(preferSendingUnicode);
+        setLastZoomFactor(0f);
         c = context;
 
         // These two are not saved in the database since we always save the cert data. 
