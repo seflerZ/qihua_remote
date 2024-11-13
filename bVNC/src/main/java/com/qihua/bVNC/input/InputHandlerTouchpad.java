@@ -20,6 +20,7 @@
 
 package com.qihua.bVNC.input;
 
+import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -366,9 +367,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             delta = delta * 1f;
         } else if (accelerated && delta <= 20.0f * canvas.getZoomFactor()) {
             delta = delta * 1.5f;
-        } else if (accelerated && delta <= 40.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 35.0f * canvas.getZoomFactor()) {
             delta = delta * 2.5f;
-        } else if (accelerated && delta <= 55.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 45.0f * canvas.getZoomFactor()) {
             delta = delta * 3f;
             autoZoomOut();
         } else if (accelerated) {
@@ -378,7 +379,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         return origSign * delta;
     }
 
-    private float lastZoomFactor;
+    private float lastZoomFactor = 0f;
+
+    private long lastHandleTime = 0;
 
     private Runnable zoomBackRunnable = new Runnable() {
         @Override
@@ -400,12 +403,16 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             return;
         }
 
+        if (System.currentTimeMillis() - lastHandleTime < 250) {
+            return;
+        }
+
+        lastHandleTime = System.currentTimeMillis();
+
         // already zoomed out
         if (lastZoomFactor > 0) {
-            // just increase the zoom back delay
             canvas.handler.removeCallbacks(zoomBackRunnable);
             canvas.handler.postDelayed(zoomBackRunnable, 1800);
-
             return;
         }
 
