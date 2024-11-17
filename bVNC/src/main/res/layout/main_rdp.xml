@@ -583,7 +583,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="@string/position_toolbar_last_used"
-                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:checked="true"/>
 
