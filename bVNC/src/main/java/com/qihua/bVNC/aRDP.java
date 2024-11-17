@@ -336,9 +336,7 @@ public class aRDP extends MainConfiguration {
     }
 
     public void setRemoteSoundTypeFromSettings(int type) {
-        if (Utils.isFree(this)) {
-            type = Constants.REMOTE_SOUND_DISABLED;
-        }
+        type = Constants.REMOTE_SOUND_DISABLED;
 
         int id = 0;
         switch (type) {
