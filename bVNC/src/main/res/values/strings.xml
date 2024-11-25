@@ -204,6 +204,8 @@
     <string name="connection_edit_delete_prompt">Do you want to edit or delete the connection</string>
     <string name="connection_edit">Edit</string>
     <string name="connection_delete">Delete</string>
+    <string name="connection_favorite">Add to Favorite</string>
+    <string name="connection_cancel_favorite">Remove from Favorite</string>
 
     <string name="control_check">Ctrl</string>
 

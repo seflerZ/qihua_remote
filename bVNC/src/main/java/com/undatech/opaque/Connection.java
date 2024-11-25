@@ -434,4 +434,8 @@ public interface Connection {
     boolean getPreferSendingUnicode();
 
     void setPreferSendingUnicode(boolean preferSendingUnicode);
+
+    int getPriority();
+
+    void setPriority(int priority);
 }
