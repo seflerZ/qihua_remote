@@ -79,6 +79,7 @@ import com.undatech.remoteClientUi.R;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 public class ConnectionGridActivity extends FragmentActivity implements GetTextFragment.OnFragmentDismissedListener {
     private static String TAG = "ConnectionGridActivity";
@@ -130,14 +131,23 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ConnectionGridActivity.this);
                 String gridItemText = (String) ((TextView) v.findViewById(R.id.grid_item_text)).getText();
                 alertDialogBuilder.setTitle(getString(R.string.connection_edit_delete_prompt) + " " + gridItemText + " ?");
-                CharSequence[] cs = {getString(R.string.connection_edit), getString(R.string.connection_delete)};
+
+                CharSequence[] cs = {getString(R.string.connection_edit), getString(R.string.connection_delete), getString(R.string.connection_favorite)};
+                if (gridItemText.contains("★")) {
+                    cs[2] = getString(R.string.connection_cancel_favorite);
+                }
+
                 alertDialogBuilder.setItems(cs, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
-                        if (cs[item].toString() == getString(R.string.connection_edit)) {
+                        if (cs[item].toString().equals(getString(R.string.connection_edit))) {
                             editConnection(v);
-                        } else if (cs[item].toString() == getString(R.string.connection_delete)) {
+                        } else if (cs[item].toString().equals(getString(R.string.connection_delete))) {
                             deleteConnection(v);
+                        } else if (cs[item].toString().equals(getString(R.string.connection_favorite))) {
+                            addFavConnection(v);
+                        } else if (cs[item].toString().equals(getString(R.string.connection_cancel_favorite))) {
+                            cancelFavConnection(v);
                         }
                     }
                 });
@@ -201,9 +211,11 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
     }
 
     private void createAndSetLabeledImageAdapterAndNumberOfColumns() {
+        Map<String, Connection> connectionsByPosition = getConnectionLoader(this).loadConnectionsById();
+
         LabeledImageApapter labeledImageApapter = new LabeledImageApapter(
                 ConnectionGridActivity.this,
-                getConnectionLoader(this).loadConnectionsById(),
+                connectionsByPosition,
                 search.getText().toString().toLowerCase().split(" "));
         gridView.setAdapter(labeledImageApapter);
     }
@@ -298,6 +310,36 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
                         onResume();
                     }
                 }, null);
+    }
+
+    private void addFavConnection(View v) {
+        String runtimeId = (String) ((TextView) v.findViewById(R.id.grid_item_id)).getText();
+
+        ConnectionLoader connectionLoader = getConnectionLoader(ConnectionGridActivity.this);
+        ConnectionBean conn = (ConnectionBean) connectionLoader.getConnectionsById().get(runtimeId);
+        if (conn == null) {
+            return;
+        }
+
+        conn.setPriority((int) (System.currentTimeMillis() / 1000));
+        conn.save(this);
+
+        recreate();
+    }
+
+    private void cancelFavConnection(View v) {
+        String runtimeId = (String) ((TextView) v.findViewById(R.id.grid_item_id)).getText();
+
+        ConnectionLoader connectionLoader = getConnectionLoader(ConnectionGridActivity.this);
+        ConnectionBean conn = (ConnectionBean) connectionLoader.getConnectionsById().get(runtimeId);
+        if (conn == null) {
+            return;
+        }
+
+        conn.setPriority(0);
+        conn.save(this);
+
+        recreate();
     }
 
     @Override

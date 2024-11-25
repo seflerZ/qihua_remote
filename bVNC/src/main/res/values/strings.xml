@@ -210,6 +210,8 @@
     <string name="connection_edit_delete_prompt">你想编辑或删除连接吗？</string>
     <string name="connection_edit">编辑</string>
     <string name="connection_delete">删除</string>
+    <string name="connection_favorite">收藏</string>
+    <string name="connection_cancel_favorite">取消收藏</string>
 
     <string name="control_check">Ctrl</string>
     <string name="copy_list_button">复制列表</string>

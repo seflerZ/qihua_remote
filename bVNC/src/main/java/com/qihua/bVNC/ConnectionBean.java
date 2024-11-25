@@ -516,6 +516,10 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
      */
     @Override
     public int compareTo(ConnectionBean another) {
+        if (this.getPriority() - another.getPriority() != 0) {
+            return this.getPriority() - another.getPriority();
+        }
+
         int result = getNickname().compareTo(another.getNickname());
         if (result == 0) {
             result = getConnectionType() - another.getConnectionType();

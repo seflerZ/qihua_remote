@@ -517,6 +517,16 @@ public class ConnectionSettings implements Connection, Serializable {
     }
 
     @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
+    public void setPriority(int priority) {
+
+    }
+
+    @Override
     public boolean getUseLastPositionToolbarMoved() {
         return useLastPositionToolbarMoved;
     }

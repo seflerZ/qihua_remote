@@ -6,7 +6,7 @@ package com.qihua.bVNC;
 public abstract class AbstractConnectionBean extends com.antlersoft.android.dbimpl.IdImplementationBase implements IConnectionBean {
 
     public static final String GEN_TABLE_NAME = "CONNECTION_BEAN";
-    public static final int GEN_COUNT = 83;
+    public static final int GEN_COUNT = 84;
 
     // Field constants
     public static final String GEN_FIELD__ID = "_id";
@@ -178,6 +178,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
     public static final int GEN_ID_PREFERSENDINGUNICODE = 81;
     public static final String GEN_FIELD_LASTZOOMFACTOR = "LASTZOOMFACTOR";
     public static final int GEN_ID_LASTZOOMFACTOR = 82;
+    public static final String GEN_FIELD_PRIORITY = "PRIORITY";
+    public static final int GEN_ID_PRIORITY = 83;
 
     // SQL Command for creating the table
     public static String GEN_CREATE = "CREATE TABLE CONNECTION_BEAN (" +
@@ -263,7 +265,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
             "ENABLEGFX INTEGER," +
             "ENABLEGFXH264 INTEGER," +
             "PREFERSENDINGUNICODE INTEGER," +
-            "LASTZOOMFACTOR FLOAT" +
+            "LASTZOOMFACTOR FLOAT," +
+            "PRIORITY INTEGER" +
             ")";
 
     // Members corresponding to defined fields
@@ -352,6 +355,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
     private boolean gen_enableGfx;
     private boolean gen_enableGfxH264;
     private boolean gen_preferSendingUnicode;
+    private int gen_priority;
 
     public String Gen_tableName() {
         return GEN_TABLE_NAME;
@@ -1028,6 +1032,14 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_lastZoomFactor = arg_lastZoomFactor;
     }
 
+    public int getPriority() {
+        return gen_priority;
+    }
+
+    public void setPriority(int arg_priority) {
+        gen_priority = arg_priority;
+    }
+
     public android.content.ContentValues Gen_getValues() {
         android.content.ContentValues values = new android.content.ContentValues();
         values.put(GEN_FIELD__ID, Long.toString(this.gen__Id));
@@ -1116,6 +1128,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
 
         values.put(GEN_FIELD_PREFERSENDINGUNICODE, (this.gen_preferSendingUnicode ? "1" : "0"));
         values.put(GEN_FIELD_LASTZOOMFACTOR, Float.toString(this.gen_lastZoomFactor));
+        values.put(GEN_FIELD_PRIORITY, Integer.toString(this.gen_priority));
 
         return values;
     }
@@ -1218,6 +1231,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
 
         result[81] = cursor.getColumnIndex(GEN_FIELD_PREFERSENDINGUNICODE);
         result[82] = cursor.getColumnIndex(GEN_FIELD_LASTZOOMFACTOR);
+        result[83] = cursor.getColumnIndex(GEN_FIELD_PRIORITY);
+
         return result;
     }
 
@@ -1476,6 +1491,9 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         if (columnIndices[GEN_ID_LASTZOOMFACTOR] >= 0 && !cursor.isNull(columnIndices[GEN_ID_LASTZOOMFACTOR])) {
             gen_lastZoomFactor = cursor.getFloat(columnIndices[GEN_ID_LASTZOOMFACTOR]);
         }
+        if (columnIndices[GEN_ID_PRIORITY] >= 0 && !cursor.isNull(columnIndices[GEN_ID_PRIORITY])) {
+            gen_priority = cursor.getInt(columnIndices[GEN_ID_PRIORITY]);
+        }
     }
 
     /**
@@ -1568,5 +1586,6 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
 
         gen_preferSendingUnicode = (values.getAsInteger(GEN_FIELD_PREFERSENDINGUNICODE) != 0);
         gen_lastZoomFactor = (values.getAsFloat(GEN_FIELD_LASTZOOMFACTOR));
+        gen_priority = (values.getAsInteger(GEN_FIELD_PRIORITY));
     }
 }

@@ -1038,4 +1038,14 @@ public class NewConnection implements Connection {
     public void setPreferSendingUnicode(boolean preferSendingUnicode) {
 
     }
+
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
+    @Override
+    public void setPriority(int priority) {
+
+    }
 }
