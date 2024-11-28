@@ -20,6 +20,7 @@ package com.undatech.opaque;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.PersistableBundle;
 import android.widget.ImageView.ScaleType;
 
 public interface Connection {
@@ -188,6 +189,8 @@ public interface Connection {
     String saveCaToFile(Context context, String caCertData);
 
     void populateFromContentValues(ContentValues values);
+
+    void populateFromPersistentBundle(PersistableBundle bundle);
 
     boolean isReadyForConnection();
 

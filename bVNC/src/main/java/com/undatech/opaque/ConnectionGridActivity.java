@@ -47,7 +47,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -249,8 +248,9 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             intent.putExtra("com.undatech.opaque.ConnectionSettings", cs);
         } else {
             ConnectionBean conn = (ConnectionBean) connectionLoader.getConnectionsById().get(runtimeId);
-            intent.putExtra(Utils.getConnectionString(appContext), conn.Gen_getValues());
+            intent.putExtra(Utils.getConnectionString(appContext), conn.gen_getPersistentBundle());
         }
+
         startActivity(intent);
     }
 

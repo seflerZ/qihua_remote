@@ -2,6 +2,7 @@ package com.qihua.bVNC;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.PersistableBundle;
 import android.widget.ImageView;
 
 import com.google.android.gms.common.internal.ResourceUtils;
@@ -421,6 +422,11 @@ public class NewConnection implements Connection {
 
     @Override
     public void populateFromContentValues(ContentValues values) {
+
+    }
+
+    @Override
+    public void populateFromPersistentBundle(PersistableBundle bundle) {
 
     }
 
