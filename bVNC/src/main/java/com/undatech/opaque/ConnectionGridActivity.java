@@ -245,8 +245,9 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             intent.putExtra("com.undatech.opaque.ConnectionSettings", cs);
         } else {
             ConnectionBean conn = (ConnectionBean) connectionLoader.getConnectionsById().get(runtimeId);
-            intent.putExtra(Utils.getConnectionString(appContext), conn.Gen_getValues());
+            intent.putExtra(Utils.getConnectionString(appContext), conn.gen_getPersistentBundle());
         }
+
         startActivity(intent);
     }
 
@@ -516,8 +517,8 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         android.util.Log.d(TAG, "onMenuOpened");
         try {
             updateInputMenu(menu.findItem(R.id.itemInputMode).getSubMenu());
-            MenuItem itemMasterPassword = menu.findItem(R.id.itemMasterPassword);
-            itemMasterPassword.setChecked(Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag));
+//            MenuItem itemMasterPassword = menu.findItem(R.id.itemMasterPassword);
+//            itemMasterPassword.setChecked(Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag));
         } catch (NullPointerException e) {
         }
         return true;
@@ -568,18 +569,20 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
         int itemId = item.getItemId();
         if (itemId == R.id.itemExportImport) {
             showDialog(R.layout.importexport);
-        } else if (itemId == R.id.itemMasterPassword) {
-            if (Utils.isFree(this)) {
-                IntroTextDialog.showIntroTextIfNecessary(this, database, true);
-            } else {
-                togglingMasterPassword = true;
-                if (Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag)) {
-                    showGetTextFragment(getPassword);
-                } else {
-                    showGetTextFragment(getNewPassword);
-                }
-            }
-        } else if (item.getGroupId() == R.id.itemInputModeGroup) {
+        }
+//        else if (itemId == R.id.itemMasterPassword) {
+//            if (Utils.isFree(this)) {
+//                IntroTextDialog.showIntroTextIfNecessary(this, database, true);
+//            } else {
+//                togglingMasterPassword = true;
+//                if (Utils.querySharedPreferenceBoolean(this, Constants.masterPasswordEnabledTag)) {
+//                    showGetTextFragment(getPassword);
+//                } else {
+//                    showGetTextFragment(getNewPassword);
+//                }
+//            }
+//        }
+        else if (item.getGroupId() == R.id.itemInputModeGroup) {
             Log.d(TAG, RemoteCanvasActivity.inputModeMap.get(item.getItemId()));
             Utils.setSharedPreferenceString(this, Constants.defaultInputMethodTag,
                     RemoteCanvasActivity.inputModeMap.get(item.getItemId()));

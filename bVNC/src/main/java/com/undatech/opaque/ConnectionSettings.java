@@ -24,6 +24,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -831,6 +832,11 @@ public class ConnectionSettings implements Connection, Serializable {
 
     @Override
     public void populateFromContentValues(ContentValues values) {
+
+    }
+
+    @Override
+    public void populateFromPersistentBundle(PersistableBundle bundle) {
 
     }
 

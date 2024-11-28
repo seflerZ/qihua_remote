@@ -41,6 +41,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.Log;
@@ -360,12 +363,15 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         Log.d(TAG, "Initializing serialized connection");
         connection = new ConnectionBean(this);
         Bundle extras = i.getExtras();
-
-        if (extras != null) {
-            Log.d(TAG, "Loading values from serialized connection");
-            connection.populateFromContentValues((ContentValues) extras.getParcelable(Utils.getConnectionString(this)));
-            connection.load(this);
+        if (extras == null) {
+            return;
         }
+
+        PersistableBundle bundle = extras.getParcelable(Utils.getConnectionString(this));
+
+        connection.populateFromPersistentBundle(bundle);
+        connection.load(this);
+
         parsePortIfIpv4Address();
         setDefaultProtocolAndSshPorts();
     }

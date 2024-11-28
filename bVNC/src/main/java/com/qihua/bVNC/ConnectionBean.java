@@ -23,6 +23,7 @@ package com.qihua.bVNC;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.ImageView.ScaleType;
 
@@ -215,6 +216,11 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
     @Override
     public void populateFromContentValues(ContentValues values) {
         Gen_populate(values);
+    }
+
+    @Override
+    public void populateFromPersistentBundle(PersistableBundle bundle) {
+        Gen_populateFromPersistentBundle(bundle);
     }
 
     @Override
