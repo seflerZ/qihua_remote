@@ -15,7 +15,7 @@ import com.undatech.opaque.RfbConnectable;
 public abstract class RemotePointer {
 
     public static final int POINTER_DOWN_MASK = 0x8000;
-    public static float DEFAULT_SENSITIVITY = 1.0f;
+    public static float DEFAULT_SENSITIVITY = 0.9f;
     public static boolean DEFAULT_ACCELERATED = true;
     /**
      * Current state of "mouse" buttons
