@@ -485,8 +485,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             }
 
                             // If try to drag with long time, enlarge the screen for drag helper. This is very helpful in selecting texts in small screen.
-                            if (System.currentTimeMillis() - lastDragStartTime > 1000 && canEnlarge
-                                    && dragMode && (Math.abs(totalDragX) < 50 && Math.abs(totalDragY) < 50)
+                            if (System.currentTimeMillis() - lastDragStartTime > 600 && canEnlarge
+                                    && dragMode && (Math.abs(totalDragX) < 120 && Math.abs(totalDragY) < 120)
                                     && lastZoomFactor < 2.0f) {
                                 canvas.canvasZoomer.changeZoom(activity, 2.5f/canvas.getZoomFactor(), pointer.getX(), pointer.getY());
                                 dragHelped = true;
