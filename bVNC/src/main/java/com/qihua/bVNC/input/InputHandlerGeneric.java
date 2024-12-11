@@ -534,21 +534,25 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 canvas.getKeyboard().onScreenAltOff();
 
                                 Toast.makeText(pointer.context, "手势：前进", Toast.LENGTH_SHORT).show();
-                            } else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY < -130) {
-                                canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
-
-                                Toast.makeText(pointer.context, "手势：复制", Toast.LENGTH_SHORT).show();
-
-                            } else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY > 130) {
-                                canvas.getKeyboard().sendUnicode('v', KeyEvent.META_CTRL_LEFT_ON);
-
-                                Toast.makeText(pointer.context, "手势：粘贴", Toast.LENGTH_SHORT).show();
-
-                            } else if ((e.getX(index) - gestureX) < -130 && e.getY(index) - gestureY > 130) {
-                                canvas.getKeyboard().sendUnicode('z', KeyEvent.META_CTRL_LEFT_ON);
-
-                                Toast.makeText(pointer.context, "手势：撤消", Toast.LENGTH_SHORT).show();
-                            } else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
+                            }
+//                            else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY < -130) {
+//                                canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
+//
+//                                Toast.makeText(pointer.context, "手势：复制", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                            else if ((e.getX(index) - gestureX) > 130 && e.getY(index) - gestureY > 130) {
+//                                canvas.getKeyboard().sendUnicode('v', KeyEvent.META_CTRL_LEFT_ON);
+//
+//                                Toast.makeText(pointer.context, "手势：粘贴", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                            else if ((e.getX(index) - gestureX) < -130 && e.getY(index) - gestureY > 130) {
+//                                canvas.getKeyboard().sendUnicode('z', KeyEvent.META_CTRL_LEFT_ON);
+//
+//                                Toast.makeText(pointer.context, "手势：撤消", Toast.LENGTH_SHORT).show();
+//                            }
+                            else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
                                 canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
 
                                 Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
@@ -576,16 +580,16 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         gestureY = e.getY(index);
 
                         break;
-//                    case MotionEvent.ACTION_POINTER_UP:
-//                        //two finger gesture
+                    case MotionEvent.ACTION_POINTER_UP:
+                        //two finger gesture
 //                        if (e.getY(index) - gestureY < -130) {
-//                            canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
-//                            Toast.makeText(pointer.context, "手势：复制", Toast.LENGTH_SHORT).show();
+//                            canvas.getKeyboard().sendUnicode('1', RemoteKeyboard.ALT_MASK);
+//                            Toast.makeText(pointer.context, "手势：任务视图", Toast.LENGTH_SHORT).show();
 //
 //                            secondPointerWasDown = false;
 //                        } else if (e.getY(index) - gestureY > 130) {
-//                            canvas.getKeyboard().sendUnicode('v', KeyEvent.META_CTRL_LEFT_ON);
-//                            Toast.makeText(pointer.context, "手势：粘贴", Toast.LENGTH_SHORT).show();
+//                            canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
+//                            Toast.makeText(pointer.context, "手势：关闭标签", Toast.LENGTH_SHORT).show();
 //
 //                            secondPointerWasDown = false;
 //                        }
@@ -627,6 +631,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
                 if (dragHelped) {
                     canvas.canvasZoomer.changeZoom(activity, lastZoomFactor / canvas.getZoomFactor(), pointer.getX(), pointer.getY());
+
+                    canvas.getKeyboard().sendUnicode('c', KeyEvent.META_CTRL_LEFT_ON);
+                    Toast.makeText(pointer.context, "自动复制", Toast.LENGTH_SHORT).show();
+
                     dragHelped = false;
                 }
             }
