@@ -36,6 +36,7 @@ import com.undatech.opaque.util.GeneralUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.Semaphore;
 
 abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureListener
         implements InputHandler, ScaleGestureDetector.OnScaleGestureListener {
@@ -65,14 +66,16 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected boolean singleHandedJustEnded = false;
     // These variables keep track of which pointers have seen ACTION_DOWN events.
     protected boolean secondPointerWasDown = false;
-    protected boolean inertiaScrollingEnabled = false;
-    protected boolean isInertiaScrollingCancelled = false;
     protected long inertiaStartTime = 0;
+    protected Thread inertiaThread;
+    protected long inertiaBaseInterval = 16;
+    protected boolean inertiaScrollingEnabled = true;
+    protected int inertiaMetaState = 0;
+    protected Semaphore inertiaSemaphore = new Semaphore(0);
     protected float lastSpeedX = 0;
     protected float lastSpeedY = 0;
     protected float lastX = 0;
     protected float lastY = 0;
-    protected Thread inertiaThread;
     protected boolean thirdPointerWasDown = false;
     protected RemotePointer pointer;
     // This is the initial "focal point" of the gesture (between the two fingers).
@@ -155,6 +158,43 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         immersiveSwipeDistance = immersiveSwipeDistance * displayDensity;
         GeneralUtils.debugLog(debugLogging, TAG, "displayDensity, baseSwipeDist, immersiveSwipeDistance: "
                 + displayDensity + " " + baseSwipeDist + " " + immersiveSwipeDistance);
+
+        // for inertia scrolling
+        inertiaThread = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                while (true) {
+                    try {
+                        inertiaSemaphore.acquire();
+                    } catch (Exception ignored) {
+                        // stop immediately
+                        continue;
+                    }
+
+                    if (lastSpeedX == 0 && lastSpeedY == 0) {
+                        continue;
+                    }
+
+                    int speedX = (int) lastSpeedX;
+                    int speedY = (int) lastSpeedY;
+
+                    while ((speedX != 0 || speedY != 0) && !inertiaThread.isInterrupted()) {
+                        pointer.moveMouse(pointer.getX() + speedX, pointer.getY() + speedY, inertiaMetaState);
+                        canvas.movePanToMakePointerVisible();
+
+                        speedX = (int) (speedX * 0.85);
+                        speedY = (int) (speedY * 0.85);
+
+                        SystemClock.sleep(inertiaBaseInterval);
+                    }
+
+                    canvas.movePanToMakePointerVisible();
+                }
+            }
+        });
+
+        inertiaThread.setDaemon(true);
+        inertiaThread.start();
     }
 
     /**
@@ -468,6 +508,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             inertiaThread.interrupt();
                         }
 
+                        lastX = e.getX();
+                        lastY = e.getY();
+
 //                        activity.hideKeyboardAndExtraKeys();
 
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
@@ -475,26 +518,22 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 //                        detectImmersiveSwipe(dragX);
 
                         // Stop inertia srolling
-                        if (!inertiaScrollingEnabled) {
-                            inertiaScrollingEnabled = true;
-                            inertiaStartTime = System.currentTimeMillis();
-                        }
+                        inertiaStartTime = System.currentTimeMillis();
 
                         break;
                     case MotionEvent.ACTION_MOVE:
                         long timeElapsed = System.currentTimeMillis() - inertiaStartTime;
+                        long interval = inertiaBaseInterval * 3;
 
-                        if (lastX != 0 && timeElapsed > 16 * 2) {
-                            long time = System.currentTimeMillis() - inertiaStartTime;
-                            lastSpeedX = (1000 * (e.getX() - lastX)) / (time * 16 * canvas.getZoomFactor());
-                        }
+                        if (timeElapsed > interval) {
+                            if (lastX != 0) {
+                                lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
+                            }
 
-                        if (lastX != 0 && timeElapsed > 16 * 2) {
-                            long time = System.currentTimeMillis() - inertiaStartTime;
-                            lastSpeedY = (1000 * (e.getY() - lastY)) / (time * 16 * canvas.getZoomFactor());
-                        }
+                            if (lastY != 0) {
+                                lastSpeedY = (1000 * (e.getY() - lastY)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
+                            }
 
-                        if (timeElapsed > 16 * 2) {
                             inertiaStartTime = System.currentTimeMillis();
                         }
 
