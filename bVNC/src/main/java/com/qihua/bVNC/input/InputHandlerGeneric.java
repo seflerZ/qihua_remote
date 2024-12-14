@@ -65,6 +65,14 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected boolean singleHandedJustEnded = false;
     // These variables keep track of which pointers have seen ACTION_DOWN events.
     protected boolean secondPointerWasDown = false;
+    protected boolean inertiaScrollingEnabled = false;
+    protected boolean isInertiaScrollingCancelled = false;
+    protected long inertiaStartTime = 0;
+    protected float lastSpeedX = 0;
+    protected float lastSpeedY = 0;
+    protected float lastX = 0;
+    protected float lastY = 0;
+    protected Thread inertiaThread;
     protected boolean thirdPointerWasDown = false;
     protected RemotePointer pointer;
     // This is the initial "focal point" of the gesture (between the two fingers).
@@ -454,13 +462,45 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
                         immerInitY = dragY;
 
+                        lastSpeedX = lastSpeedY = 0;
+
+                        if (inertiaThread != null) {
+                            inertiaThread.interrupt();
+                        }
+
 //                        activity.hideKeyboardAndExtraKeys();
 
                         // Detect whether this is potentially the start of a gesture to show the nav bar.
                         // No single finger scrolling in free edition
 //                        detectImmersiveSwipe(dragX);
+
+                        // Stop inertia srolling
+                        if (!inertiaScrollingEnabled) {
+                            inertiaScrollingEnabled = true;
+                            inertiaStartTime = System.currentTimeMillis();
+                        }
+
                         break;
                     case MotionEvent.ACTION_MOVE:
+                        long timeElapsed = System.currentTimeMillis() - inertiaStartTime;
+
+                        if (lastX != 0 && timeElapsed > 16 * 2) {
+                            long time = System.currentTimeMillis() - inertiaStartTime;
+                            lastSpeedX = (1000 * (e.getX() - lastX)) / (time * 16 * canvas.getZoomFactor());
+                        }
+
+                        if (lastX != 0 && timeElapsed > 16 * 2) {
+                            long time = System.currentTimeMillis() - inertiaStartTime;
+                            lastSpeedY = (1000 * (e.getY() - lastY)) / (time * 16 * canvas.getZoomFactor());
+                        }
+
+                        if (timeElapsed > 16 * 2) {
+                            inertiaStartTime = System.currentTimeMillis();
+                        }
+
+                        lastX = e.getX();
+                        lastY = e.getY();
+
                         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE");
                         // Send scroll up/down events if swiping is happening.
                         if (panMode) {
