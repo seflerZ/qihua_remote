@@ -586,6 +586,31 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         }
                         break;
                     case MotionEvent.ACTION_UP:
+                        if (inertiaScrollingEnabled && !activity.isToolbarShowing() && !immersiveSwipe) {
+//                            timeElapsed = System.currentTimeMillis() - inertiaStartTime;
+//                            interval = inertiaBaseInterval * 2;
+//
+//                            if (timeElapsed > interval) {
+//                                if (lastX != 0) {
+//                                    lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
+//                                }
+//
+//                                if (lastY != 0) {
+//                                    lastSpeedY = (1000 * (e.getY() - lastY)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
+//                                }
+//
+//                                inertiaStartTime = System.currentTimeMillis();
+//                            }
+
+//                            if (lastSpeedX == 0 && lastSpeedY == 0) {
+//                                lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
+//                                lastSpeedY = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
+//                            }
+
+                            inertiaMetaState = e.getMetaState();
+                            inertiaSemaphore.release();
+                        }
+
                         if (activity.isToolbarShowing()){
                             // the three pointer gestures
                             if ((e.getY(index) - gestureY) > 130 && Math.abs(e.getX(index) - gestureX) < 100) {
@@ -635,32 +660,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             }
 
                             activity.hideToolbar();
-                        }
-
-                        if (inertiaScrollingEnabled) {
-                            timeElapsed = System.currentTimeMillis() - inertiaStartTime;
-                            interval = inertiaBaseInterval * 2;
-//
-//                            if (timeElapsed > interval) {
-//                                if (lastX != 0) {
-//                                    lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
-//                                }
-//
-//                                if (lastY != 0) {
-//                                    lastSpeedY = (1000 * (e.getY() - lastY)) / (timeElapsed * inertiaBaseInterval * canvas.getZoomFactor());
-//                                }
-//
-//                                inertiaStartTime = System.currentTimeMillis();
-//                            }
-
-                            if (lastSpeedX == 0 && lastSpeedY == 0) {
-
-                                lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
-                                lastSpeedY = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
-                            }
-
-                            inertiaMetaState = e.getMetaState();
-                            inertiaSemaphore.release();
                         }
 
                         break;
