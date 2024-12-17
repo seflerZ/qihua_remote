@@ -237,61 +237,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
     }
 
     private float getRatio(float distance, boolean isY) {
-        float ratio = 0;
-        float cumulated = cumulatedX;
-        if (isY) {
-            cumulated = cumulatedY;
-        }
-
-        float zoomFactor = canvas.getZoomFactor() * 0.7f;
-        if (Math.abs(distance / (10 * zoomFactor)) < 1) {
-            ratio = distance / (10 * zoomFactor);
-            ratio = ratio + cumulated;
-            if (Math.abs(ratio) < 1) {
-                cumulated += ratio;
-                ratio = 0;
-            } else {
-                cumulated = 0;
-            }
-        } else if (Math.abs(distance / (18 * zoomFactor)) < 1) {
-            ratio = distance / (18 * zoomFactor);
-            ratio = ratio + cumulated;
-            if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 1.2f;
-                ratio = 0;
-            } else {
-                cumulated = 0;
-            }
-        } else if (Math.abs(distance / (24 * zoomFactor)) < 1) {
-            ratio = distance / (24 * zoomFactor);
-            ratio = ratio + cumulated;
-            if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 1.4f;
-                ratio = 0;
-            } else {
-                cumulated = 0;
-            }
-        } else if (Math.abs(distance / (36 * zoomFactor)) < 1) {
-            ratio = distance / (36 * zoomFactor);
-            ratio = ratio + cumulated;
-            if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 1.6f;
-                ratio = 0;
-            } else {
-                cumulated = 0;
-            }
-        } else {
-            ratio = distance;
-            cumulated = 0;
-        }
-
-        if (isY) {
-            cumulatedY = cumulated;
-        } else {
-            cumulatedX = cumulated;
-        }
-
-        return ratio;
+        return distance;
     }
 
     /*
