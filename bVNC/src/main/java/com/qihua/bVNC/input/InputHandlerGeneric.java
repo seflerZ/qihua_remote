@@ -576,6 +576,22 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                             GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: ACTION_MOVE in a drag mode, moving mouse with button down");
                             break;
                         }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (inertiaScrollingEnabled) {
+                            timeElapsed = System.currentTimeMillis() - inertiaStartTime;
+
+                            if (lastSpeedX == 0 && lastSpeedY == 0) {
+
+                                lastSpeedX = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
+                                lastSpeedY = (1000 * (e.getX() - lastX)) / (timeElapsed * (inertiaBaseInterval) * canvas.getZoomFactor());
+                            }
+
+                            inertiaMetaState = e.getMetaState();
+                            inertiaSemaphore.release();
+                        }
+
+                        break;
                 }
                 break;
             case 1:
