@@ -257,7 +257,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             ratio = distance / (18 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 1.5f;
+                cumulated += ratio * 1.2f;
                 ratio = 0;
             } else {
                 cumulated = 0;
@@ -266,7 +266,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             ratio = distance / (24 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 2;
+                cumulated += ratio * 1.4f;
                 ratio = 0;
             } else {
                 cumulated = 0;
@@ -275,7 +275,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             ratio = distance / (36 * zoomFactor);
             ratio = ratio + cumulated;
             if (Math.abs(ratio) < 1) {
-                cumulated += ratio * 3;
+                cumulated += ratio * 1.6f;
                 ratio = 0;
             } else {
                 cumulated = 0;
