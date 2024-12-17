@@ -578,7 +578,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (inertiaScrollingEnabled) {
+                        if (inertiaScrollingEnabled && !secondPointerWasDown) {
                             timeElapsed = System.currentTimeMillis() - inertiaStartTime;
 
                             if (lastSpeedX == 0 && lastSpeedY == 0) {
