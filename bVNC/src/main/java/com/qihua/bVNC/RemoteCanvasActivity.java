@@ -487,7 +487,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         canvas.setOnKeyListener(this);
         canvas.setFocusableInTouchMode(true);
-        canvas.setDrawingCacheEnabled(false);
+        canvas.setDrawingCacheEnabled(true);
 
         // This code detects when the soft keyboard is up and sets an appropriate visibleHeight in vncCanvas.
         // When the keyboard is gone, it resets visibleHeight and pans zero distance to prevent us from being

@@ -88,9 +88,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             distYQueue.clear();
 
             inSwiping = true;
-
-            // prevent right click
-            secondPointerWasDown = false;
         }
 
         // If in swiping mode, indicate a swipe at regular intervals.
@@ -125,8 +122,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             // get the relative moving distance compared to one step
-            float ratioY = getRatio(distanceY, true);
-            float ratioX = getRatio(distanceX, false);
+            float ratioY = distanceY / canvas.getZoomFactor();
+            float ratioX = distanceX / canvas.getZoomFactor();
 
             // The direction is just up side down.
             int newY = (int)-(ratioY);
@@ -309,19 +306,18 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         delta = Math.abs(delta);
         boolean accelerated = pointer.isAccelerated();
         if (delta <= 8 * canvas.getZoomFactor()) {
-            delta = delta * 0.75f;
+            delta = delta * 0.85f;
         } else if (accelerated && delta <= 15.0f * canvas.getZoomFactor()) {
             delta = delta * 1f;
-        } else if (accelerated && delta <= 20.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 25.0f * canvas.getZoomFactor()) {
             delta = delta * 1.5f;
-        } else if (accelerated && delta <= 40.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 35.0f * canvas.getZoomFactor()) {
             delta = delta * 2.5f;
-        } else if (accelerated && delta <= 55.0f * canvas.getZoomFactor()) {
+        } else if (accelerated && delta <= 45.0f * canvas.getZoomFactor()) {
             delta = delta * 3f;
         } else if (accelerated) {
-            delta = delta * 4f;
+            delta = delta * 3.5f;
         }
-
         return origSign * delta;
     }
 }
