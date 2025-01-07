@@ -294,30 +294,4 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         float delta = (float) (distance * Math.cbrt(canvas.getZoomFactor()));
         return computeAcceleration(delta);
     }
-
-    /**
-     * Computes the acceleration depending on the size of the supplied delta.
-     *
-     * @param delta
-     * @return
-     */
-    private float computeAcceleration(float delta) {
-        float origSign = getSign(delta);
-        delta = Math.abs(delta);
-        boolean accelerated = pointer.isAccelerated();
-        if (delta <= 8 * canvas.getZoomFactor()) {
-            delta = delta * 0.85f;
-        } else if (accelerated && delta <= 15.0f * canvas.getZoomFactor()) {
-            delta = delta * 1f;
-        } else if (accelerated && delta <= 25.0f * canvas.getZoomFactor()) {
-            delta = delta * 1.5f;
-        } else if (accelerated && delta <= 35.0f * canvas.getZoomFactor()) {
-            delta = delta * 2.5f;
-        } else if (accelerated && delta <= 45.0f * canvas.getZoomFactor()) {
-            delta = delta * 3f;
-        } else if (accelerated) {
-            delta = delta * 3.5f;
-        }
-        return origSign * delta;
-    }
 }
