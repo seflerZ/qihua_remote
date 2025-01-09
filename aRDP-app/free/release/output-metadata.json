@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.qihua.rmt",
+  "variantName": "freeRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 2501,
+      "versionName": "v1.3.0",
+      "outputFile": "aRDP-app-free-release.apk"
+    }
+  ],
+  "elementType": "File"
+}

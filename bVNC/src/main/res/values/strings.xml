@@ -223,7 +223,7 @@
     <string name="disconnect">切断</string>
     <string name="dpad_as_arrows">将D-Pad用于箭头键，将D-Pad单击用于Ctrl。</string>
     <string name="enable_recording">启用音频录制</string>
-    <string name="enable_gesture">启用手势（仅限专业版）</string>
+    <string name="enable_gesture">启用手势（暂未开放）</string>
     <string name="enable_sound">声音重定向</string>
     <string name="enter_text">发送文字</string>
     <string name="enter_text_title">输入发送用文字</string>
@@ -635,8 +635,8 @@ bVNC对应的功能如下：
     <string name="rdp_server_empty">RDP服务器或端口是空着。无法连接！</string>
     <string name="rdp_username_hint">RDP用户名</string>
     <string name="remote_sound_disabled">声音已禁用</string>
-    <string name="remote_sound_on_device">设备上的声音(仅限专业版）</string>
-    <string name="remote_sound_on_server">服务器上的声音(仅限专业版）</string>
+    <string name="remote_sound_on_device">设备上的声音(暂未开放）</string>
+    <string name="remote_sound_on_server">服务器上的声音(暂未开放）</string>
     <string name="repeater_button">UltraVNC中继器</string>
     <string name="repeater_caption">重要信息：如果使用UltraVNC中继器，请在此对话框外部输入其地址和端口号。在此输入实际VNC服务器的地址和端口号。用冒号分隔VNC服务器的地址和端口号，例如 192.168.0.100:5900。</string>
     <string name="repeater_caption_hint">UltraVNC中继器</string>
