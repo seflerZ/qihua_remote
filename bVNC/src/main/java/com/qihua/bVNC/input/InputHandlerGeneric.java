@@ -774,7 +774,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
-        if (e.isFromSource(InputDevice.SOURCE_MOUSE)) {
+        if (e.getDeviceId() > 10) {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 canvas.getKeyboard().onScreenAltOn();
 
@@ -798,8 +798,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // If the toolbar is already shown, disconnect
             if (activity.getSupportActionBar().isShowing()) {
-                // Save current zoom factor
-                canvas.saveZoomFactor(canvas.getZoomFactor());
+                // Save current zoom factor, but not on second display mode
+                if (!canvas.isOutDisplay()) {
+                    canvas.saveZoomFactor(canvas.getZoomFactor());
+                }
+
                 canvas.disconnectWithoutMessage();
 
                 return true;
