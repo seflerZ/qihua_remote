@@ -110,7 +110,7 @@ public class ConnectionListActivity extends ListActivity {
             Context context = getApplicationContext();
             ShortcutIconResource icon = Intent.ShortcutIconResource.fromContext(this, R.drawable.icon);
             if (Utils.isRdp(context)) {
-                icon = Intent.ShortcutIconResource.fromContext(this, R.drawable.icon_ardp);
+                icon = Intent.ShortcutIconResource.fromContext(this, R.drawable.app_icon);
             } else if (Utils.isSpice(context)) {
                 icon = Intent.ShortcutIconResource.fromContext(this, R.drawable.icon_aspice);
             }
