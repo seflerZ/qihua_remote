@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.qihua.rmt"
     android:installLocation="auto"
-    android:versionCode="2501"
-    android:versionName="v1.3.1">
+    android:versionCode="2502"
+    android:versionName="v1.3.2">
 
 <!--    <uses-permission tools:node="removeAll" />-->
     <uses-permission android:name="android.permission.INTERNET" />
