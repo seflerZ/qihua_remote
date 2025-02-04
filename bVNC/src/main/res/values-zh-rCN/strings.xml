@@ -214,7 +214,7 @@
     <string name="delete_key_list">删除密钥列表</string>
     <string name="disconnect">切断</string>
     <string name="dpad_as_arrows">将D-Pad用于箭头键，将D-Pad单击用于Ctrl。</string>
-    <string name="enable_recording">启用音频录制</string>
+    <string name="enable_recording">启用麦克风重定向</string>
     <string name="enable_gesture">启用手势(暂未开放)</string>
     <string name="enable_sound">声音重定向</string>
     <string name="enter_text">发送文字</string>
@@ -855,7 +855,7 @@ aSPICE对应的功能如下：
     <string name="report_bug">报告错误</string>
     <string name="download_from_server">从服务器下载</string>
     <string name="import_from_file">从文件导入</string>
-    <string name="please_grant_permission_from_prefs">你可能需要通过设置向应用程序授予权限。</string>
+    <string name="please_grant_permission_from_prefs">权限申请失败，你可能需要通过设置向应用程序授予权限。</string>
     <string name="rdp_adv_gfx">RDP Gfx</string>
     <string name="rdp_adv_gfxh264">RDP Gfx H264</string>
     <string name="more_debug_logging">更多调试记录</string>
@@ -864,4 +864,6 @@ aSPICE对应的功能如下：
     <string name="show_only_connection_nicknames">只显示昵称</string>
     <string name="warn_disconnect_will_reconnect">连接异常断开（用户从其他主机登录或网络中断），重连中。</string>
     <string name="show_privacy_policy">查看隐私政策</string>
+    <string name="request_recording_parameter_title">将申请录音权限</string>
+    <string name="request_recording_parameter_description">申请此权限将手机的麦克风用于远程录音输入，例如在远端参加语音、视频会议时使用。</string>
 </resources>

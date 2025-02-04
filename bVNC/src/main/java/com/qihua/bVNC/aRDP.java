@@ -19,6 +19,9 @@
 
 package com.qihua.bVNC;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,10 +36,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.core.app.ActivityCompat;
+
 import com.qihua.bVNC.dialogs.IntroTextDialog;
 import com.qihua.util.PermissionGroups;
 import com.qihua.util.PermissionsManager;
 import com.morpheusly.common.Utilities;
+import com.undatech.opaque.ConnectionGridActivity;
+import com.undatech.opaque.ConnectionSetupActivity;
 import com.undatech.remoteClientUi.R;
 
 import java.util.List;
@@ -292,9 +299,25 @@ public class aRDP extends MainConfiguration {
      */
     public void toggleEnableRecording(View view) {
         CheckBox b = (CheckBox) view;
-        PermissionsManager.requestPermissions(this, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
+        Activity a = this;
 
-        selected.setEnableRecording(b.isChecked());
+        if (!PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
+            android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getString(R.string.request_recording_parameter_title));
+            alertDialogBuilder.setMessage(getString(R.string.request_recording_parameter_description));
+
+            alertDialogBuilder.setPositiveButton("知道了", (dialog, which) -> {
+                PermissionsManager.requestPermissions(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
+            });
+
+            alertDialogBuilder.create().show();
+        }
+
+        if (PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
+            selected.setEnableRecording(b.isChecked());
+        } else {
+            b.setChecked(false);
+        }
     }
 
     public void toggleEnableStorageRedirect(View view) {

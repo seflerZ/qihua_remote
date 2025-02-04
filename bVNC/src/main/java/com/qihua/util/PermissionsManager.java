@@ -70,4 +70,21 @@ public class PermissionsManager {
             }
         }
     }
+
+    public static boolean hasPermission(Activity activity, PermissionGroups permission_group) {
+        String[] permissions = (String[]) permissionGroups.get(permission_group);
+        if (permissions == null) {
+            Log.e(TAG, "Could not find permissions for permission group: " + permission_group);
+            return false;
+        }
+        Log.i(TAG, "Requesting permissions for permission group: " + permission_group);
+        for (String permission : permissions) {
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
