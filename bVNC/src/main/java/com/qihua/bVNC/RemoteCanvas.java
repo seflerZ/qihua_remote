@@ -251,10 +251,6 @@ public class RemoteCanvas extends AppCompatImageView
     public RemoteCanvas(final Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.R) {
-            return;
-        }
-
         clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         isVnc = Utils.isVnc(getContext());
         isRdp = Utils.isRdp(getContext());
@@ -262,10 +258,14 @@ public class RemoteCanvas extends AppCompatImageView
         isOpaque = Utils.isOpaque(getContext());
 
         Display display;
-        if (context instanceof Activity) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.R) {
             display = ((Activity) context).getWindow().getWindowManager().getDefaultDisplay();
         } else {
-            display = context.getDisplay();
+            if (context instanceof Activity) {
+                display = ((Activity) context).getWindow().getWindowManager().getDefaultDisplay();
+            } else {
+                display = context.getDisplay();
+            }
         }
 
         // TODO resolve deprecated

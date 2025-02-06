@@ -301,23 +301,26 @@ public class aRDP extends MainConfiguration {
         CheckBox b = (CheckBox) view;
         Activity a = this;
 
-        if (!PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
-            android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(getString(R.string.request_recording_parameter_title));
-            alertDialogBuilder.setMessage(getString(R.string.request_recording_parameter_description));
-
-            alertDialogBuilder.setPositiveButton("知道了", (dialog, which) -> {
-                PermissionsManager.requestPermissions(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
-            });
-
-            alertDialogBuilder.create().show();
-        }
-
         if (PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
             selected.setEnableRecording(b.isChecked());
-        } else {
-            b.setChecked(false);
         }
+
+        // reqest for recoding permission
+        android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getString(R.string.request_recording_parameter_title));
+        alertDialogBuilder.setMessage(getString(R.string.request_recording_parameter_description));
+
+        alertDialogBuilder.setPositiveButton("知道了", (dialog, which) -> {
+            PermissionsManager.requestPermissions(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
+
+            if (PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
+                selected.setEnableRecording(b.isChecked());
+            } else {
+                b.setChecked(false);
+            }
+        });
+
+        alertDialogBuilder.create().show();
     }
 
     public void toggleEnableStorageRedirect(View view) {
