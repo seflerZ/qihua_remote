@@ -303,6 +303,7 @@ public class aRDP extends MainConfiguration {
 
         if (PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
             selected.setEnableRecording(b.isChecked());
+            return;
         }
 
         // reqest for recoding permission
@@ -312,12 +313,6 @@ public class aRDP extends MainConfiguration {
 
         alertDialogBuilder.setPositiveButton("知道了", (dialog, which) -> {
             PermissionsManager.requestPermissions(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
-
-            if (PermissionsManager.hasPermission(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO)) {
-                selected.setEnableRecording(b.isChecked());
-            } else {
-                b.setChecked(false);
-            }
         });
 
         alertDialogBuilder.create().show();
