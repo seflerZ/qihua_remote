@@ -129,6 +129,10 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
             public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ConnectionGridActivity.this);
                 String gridItemText = (String) ((TextView) v.findViewById(R.id.grid_item_text)).getText();
+                if (gridItemText.equals("$NEW$")) {
+                    return true;
+                }
+
                 alertDialogBuilder.setTitle(getString(R.string.connection_edit_delete_prompt) + " " + gridItemText + " ?");
 
                 CharSequence[] cs = {getString(R.string.connection_edit), getString(R.string.connection_delete), getString(R.string.connection_favorite)};
