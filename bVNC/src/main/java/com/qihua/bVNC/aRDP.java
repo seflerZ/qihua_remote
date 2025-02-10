@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -162,8 +163,14 @@ public class aRDP extends MainConfiguration {
                 if (selectedConnType == Constants.CONN_TYPE_RDP) {
                     setVisibilityOfSshWidgets(View.GONE);
                     rdpDomain.setVisibility(View.VISIBLE);
+                    findViewById(R.id.geometryGroup).setVisibility(View.VISIBLE);
+                    findViewById(R.id.checkboxEnableRecording).setVisibility(View.VISIBLE);
+                    findViewById(R.id.textDescriptGeom).setVisibility(View.VISIBLE);
                 } else if (selectedConnType == Constants.CONN_TYPE_VNC) {
                     rdpDomain.setVisibility(View.GONE);
+                    findViewById(R.id.geometryGroup).setVisibility(View.GONE);
+                    findViewById(R.id.checkboxEnableRecording).setVisibility(View.GONE);
+                    findViewById(R.id.textDescriptGeom).setVisibility(View.GONE);
                 }
             }
 
