@@ -497,7 +497,7 @@ build() {
         fi
 
         echo "Copying local recipes into cerbero"
-        git clone https://github.com/qihua/remote-desktop-clients-cerbero-recipes.git recipes || true
+        git clone https://github.com/iiordanov/remote-desktop-clients-cerbero-recipes.git recipes || true
         pushd recipes
         git pull
         popd
@@ -624,10 +624,10 @@ build_freerdp() {
 
         # Patch the config
         sed -i -e 's/CMAKE_BUILD_TYPE=.*/CMAKE_BUILD_TYPE=Release/'\
-               -e 's/WITH_JPEG=.*/WITH_JPEG=1/'\
-               -e 's/WITH_FFMPEG=.*/WITH_FFMPEG=1/'\
-               -e 's/WITH_MEDIACODEC=.*/WITH_MEDIACODEC=1/'\
+               -e 's/WITH_JPEG=.*/WITH_JPEG=0/'\
                -e 's/WITH_OPENH264=.*/WITH_OPENH264=1/'\
+               -e 's/WITH_MEDIACODEC=.*/WITH_MEDIACODEC=1/'\
+               -e 's/WITH_FFMPEG=.*/WITH_FFMPEG=0/'\
                -e 's/OPENH264_TAG=.*/OPENH264_TAG=v2.4.1/'\
                -e 's/OPENSSL_TAG=.*/OPENSSL_TAG=openssl-1.1.1w/'\
                -e 's/NDK_TARGET=26/NDK_TARGET=21/'\
@@ -636,11 +636,11 @@ build_freerdp() {
                -e "s/BUILD_ARCH=.*/BUILD_ARCH=\"${abis}\"/"\
                 ./scripts/android-build.conf
 
-        for f in ${basedir}/../*_freerdp_*.patch
-        do
-            echo "Applying $f"
-            patch -N -p1 < ${f}
-        done
+#        for f in ${basedir}/../*_freerdp_*.patch
+#        do
+#            echo "Applying $f"
+#            patch -N -p1 < ${f}
+#        done
 
         sed -i 's/implementationSdkVersion/compileSdkVersion/; s/.*rootProject.ext.versionName.*//; s/.*rootProject.ext.versionCode.*//; s/.*.*buildToolsVersion.*.*//; s/compile /implementation /; s/minSdkVersion .*/minSdkVersion 14/;' \
                client/Android/Studio/freeRDPCore/build.gradle
