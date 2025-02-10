@@ -59,16 +59,31 @@ public class RemoteVncPointer extends RemotePointer {
         sendPointerEvent(x, y, metaState, false);
     }
 
+    private long lastScrollMs = 0;
+
     @Override
     public void scrollUp(int x, int y, int speed, int metaState) {
+        if (System.currentTimeMillis() - lastScrollMs < 300) {
+            // avoid too fast scrolling
+            return;
+        }
+
         pointerMask = MOUSE_BUTTON_SCROLL_UP | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
+
+        lastScrollMs = System.currentTimeMillis();
     }
 
     @Override
     public void scrollDown(int x, int y, int speed, int metaState) {
+        if (System.currentTimeMillis() - lastScrollMs < 300) {
+            // avoid too fast scrolling
+            return;
+        }
         pointerMask = MOUSE_BUTTON_SCROLL_DOWN | POINTER_DOWN_MASK;
         sendPointerEvent(x, y, metaState, false);
+
+        lastScrollMs = System.currentTimeMillis();
     }
 
     @Override
