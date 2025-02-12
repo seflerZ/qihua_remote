@@ -643,7 +643,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (inertiaScrollingEnabled && !immersiveSwipe) {
+                        if (inertiaScrollingEnabled && !immersiveSwipe && !dragMode) {
 
                             inertiaMetaState = e.getMetaState();
                             inertiaSemaphore.release();
