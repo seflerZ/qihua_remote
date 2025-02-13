@@ -259,7 +259,13 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-                touchpad.setImageResource(R.drawable.t_tips);
+                boolean isChinese = Utils.isChineseLocal(getApplicationContext());
+                if (isChinese) {
+                    touchpad.setImageResource(R.drawable.t_tips);
+                } else {
+                    touchpad.setImageResource(R.drawable.t_tips_en);
+                }
+
                 touchpad.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             } catch (Throwable ignored) {
                 // fallback

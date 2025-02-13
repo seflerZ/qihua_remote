@@ -36,8 +36,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.ClipboardManager;
@@ -78,6 +80,7 @@ import java.lang.reflect.Field;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Utils {
@@ -90,6 +93,17 @@ public class Utils {
     };
     private static AlertDialog alertDialog;
     private static int nextNoticeID = 0;
+
+    public static boolean isChineseLocal(Context context) {
+        Locale currentLocale;
+        Configuration config = context.getResources().getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            currentLocale = config.getLocales().get(0);
+        } else {
+            currentLocale = config.locale;
+        }
+        return "zh".equals(currentLocale.getLanguage());
+    }
 
     public static void showYesNoPrompt(Context _context, String title, String message, OnClickListener onYesListener, OnClickListener onNoListener) {
         try {
