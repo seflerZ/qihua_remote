@@ -9,7 +9,7 @@ RDP and VNC. It's a fork of aRDP project with many customizations and feature im
 - ✅ Support large screen devices like Pads or Foldable phones.
 - ✅ External monitor and external mouse/keyboard support(instantly turn your mobile device into PC).
 - ✅ Integrated RDP and VNC clients, more in the future.
-- ✅ Various interactive improvements(such as pointer momentum) and bug fixes.
+- ✅ Various interaction improvements(such as pointer momentum) and bug fixes.
 
 # Screenshots
 ### Turn your mobile device into desktop PC
