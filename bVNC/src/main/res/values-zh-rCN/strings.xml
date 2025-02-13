@@ -566,7 +566,7 @@ bVNC对应的功能如下：
 &lt;br&gt;
 &lt;h2&gt;8. 未成年人保护&lt;/h2&gt;
 我们鼓励父母或监护人指导未满十八岁的未成年人使用我们的服务。我们建议未成年人鼓励他们的父母或监护人阅读本《隐私政策》，并建议未成年人在提交的个人信息之前寻求父母或监护人的同意和指导。</string>
-    <string name="rdp_intro_title">aRDP：又直观又安全的RDP客户端</string>
+    <string name="rdp_intro_title">奇花远程桌面：全能好用的远程桌面客户端</string>
     <string name="rdp_connection_screen_help_text" tools:ignore="TypographyOther">"
 新建或编辑连接时连接设定画面会显示出来。在此可以设置新的RDP连接设定或选择现有的连接。顶部有保存连接的按钮，下面可设定连接。
 
@@ -745,31 +745,7 @@ aSPICE对应的功能如下：
  （b）旋转D-Pad：与蓝牙键盘配对的装置可能需要逆时针旋转键盘的D-pad，才能将正确的方向发送到服务器。
 
  （c）本地鼠标指针：如果鼠标指针隐藏的话，勾选此选项将使应用程序显示鼠标位置。"</string>
-    <string name="spice_main_screen_help_text">
-"首次启动aSPICE时连接设定画面会显示出来。在此可以设置新的SPICE连接设定或选择现有的SPICE连接。该页面分为2个部分，顶部有下拉菜单显示之前创建的连接设定。首次启动aSPICE时只能创建新的连接。下拉菜单旁边有连接按钮，按下它就按照当前的设定启动SPICE客户端。在连接按钮之下可设定连接。
-
--连接类型：在此处选择SPICE连接类型。可用的连接类型如下：
-  （a）SPICE：通过SPICE通讯协议直接连接计算机。
-  （b）通过SSH的SPICE：通过运行SSH服务器的计算机进行隧道连接。
-
--标题：您创建的每个连接都可以有一个昵称，以便在列表中轻松识别它。
-
--SSH隧道设置：在SSH模式的SPICE中可用。
-  （a）SSH服务器/端口：将通过隧道建立连接的SSH服务器的地址和端口。 默认端口是22。
-  （b）用户名/密码：SSH服务器上帐户的用户名和密码。 未退出aSPICE，密码就保留在画面上。
-  （c）管理密钥/使用密钥：用于管理公钥／密钥的按钮，以及验证方法是否从密码改为密钥的选项。如果在生成密钥对后使用\"复制到剪贴板\"按钮的话，连接到SPICE服务器后可以粘贴公钥（剪贴板同步到服务器）。
-
--SPICE连接设置：
-  （a）SPICE服务器／端口：在此输入运行SPICE服务器的计算机的主机名或IP地址与端口号。在通过SSH模式的SPICE中，SSH服务器也咖已看到此IP地址。如果SSH服务器与SPICE服务器在同一台计算机上，就可以使用localhost。SPICE服务器通常用端口5900侦听（第一个SPICE屏幕，屏幕：0）。
-  （c）SPICE密码：为了保护SPICE会话设定密码。密码不使用安全存储（储存在数据库里），只有选中\"保持\"选项，才会存储密码。未退出aSPICE，密码就保留在画面上。
-
--详细设定：在此进行桌面分辨率的自定义设定或者SPICE性能微调。
-
--本地设备调整：在此调整aSPICE在您的设备上的动作。
-  （a）D-Pad用于箭头：想要将箭头发送到SPICE服务器时，可以使用蓝牙键盘的D-Pad或屏幕键盘上的箭头。
-  （b）旋转D-Pad：与Bluetooth键盘配对的装置可能需要逆时针旋转键盘的D-pad，才能将正确的方向发送到服务器。
-  （c）本地鼠标指针：如果鼠标指针隐藏的话，勾选此选项将使aSPICE显示鼠标位置。"
-  </string>
+    <string name="spice_main_screen_help_text">Spice 简介</string>
     <string name="spice_password_hint">SPICE密码</string>
     <string name="spice_server_empty">SPICE服务器或端口是空着。无法连接！</string>
     <string name="spice_tls_port_hint">TLS端口</string>
