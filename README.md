@@ -6,7 +6,7 @@ RDP and VNC. It's a fork of aRDP project with many customizations and feature im
 
 # Key features
 - ✅ High performance with 60fps support.
-- ✅ Support large screen devices like Pads or Foldable phones.
+- ✅ Support large screen devices like pads or foldable phones.
 - ✅ External monitor and external mouse/keyboard support(instantly turn your mobile device into PC).
 - ✅ Integrated RDP and VNC clients, more in the future.
 - ✅ Various interaction improvements(such as pointer momentum) and bug fixes.
