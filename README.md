@@ -1,5 +1,6 @@
 # Intro
-https://github.com/seflerZ/qihua_remote/blob/main/bVNC/src/main/res/drawable/app_icon.png
+![Qihua Logo](https://github.com/seflerZ/qihua_remote/blob/main/bVNC/src/main/res/drawable/app_icon.png)
+
 QihuaRemote is a swizz knife remote desktop client which support various remote protocols, such as
 RDP and VNC. It's a fork of aRDP project with many customizations and feature improvements.
 
