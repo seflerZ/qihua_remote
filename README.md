@@ -2,7 +2,7 @@
 <img src="https://github.com/user-attachments/assets/b801786b-ff35-4a8c-91dd-127def5345e4" width="128">
 
 QihuaRemote is a swizz knife remote desktop client which support various remote protocols, such as
-RDP and VNC. It's a fork of aRDP project with many customizations and feature improvements.
+RDP and VNC. It's a fork of aRDP project (owned by iiordanov) with many customizations and feature improvements.
 
 # Key features
 - ✅ High performance with 60fps support.
