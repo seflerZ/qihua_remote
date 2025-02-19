@@ -505,9 +505,14 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
     private void detectImmersiveSwipe(float x, float y) {
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
+
+        float immersiveXDistance = canvas.getWidth() * immersiveSwipeRatio;
+        float immersiveYDistance = canvas.getHeight() * immersiveSwipeRatio;
+
         if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
-                (x <= immersiveSwipeDistance || canvas.getWidth() - x <= immersiveSwipeDistance
-                        || canvas.getHeight() - y <= immersiveSwipeDistance)) {
+                (x <= immersiveXDistance || canvas.getWidth() - x <= immersiveXDistance
+                        || y <= immersiveYDistance || canvas.getHeight() - y <= immersiveYDistance)) {
+
             inSwiping = true;
             immersiveSwipe = true;
         } else if (!singleHandedGesture) {
