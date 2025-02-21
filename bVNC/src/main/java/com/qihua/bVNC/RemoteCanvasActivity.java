@@ -26,7 +26,6 @@ package com.qihua.bVNC;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,13 +41,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -66,7 +62,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -85,9 +80,6 @@ import com.qihua.android.bc.BCFactory;
 import com.qihua.bVNC.dialogs.EnterTextDialog;
 import com.qihua.bVNC.dialogs.MetaKeyDialog;
 import com.qihua.bVNC.input.InputHandler;
-import com.qihua.bVNC.input.InputHandlerDirectDragPan;
-import com.qihua.bVNC.input.InputHandlerDirectSwipePan;
-import com.qihua.bVNC.input.InputHandlerSingleHanded;
 import com.qihua.bVNC.input.InputHandlerTouchpad;
 import com.qihua.bVNC.input.KeyBoardListenerHelper;
 import com.qihua.bVNC.input.MetaKeyBean;
@@ -121,10 +113,7 @@ import java.util.TimerTask;
 public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyListener,
         SelectTextElementFragment.OnFragmentDismissedListener {
 
-    public static final int[] inputModeIds = {R.id.itemInputTouchpad,
-//            R.id.itemInputTouchPanZoomMouse,
-//            R.id.itemInputDragPanZoomMouse,
-            R.id.itemInputSingleHanded};
+    public static final int[] inputModeIds = {R.id.itemInputTouchpad};
     public static final Map<Integer, String> inputModeMap;
     private final static String TAG = "RemoteCanvasActivity";
     private static final int scalingModeIds[] = {R.id.itemZoomable, R.id.itemFitToScreen,
@@ -133,9 +122,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     static {
         Map<Integer, String> temp = new HashMap<>();
         temp.put(R.id.itemInputTouchpad, InputHandlerTouchpad.ID);
-//        temp.put(R.id.itemInputDragPanZoomMouse, InputHandlerDirectDragPan.ID);
-//        temp.put(R.id.itemInputTouchPanZoomMouse, InputHandlerDirectSwipePan.ID);
-        temp.put(R.id.itemInputSingleHanded, InputHandlerSingleHanded.ID);
         inputModeMap = Collections.unmodifiableMap(temp);
     }
 
@@ -1484,8 +1470,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 if (inputModeHandlers[i] == null) {
                     if (id == R.id.itemInputTouchpad) {
                         inputModeHandlers[i] = new InputHandlerTouchpad(this, canvas, touchpad, canvas.getPointer(), App.debugLog);
-                    } else if (id == R.id.itemInputSingleHanded) {
-                        inputModeHandlers[i] = new InputHandlerSingleHanded(this, canvas, canvas.getPointer(), App.debugLog);
                     } else {
                         throw new IllegalStateException("Unexpected value: " + id);
                     }
