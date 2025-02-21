@@ -510,12 +510,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         // TODO: Move this into a separate thread, and post the visibility changes to the handler.
         //       to avoid occupying the UI thread with this.
         rootView = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                relayoutViews(rootView);
-            }
-        });
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> relayoutViews(rootView));
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -531,7 +526,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         toolbar = (RemoteToolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        toolbar.getBackground().setAlpha(64);
+        toolbar.getBackground().setAlpha(66);
         toolbar.setLayoutParams(params);
         setSupportActionBar(toolbar);
         showToolbar();
