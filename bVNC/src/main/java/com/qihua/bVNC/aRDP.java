@@ -339,7 +339,7 @@ public class aRDP extends MainConfiguration {
         alertDialogBuilder.setTitle(getString(R.string.request_recording_parameter_title));
         alertDialogBuilder.setMessage(getString(R.string.request_recording_parameter_description));
 
-        alertDialogBuilder.setPositiveButton("知道了", (dialog, which) -> {
+        alertDialogBuilder.setPositiveButton(getText(R.string.ok), (dialog, which) -> {
             PermissionsManager.requestPermissions(a, PermissionGroups.RECORD_AND_MODIFY_AUDIO, true);
         });
 

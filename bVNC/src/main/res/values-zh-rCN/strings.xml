@@ -49,7 +49,7 @@
 
     <string name="input_method_help">输入方式帮助</string>
 
-    <string name="ok">OK</string>
+    <string name="ok">确定</string>
 
     <string name="input_methods">输入方式</string>
     <string name="input_method_help_text">"
@@ -215,7 +215,7 @@
     <string name="disconnect">切断</string>
     <string name="dpad_as_arrows">将D-Pad用于箭头键，将D-Pad单击用于Ctrl。</string>
     <string name="enable_recording">启用麦克风重定向</string>
-    <string name="enable_gesture">启用手势(暂未开放)</string>
+    <string name="enable_gesture">启用手势</string>
     <string name="enable_sound">声音重定向</string>
     <string name="enter_text">发送文字</string>
     <string name="enter_text_title">输入发送用文字</string>
