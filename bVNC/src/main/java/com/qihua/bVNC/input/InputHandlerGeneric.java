@@ -506,12 +506,12 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     private void detectImmersiveSwipe(float x, float y) {
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
 
-        float immersiveXDistance = canvas.getWidth() * immersiveSwipeRatio;
-        float immersiveYDistance = canvas.getHeight() * immersiveSwipeRatio;
+        float immersiveXDistance = touchpad.getWidth() * immersiveSwipeRatio;
+        float immersiveYDistance = touchpad.getHeight() * immersiveSwipeRatio;
 
         if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
-                (x <= immersiveXDistance || canvas.getWidth() - x <= immersiveXDistance
-                        || y <= immersiveYDistance || canvas.getHeight() - y <= immersiveYDistance)) {
+                (x <= immersiveXDistance || touchpad.getWidth() - x <= immersiveXDistance
+                        || y <= immersiveYDistance || touchpad.getHeight() - y <= immersiveYDistance)) {
 
             inSwiping = true;
             immersiveSwipe = true;
