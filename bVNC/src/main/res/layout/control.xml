@@ -12,13 +12,6 @@
         android:layout_gravity="bottom|center"
         android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
 
-    <com.qihua.bVNC.RemoteCanvas
-        android:id="@+id/canvas"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom|center"
-        android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
-
     <ImageView
         android:id="@+id/gestureTipBackground"
         android:layout_width="match_parent"
