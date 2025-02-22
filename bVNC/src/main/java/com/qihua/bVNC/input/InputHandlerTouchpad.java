@@ -226,8 +226,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             // Compute the absolute new mouse position.
-            int newX = Math.round(pointer.getX() + getDelta(-distanceX));
-            int newY = Math.round(pointer.getY() + getDelta(-distanceY));
+            int newX = Math.round(pointer.getX() + -distanceX);
+            int newY = Math.round(pointer.getY() + -distanceY);
 
             pointer.moveMouse(newX, newY, meta);
 
