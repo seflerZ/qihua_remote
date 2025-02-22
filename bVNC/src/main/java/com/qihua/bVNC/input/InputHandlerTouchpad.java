@@ -64,6 +64,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         GeneralUtils.debugLog(debugLogging, TAG, "onScroll, e1: " + e1 + ", e2:" + e2);
 
+        if (activity.isToolbarShowing()) {
+            return true;
+        }
+
         final int meta = e2.getMetaState();
 
         // TODO: This is a workaround for Android 4.2

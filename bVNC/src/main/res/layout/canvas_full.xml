@@ -12,6 +12,21 @@
         android:layout_gravity="bottom|center"
         android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
 
+    <ImageView
+        android:id="@+id/gestureTipBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gesture_overlay"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/gestureTipTexts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/gesture_tap_drag"
+        android:scaleType="center"
+        android:visibility="gone"/>
+
     <com.undatech.opaque.util.RemoteToolbar
         android:id="@+id/toolbar"
         android:layout_width="wrap_content"

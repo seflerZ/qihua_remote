@@ -572,6 +572,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         dragX = e.getX();
                         dragY = e.getY();
 
+                        gestureX = e.getX();
+                        gestureY = e.getY();
+
                         lastSpeedX = lastSpeedY = 0;
 
                         if (inertiaThread != null) {
@@ -650,9 +653,41 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         break;
                     case MotionEvent.ACTION_UP:
                         if (inertiaScrollingEnabled && !immersiveSwipe && !dragMode) {
+                            if (activity.isToolbarShowing()) {
+                                // the three pointer gestures
+                                if ((e.getX(index) - gestureX) < -130 && Math.abs(e.getY(index) - gestureY) < 100) {
+                                    canvas.getKeyboard().onScreenAltOn();
 
-                            inertiaMetaState = e.getMetaState();
-                            inertiaSemaphore.release();
+                                    canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
+                                    canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
+
+                                    canvas.getKeyboard().onScreenAltOff();
+
+                                    Toast.makeText(pointer.context, "手势：返回", Toast.LENGTH_SHORT).show();
+                                } else if ((e.getX(index) - gestureX) > 130 && Math.abs(e.getY(index) - gestureY) < 100) {
+                                    canvas.getKeyboard().onScreenAltOn();
+
+                                    canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
+                                    canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
+
+                                    canvas.getKeyboard().onScreenAltOff();
+
+                                    Toast.makeText(pointer.context, "手势：前进", Toast.LENGTH_SHORT).show();
+                                } else if ((e.getY(index) - gestureY) > 130 && Math.abs(e.getX(index) - gestureX) < 100) {
+                                    canvas.getKeyboard().sendUnicode('w', RemoteKeyboard.CTRL_MASK);
+
+                                    Toast.makeText(pointer.context, "手势：关闭标签", Toast.LENGTH_SHORT).show();
+                                } else if ((e.getY(index) - gestureY) < -130 && Math.abs(e.getX(index) - gestureX) < 100) {
+                                    canvas.getKeyboard().sendUnicode('z', KeyEvent.META_CTRL_LEFT_ON);
+
+                                    Toast.makeText(pointer.context, "手势：撤消", Toast.LENGTH_SHORT).show();
+                                }
+
+                                activity.hideToolbar();
+                            } else {
+                                inertiaMetaState = e.getMetaState();
+                                inertiaSemaphore.release();
+                            }
                         }
 
                         break;

@@ -200,6 +200,26 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         }
     }
 
+    public void hideToolbar() {
+        ActionBar toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.hide();
+
+            // show gesture overlay
+            View gestureBg = findViewById(R.id.gestureTipBackground);
+            View gestureTips = findViewById(R.id.gestureTipTexts);
+
+            if (gestureBg != null && gestureTips != null) {
+                gestureBg.setVisibility(View.GONE);
+                gestureTips.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public boolean isToolbarShowing() {
+        return toolbar.isShown();
+    }
+
     @Override
     public void onCreate(Bundle icicle) {
         Log.d(TAG, "OnCreate called");
@@ -1395,7 +1415,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             OnTouchListener moveListener = new OnTouchViewMover(toolbar, handler, toolbarHider, hideToolbarDelay);
             ImageButton moveButton = new ImageButton(this);
 
-            moveButton.setBackgroundResource(R.drawable.ic_all_out_gray_36dp);
+            moveButton.setBackgroundResource(R.drawable.verticalbar);
+            moveButton.setMinimumWidth(36);
             MenuItem moveToolbar = menu.findItem(R.id.moveToolbar);
             moveToolbar.setActionView(moveButton);
             moveToolbar.getActionView().setOnTouchListener(moveListener);
@@ -1752,6 +1773,17 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         getSupportActionBar().show();
         handler.removeCallbacks(toolbarHider);
         handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
+
+        // show gesture overlay
+        View gestureBg = findViewById(R.id.gestureTipBackground);
+        View gestureTips = findViewById(R.id.gestureTipTexts);
+
+        // show gesture overlay
+        if (gestureBg != null && gestureTips != null) {
+            findViewById(R.id.gestureTipBackground).setVisibility(View.VISIBLE);
+            findViewById(R.id.gestureTipTexts).setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -1876,9 +1908,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     private class ToolbarHiderRunnable implements Runnable {
         public void run() {
-            ActionBar toolbar = getSupportActionBar();
-            if (toolbar != null)
-                toolbar.hide();
+            hideToolbar();
         }
     }
 
