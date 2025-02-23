@@ -33,6 +33,11 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.gesture.Gesture;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
+import android.gesture.GestureOverlayView;
+import android.gesture.Prediction;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
@@ -153,6 +158,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     volatile boolean softKeyboardUp;
     RemoteToolbar toolbar;
     View rootView;
+    GestureOverlayView gestureOverlayView;
     ToolbarHiderRunnable toolbarHider = new ToolbarHiderRunnable();
     private Vibrator myVibrator;
     private RemoteCanvas canvas;
@@ -205,13 +211,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         if (toolbar != null) {
             toolbar.hide();
 
-            // show gesture overlay
-            View gestureBg = findViewById(R.id.gestureTipBackground);
-            View gestureTips = findViewById(R.id.gestureTipTexts);
-
-            if (gestureBg != null && gestureTips != null && canvas.connection.getEnableGesture()) {
-                gestureBg.setVisibility(View.GONE);
-                gestureTips.setVisibility(View.GONE);
+            if (gestureOverlayView != null && canvas.connection.getEnableGesture()) {
+                gestureOverlayView.setVisibility(View.GONE);
             }
         }
     }
@@ -296,6 +297,34 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         touchpad.setOutDisplay(canvas != touchpad);
         canvas.setOutDisplay(canvas != touchpad);
+
+        gestureOverlayView = findViewById(R.id.gestureOverlay);
+
+//        final GestureLibrary library = GestureLibraries.fromFile("test");
+//        library.load();
+
+        gestureOverlayView.addOnGesturePerformedListener((overlay, gesture) -> {
+//            ArrayList<Prediction> myGesture = library.recognize(gesture);
+//            Prediction prediction = myGesture.get(0);
+//
+//            // similarity score 0.0~10.0
+//            if (prediction.score > 7.0) {
+//                switch (prediction.name) {
+//                    case "up":
+//                        Toast.makeText(RemoteCanvasActivity.this, "up", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "down":
+//                        Toast.makeText(RemoteCanvasActivity.this, "down", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "left":
+//                        Toast.makeText(RemoteCanvasActivity.this, "left", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "right":
+//                        Toast.makeText(RemoteCanvasActivity.this, "right", Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }
+        });
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -1775,13 +1804,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
 
         // show gesture overlay
-        View gestureBg = findViewById(R.id.gestureTipBackground);
-        View gestureTips = findViewById(R.id.gestureTipTexts);
-
-        // show gesture overlay
-        if (gestureBg != null && gestureTips != null && canvas.connection.getEnableGesture()) {
-            findViewById(R.id.gestureTipBackground).setVisibility(View.VISIBLE);
-            findViewById(R.id.gestureTipTexts).setVisibility(View.VISIBLE);
+        if (gestureOverlayView != null && canvas.connection.getEnableGesture()) {
+            gestureOverlayView.setVisibility(View.VISIBLE);
         }
 
     }
