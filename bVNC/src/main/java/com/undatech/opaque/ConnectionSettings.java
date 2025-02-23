@@ -497,6 +497,11 @@ public class ConnectionSettings implements Connection, Serializable {
     }
 
     @Override
+    public boolean getEnableGesture() {
+        return true;
+    }
+
+    @Override
     public int getUseLastPositionToolbarY() {
         return useLastPositionToolbarY;
     }

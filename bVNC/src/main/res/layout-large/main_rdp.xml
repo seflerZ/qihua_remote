@@ -426,11 +426,11 @@
             </RadioGroup>
 
             <CheckBox
-                android:id="@+id/checkboxGesture"
+                android:id="@+id/checkboxEnableGesture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
-                android:enabled="false"
+                android:onClick="toggleEnableGesture"
                 android:text="@string/enable_gesture"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 

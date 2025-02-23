@@ -13,7 +13,7 @@ import java.util.Map;
 public abstract class AbstractConnectionBean extends com.antlersoft.android.dbimpl.IdImplementationBase implements IConnectionBean {
 
     public static final String GEN_TABLE_NAME = "CONNECTION_BEAN";
-    public static final int GEN_COUNT = 84;
+    public static final int GEN_COUNT = 85;
 
     // Field constants
     public static final String GEN_FIELD__ID = "_id";
@@ -188,6 +188,9 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
     public static final String GEN_FIELD_PRIORITY = "PRIORITY";
     public static final int GEN_ID_PRIORITY = 83;
 
+    public static final String GEN_FIELD_ENABLE_GESTURE = "ENABLE_GESTURE";
+    public static final int GEN_ID_ENABLE_GESTURE = 84;
+
     // SQL Command for creating the table
     public static String GEN_CREATE = "CREATE TABLE CONNECTION_BEAN (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -273,6 +276,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
             "ENABLEGFXH264 INTEGER," +
             "PREFERSENDINGUNICODE INTEGER," +
             "LASTZOOMFACTOR FLOAT," +
+            "ENABLE_GESTURE INTEGER," +
             "PRIORITY INTEGER" +
             ")";
 
@@ -353,6 +357,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
     private int gen_remoteSoundType;
     private float gen_lastZoomFactor;
     private boolean gen_viewOnly;
+    private boolean gen_enableGesture;
     private java.lang.String gen_layoutMap;
 
     private java.lang.String gen_filename;
@@ -931,6 +936,12 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_redirectSdCard = arg_redirectSdCard;
     }
 
+    public boolean getEnableGesture() {return gen_enableGesture;}
+
+    public void setEnableGesture(boolean arg_enableGesture) {
+        gen_enableGesture = arg_enableGesture;
+    }
+
     public boolean getConsoleMode() {
         return gen_consoleMode;
     }
@@ -1137,6 +1148,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         values.put(GEN_FIELD_LASTZOOMFACTOR, this.gen_lastZoomFactor);
         values.put(GEN_FIELD_PRIORITY, this.gen_priority);
 
+        values.put(GEN_FIELD_ENABLE_GESTURE, this.gen_enableGesture);
+
         return values;
     }
 
@@ -1265,6 +1278,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         result[81] = cursor.getColumnIndex(GEN_FIELD_PREFERSENDINGUNICODE);
         result[82] = cursor.getColumnIndex(GEN_FIELD_LASTZOOMFACTOR);
         result[83] = cursor.getColumnIndex(GEN_FIELD_PRIORITY);
+        result[84] = cursor.getColumnIndex(GEN_FIELD_ENABLE_GESTURE);
 
         return result;
     }
@@ -1527,6 +1541,9 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         if (columnIndices[GEN_ID_PRIORITY] >= 0 && !cursor.isNull(columnIndices[GEN_ID_PRIORITY])) {
             gen_priority = cursor.getInt(columnIndices[GEN_ID_PRIORITY]);
         }
+        if (columnIndices[GEN_ID_ENABLE_GESTURE] >= 0 && !cursor.isNull(columnIndices[GEN_ID_ENABLE_GESTURE])) {
+            gen_enableGesture = cursor.getInt(columnIndices[GEN_ID_ENABLE_GESTURE]) > 0;
+        }
     }
 
     /**
@@ -1620,6 +1637,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_preferSendingUnicode = (values.getInt(GEN_FIELD_PREFERSENDINGUNICODE) != 0);
         gen_lastZoomFactor = (float) values.getDouble(GEN_FIELD_LASTZOOMFACTOR);
         gen_priority = (values.getInt(GEN_FIELD_PRIORITY));
+
+        gen_enableGesture = (values.getInt(GEN_FIELD_ENABLE_GESTURE) > 0);
     }
 
     @Override
@@ -1711,6 +1730,8 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_preferSendingUnicode = (values.getAsInteger(GEN_FIELD_PREFERSENDINGUNICODE) != 0);
         gen_lastZoomFactor = (values.getAsInteger(GEN_FIELD_LASTZOOMFACTOR));
         gen_priority = (values.getAsInteger(GEN_FIELD_PRIORITY));
+
+        gen_enableGesture = values.getAsBoolean(GEN_FIELD_ENABLE_GESTURE);
     }
 
     public void Gen_populatePersistBundle(android.content.ContentValues values) {
@@ -1801,5 +1822,7 @@ public abstract class AbstractConnectionBean extends com.antlersoft.android.dbim
         gen_preferSendingUnicode = (values.getAsInteger(GEN_FIELD_PREFERSENDINGUNICODE) != 0);
         gen_lastZoomFactor = (values.getAsInteger(GEN_FIELD_LASTZOOMFACTOR));
         gen_priority = (values.getAsInteger(GEN_FIELD_PRIORITY));
+
+        gen_enableGesture = values.getAsBoolean(GEN_FIELD_ENABLE_GESTURE);
     }
 }

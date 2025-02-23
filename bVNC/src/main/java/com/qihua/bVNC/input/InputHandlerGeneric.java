@@ -653,7 +653,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         break;
                     case MotionEvent.ACTION_UP:
                         if (inertiaScrollingEnabled && !immersiveSwipe && !dragMode) {
-                            if (activity.isToolbarShowing()) {
+                            if (activity.isToolbarShowing() && canvas.connection.getEnableGesture()) {
                                 // the three pointer gestures
                                 if ((e.getX(index) - gestureX) < -130 && Math.abs(e.getY(index) - gestureY) < 100) {
                                     canvas.getKeyboard().onScreenAltOn();

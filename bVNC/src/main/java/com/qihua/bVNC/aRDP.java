@@ -71,6 +71,7 @@ public class aRDP extends MainConfiguration {
     private CheckBox checkboxUseDpadAsArrows;
     private RadioGroup groupRemoteSoundType;
     private CheckBox checkboxEnableRecording;
+    private CheckBox checkboxEnableGesture;
     private CheckBox checkboxConsoleMode;
 //    private CheckBox checkboxRedirectSdCard;
     private CheckBox checkboxRemoteFx;
@@ -183,6 +184,7 @@ public class aRDP extends MainConfiguration {
         checkboxEnableRecording = (CheckBox) findViewById(R.id.checkboxEnableRecording);
         checkboxConsoleMode = (CheckBox) findViewById(R.id.checkboxConsoleMode);
 //        checkboxRedirectSdCard = (CheckBox) findViewById(R.id.checkboxRedirectSdCard);
+        checkboxEnableGesture = (CheckBox) findViewById(R.id.checkboxEnableGesture);
         checkboxRemoteFx = (CheckBox) findViewById(R.id.checkboxRemoteFx);
         checkboxDesktopBackground = (CheckBox) findViewById(R.id.checkboxDesktopBackground);
         checkboxFontSmoothing = (CheckBox) findViewById(R.id.checkboxFontSmoothing);
@@ -240,6 +242,7 @@ public class aRDP extends MainConfiguration {
         setRemoteWidthAndHeight();
         setRemoteSoundTypeFromSettings(selected.getRemoteSoundType());
         checkboxEnableRecording.setChecked(selected.getEnableRecording());
+        checkboxEnableGesture.setChecked(selected.getEnableGesture());
         checkboxConsoleMode.setChecked(selected.getConsoleMode());
 //        checkboxRedirectSdCard.setChecked(selected.getRedirectSdCard());
         checkboxRemoteFx.setChecked(selected.getRemoteFx());
@@ -299,6 +302,7 @@ public class aRDP extends MainConfiguration {
         }
         setRemoteSoundTypeFromView(groupRemoteSoundType);
         selected.setEnableRecording(checkboxEnableRecording.isChecked());
+        selected.setEnableGesture(checkboxEnableGesture.isChecked());
         selected.setConsoleMode(checkboxConsoleMode.isChecked());
 //        selected.setRedirectSdCard(checkboxRedirectSdCard.isChecked());
         selected.setRemoteFx(checkboxRemoteFx.isChecked());
@@ -344,6 +348,11 @@ public class aRDP extends MainConfiguration {
         });
 
         alertDialogBuilder.create().show();
+    }
+
+    public void toggleEnableGesture(View view) {
+        CheckBox b = (CheckBox) view;
+        selected.setEnableGesture(b.isChecked());
     }
 
     public void toggleEnableStorageRedirect(View view) {

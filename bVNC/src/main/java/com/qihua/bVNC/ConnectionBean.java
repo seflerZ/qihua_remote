@@ -144,6 +144,7 @@ public class ConnectionBean extends AbstractConnectionBean implements Connection
         setVisualStyles(false);
         setConsoleMode(false);
         setRedirectSdCard(false);
+        setEnableGesture(true);
         setEnableSound(false);
         setEnableRecording(false);
         setRemoteSoundType(Constants.REMOTE_SOUND_ON_DEVICE);

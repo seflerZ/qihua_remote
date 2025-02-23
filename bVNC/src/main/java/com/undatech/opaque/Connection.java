@@ -428,6 +428,8 @@ public interface Connection {
 
     float getLastZoomFactor();
 
+    boolean getEnableGesture();
+
     void setUseLastPositionToolbarY(int useLastPositionToolbarY);
 
     boolean getUseLastPositionToolbarMoved();

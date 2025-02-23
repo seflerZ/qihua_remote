@@ -1011,6 +1011,11 @@ public class NewConnection implements Connection {
     }
 
     @Override
+    public boolean getEnableGesture() {
+        return true;
+    }
+
+    @Override
     public void setLastZoomFactor(float lastScaleFactor) {
 
     }

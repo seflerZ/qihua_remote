@@ -209,7 +209,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             View gestureBg = findViewById(R.id.gestureTipBackground);
             View gestureTips = findViewById(R.id.gestureTipTexts);
 
-            if (gestureBg != null && gestureTips != null) {
+            if (gestureBg != null && gestureTips != null && canvas.connection.getEnableGesture()) {
                 gestureBg.setVisibility(View.GONE);
                 gestureTips.setVisibility(View.GONE);
             }
@@ -1779,7 +1779,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         View gestureTips = findViewById(R.id.gestureTipTexts);
 
         // show gesture overlay
-        if (gestureBg != null && gestureTips != null) {
+        if (gestureBg != null && gestureTips != null && canvas.connection.getEnableGesture()) {
             findViewById(R.id.gestureTipBackground).setVisibility(View.VISIBLE);
             findViewById(R.id.gestureTipTexts).setVisibility(View.VISIBLE);
         }

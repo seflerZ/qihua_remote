@@ -221,7 +221,7 @@
     <string name="disconnect">Disconnect</string>
 
     <string name="dpad_as_arrows">Use D-Pad for arrows and D-Pad click for Ctrl.</string>
-    <string name="enable_gesture">Enable gesture</string>
+    <string name="enable_gesture">Enable Gesture</string>
 
     <string name="enable_recording">Enable Recording</string>
     <string name="enable_sound">Enable Sound</string>
