@@ -129,6 +129,10 @@ public abstract class RemoteKeyboard {
         onScreenMetaState = onScreenMetaState & ~CTRL_MASK;
     }
 
+    public void onScreenCtrlOn() {
+        onScreenMetaState = onScreenMetaState | CTRL_MASK;
+    }
+
     /**
      * Toggles on-screen Alt mask.  Returns true if result is Alt enabled, false otherwise.
      *
@@ -193,6 +197,10 @@ public abstract class RemoteKeyboard {
             onScreenMetaState = onScreenMetaState | SHIFT_MASK;
             return true;
         }
+    }
+
+    public void onScreenShiftOn() {
+        onScreenMetaState = onScreenMetaState | SHIFT_MASK;
     }
 
     /**

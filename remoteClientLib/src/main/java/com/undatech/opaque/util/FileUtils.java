@@ -17,10 +17,13 @@ import com.undatech.opaque.RemoteClientLibConstants;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -193,5 +196,28 @@ public class FileUtils {
         }
         Log.d(TAG, "Successfully deleted the file or directory: " + file.toString());
         return true;
+    }
+
+    public static String readFileToString(File file) {
+        try (FileInputStream fis = new FileInputStream(file)) {
+            StringBuilder sb = new StringBuilder();
+            byte[] buffer = new byte[8192]; // 8KB 缓冲区
+            int bytesRead;
+
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                String chunk = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+                sb.append(chunk);
+            }
+
+            return sb.toString();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    public static void writeStringToFile(String str, File dest) throws Exception {
+        try (FileOutputStream fos = new FileOutputStream(dest)) {
+            fos.write(str.getBytes());
+        }
     }
 }

@@ -133,6 +133,8 @@ public abstract class MainConfiguration extends FragmentActivity {
         setContentView(layoutID);
         System.gc();
 
+        setTitle(R.string.configure_connection);
+
         textNickname = (EditText) findViewById(R.id.textNickname);
 
         // Here we say what happens when the Pubkey Generate button is pressed.

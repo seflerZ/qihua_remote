@@ -169,7 +169,7 @@
     <string name="auto_x_xvnc">使用Xvnc搜索或创建</string>
     <string name="button_send_text">发送文字</string>
     <string name="button_send_without_saving">发送文字/不保存</string>
-    <string name="bvnc_app_name">bVNC Pro</string>
+    <string name="bvnc_app_name">奇花远程桌面</string>
     <string name="center_mouse">鼠标@</string>
     <string name="close">关闭</string>
     <string name="color_format_caption">彩色模式</string>
@@ -842,4 +842,13 @@ aSPICE对应的功能如下：
     <string name="show_privacy_policy">查看隐私政策</string>
     <string name="request_recording_parameter_title">将申请录音权限</string>
     <string name="request_recording_parameter_description">申请此权限将手机的麦克风用于远程录音输入，例如在远端参加语音、视频会议时使用。</string>
+
+    <string name="configure_gesture">配置手势</string>
+    <string name="save_gesture">保存手势</string>
+    <string name="configure_connection">配置连接</string>
+
+    <string name="my_connections">我的连接</string>
+    <string name="gesture_keycode_hint">输入发送的键值，也下面按扭输入特殊字符</string>
+    <string name="gesture_not_recognized">手势未识别</string>
+    <string name="gesture_hint">手势</string>
 </resources>

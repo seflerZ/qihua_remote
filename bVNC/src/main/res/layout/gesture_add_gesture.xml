@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/popupGestureName"
+        android:layout_width="match_parent"
+        android:hint="@string/gesture_name"
+        android:layout_height="wrap_content"/>
+
+    <android.gesture.GestureOverlayView
+        android:id="@+id/popupGestureAdd"
+        android:fadeOffset="1000"
+        android:fadeEnabled="true"
+        android:gestureStrokeType="multiple"
+        android:gestureColor="@android:color/holo_blue_light"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+    <EditText
+        android:id="@+id/gesture_keycode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/gesture_keycode_hint"
+        android:inputType="textCapCharacters"
+        android:maxLength="1"
+        android:focusable="true"/>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/dpap_key_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="←"
+                android:onClick="inputDpadKey"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="inputDpadKey"
+                android:text="↑"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="inputDpadKey"
+                android:text="→"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="inputDpadKey"
+                android:text="↓"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/meta_key_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeBtnBackground"
+                android:text="CTRL"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeBtnBackground"
+                android:text="ALT"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TAB"
+                android:onClick="changeBtnBackground"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeBtnBackground"
+                android:text="META"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeBtnBackground"
+                android:text="SHIFT"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeBtnBackground"
+                android:text="ESC"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

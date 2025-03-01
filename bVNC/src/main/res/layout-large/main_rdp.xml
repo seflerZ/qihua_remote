@@ -425,14 +425,32 @@
                     android:textAppearance="?android:attr/textAppearanceLarge" />
             </RadioGroup>
 
-            <CheckBox
-                android:id="@+id/checkboxEnableGesture"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/gestureGroup"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
-                android:onClick="toggleEnableGesture"
-                android:text="@string/enable_gesture"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkboxEnableGesture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="toggleEnableGesture"
+                    android:layout_weight="8"
+                    android:text="@string/enable_gesture"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:onClick="editGesture"
+                    android:layout_weight="2"
+                    android:text="@string/configure_gesture" />
+
+            </LinearLayout>
+
 
             <CheckBox
                 android:id="@+id/checkboxEnableRecording"

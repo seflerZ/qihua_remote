@@ -33,7 +33,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
@@ -64,7 +63,6 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -84,6 +82,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.qihua.android.bc.BCFactory;
 import com.qihua.bVNC.dialogs.EnterTextDialog;
 import com.qihua.bVNC.dialogs.MetaKeyDialog;
+import com.qihua.bVNC.gesture.GestureActionLibrary;
 import com.qihua.bVNC.input.InputHandler;
 import com.qihua.bVNC.input.InputHandlerTouchpad;
 import com.qihua.bVNC.input.KeyBoardListenerHelper;
@@ -111,6 +110,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -168,16 +168,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private MenuItem[] scalingModeMenuItems;
     private InputHandler inputModeHandlers[];
     private Connection connection;
+    private GestureLibrary gestureLibrary;
+    private GestureActionLibrary gestureActionLibrary;
 
     /**
      * This runnable fixes things up after a rotation.
      */
-    private Runnable rotationCorrector = new Runnable() {
-        public void run() {
-            try {
-                correctAfterRotation();
-            } catch (Exception e) {
-            }
+    private Runnable rotationCorrector = () -> {
+        try {
+            correctAfterRotation();
+        } catch (Exception e) {
         }
     };
     private MetaKeyBean lastSentKey;
@@ -298,34 +298,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         touchpad.setOutDisplay(canvas != touchpad);
         canvas.setOutDisplay(canvas != touchpad);
 
-        gestureOverlayView = findViewById(R.id.gestureOverlay);
-
-//        final GestureLibrary library = GestureLibraries.fromFile("test");
-//        library.load();
-
-        gestureOverlayView.addOnGesturePerformedListener((overlay, gesture) -> {
-//            ArrayList<Prediction> myGesture = library.recognize(gesture);
-//            Prediction prediction = myGesture.get(0);
-//
-//            // similarity score 0.0~10.0
-//            if (prediction.score > 7.0) {
-//                switch (prediction.name) {
-//                    case "up":
-//                        Toast.makeText(RemoteCanvasActivity.this, "up", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case "down":
-//                        Toast.makeText(RemoteCanvasActivity.this, "down", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case "left":
-//                        Toast.makeText(RemoteCanvasActivity.this, "left", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case "right":
-//                        Toast.makeText(RemoteCanvasActivity.this, "right", Toast.LENGTH_SHORT).show();
-//                        break;
-//                }
-//            }
-        });
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -397,7 +369,96 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             canvas.movePanToMakePointerVisible();
         });
 
+        gestureOverlayView = findViewById(R.id.gestureOverlay);
+
+        File gesturesDir = getDir("gestures", Context.MODE_PRIVATE);
+        File gestureFile = new File(gesturesDir, canvas.connection.getId() + "_gestures.dat");
+        gestureLibrary = GestureLibraries.fromFile(gestureFile);
+        gestureLibrary.load();
+
+        gestureActionLibrary = new GestureActionLibrary(canvas.connection.getId());
+        gestureActionLibrary.load(getApplicationContext());
+
+        gestureOverlayView.setOrientation(GestureOverlayView.ORIENTATION_VERTICAL);
+        gestureOverlayView.setGestureStrokeWidth(20f);
+        gestureOverlayView.setGestureColor(getColor(R.color.theme));
+        gestureOverlayView.setEventsInterceptionEnabled(true);
+        gestureOverlayView.setFadeEnabled(false);
+        gestureOverlayView.setFadeOffset(0);
+        gestureOverlayView.setGestureStrokeType(GestureOverlayView.GESTURE_STROKE_TYPE_SINGLE);
+        gestureOverlayView.setGestureStrokeAngleThreshold(90);
+
+        gestureOverlayView.addOnGesturePerformedListener((overlay, gesture) -> {
+            ArrayList<Prediction> predictions = gestureLibrary.recognize(gesture);
+            if (predictions.isEmpty()) {
+                hideToolbar();
+
+                return;
+            }
+
+            predictions.sort((o1, o2) -> (int) (o2.score - o1.score));
+
+            // if highest score is less than 2, not recognized
+            Prediction pre = predictions.get(0);
+            if (pre.score < 2) {
+                Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_recognized), Toast.LENGTH_LONG).show();
+                hideToolbar();
+
+                return;
+            }
+
+            List<String> actionKeys = gestureActionLibrary.getAction(pre.name);
+            if (actionKeys != null && !actionKeys.isEmpty()) {
+                performShortKeys(actionKeys);
+                Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_hint) + ":" + pre.name, Toast.LENGTH_SHORT).show();
+            }
+
+            hideToolbar();
+        });
+
         Log.d(TAG, "OnCreate complete");
+    }
+
+    private void performShortKeys(List<String> keys) {
+        if (keys.contains("ALT")) {
+            canvas.getKeyboard().onScreenAltOn();
+        }
+        if (keys.contains("CTRL")) {
+            canvas.getKeyboard().onScreenCtrlOn();
+        }
+        if (keys.contains("SHIFT")) {
+            canvas.getKeyboard().onScreenShiftOn();
+        }
+
+        if (keys.contains("←")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
+        } else if (keys.contains("↑")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_UP));
+        } else if (keys.contains("↓")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_DOWN));
+        } else if (keys.contains("→")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
+        } else if (keys.contains("TAB")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
+        } else {
+            // perform the key
+            canvas.getKeyboard().sendUnicode(keys.get(keys.size() - 1).charAt(0), 0);
+        }
+
+        if (keys.contains("ALT")) {
+            canvas.getKeyboard().onScreenAltOff();
+        }
+        if (keys.contains("CTRL")) {
+            canvas.getKeyboard().onScreenCtrlOff();
+        }
+        if (keys.contains("SHIFT")) {
+            canvas.getKeyboard().onScreenShiftOff();
+        }
     }
 
     @SuppressLint("SourceLockedOrientationActivity")

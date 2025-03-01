@@ -48,12 +48,18 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.qihua.bVNC.gesture.GestureEditorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.AppCompat"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name="com.qihua.bVNC.aRDP"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/ardp_app_name"
             android:resizeableActivity="true"
-            android:screenOrientation="unspecified"
             android:theme="@android:style/Theme.DeviceDefault"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
@@ -61,7 +67,6 @@
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true"
             android:resizeableActivity="true"
-            android:screenOrientation="unspecified"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>

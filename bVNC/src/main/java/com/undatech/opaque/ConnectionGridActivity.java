@@ -104,6 +104,8 @@ public class ConnectionGridActivity extends FragmentActivity implements GetTextF
 
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        setTitle(R.string.my_connections);
+
         appContext = getApplicationContext();
         setContentView(R.layout.grid_view_activity);
 

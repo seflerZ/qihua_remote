@@ -21,7 +21,7 @@ package com.qihua.bVNC;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,18 +33,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import androidx.core.app.ActivityCompat;
-
-import com.qihua.bVNC.dialogs.IntroTextDialog;
+import com.qihua.bVNC.gesture.GestureEditorActivity;
 import com.qihua.util.PermissionGroups;
 import com.qihua.util.PermissionsManager;
 import com.morpheusly.common.Utilities;
-import com.undatech.opaque.ConnectionGridActivity;
-import com.undatech.opaque.ConnectionSetupActivity;
 import com.undatech.remoteClientUi.R;
 
 import java.util.List;
@@ -353,6 +348,12 @@ public class aRDP extends MainConfiguration {
     public void toggleEnableGesture(View view) {
         CheckBox b = (CheckBox) view;
         selected.setEnableGesture(b.isChecked());
+    }
+
+    public void editGesture(View view) {
+        Intent intent = new Intent(this, GestureEditorActivity.class);
+        intent.putExtra("connId", getCurrentConnection().getId());
+        startActivity(intent);
     }
 
     public void toggleEnableStorageRedirect(View view) {

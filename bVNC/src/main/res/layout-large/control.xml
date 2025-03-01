@@ -12,6 +12,20 @@
         android:layout_gravity="bottom|center"
         android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
 
+    <android.gesture.GestureOverlayView
+        android:id="@+id/gestureOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/gestureTips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/gesture_tap_drag"
+            android:scaleType="center"/>
+    </android.gesture.GestureOverlayView>
+
     <ImageView
         android:id="@+id/gestureTipBackground"
         android:layout_width="match_parent"

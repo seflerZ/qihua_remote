@@ -168,7 +168,7 @@
     <string name="button_send_text">Send Text</string>
     <string name="button_send_without_saving">Send Text/Don\'t Save It</string>
 
-    <string name="bvnc_app_name">bVNC Pro</string>
+    <string name="bvnc_app_name">QihuaRemote</string>
 
     <string name="center_mouse">Mouse @</string>
 
@@ -866,4 +866,12 @@ Below that is where you configure your connection.
     <string name="request_recording_parameter_description">"This permission is used to redirect local microphone to remote devices, especially useful in net meetings. "</string>
     <string name="spice_main_screen_help_text">spice intro</string>
     <string name="rdp_main_screen_help_text">rdp</string>
+
+    <string name="configure_gesture">Configure Gesture</string>
+    <string name="configure_connection">Configure Connection</string>
+    <string name="save_gesture">Save Gesture</string>
+    <string name="gesture_keycode_hint">The key to be sent. Following button for special key</string>
+    <string name="gesture_not_recognized">Gesture not recognized</string>
+    <string name="gesture_hint">Gesture</string>
+
 </resources>
