@@ -121,7 +121,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     public static final int[] inputModeIds = {R.id.itemInputTouchpad};
     public static final Map<Integer, String> inputModeMap;
     private final static String TAG = "RemoteCanvasActivity";
-    private static final int scalingModeIds[] = {R.id.itemZoomable, R.id.itemFitToScreen,
+    private static final int[] scalingModeIds = {R.id.itemZoomable, R.id.itemFitToScreen,
             R.id.itemOneToOne};
 
     static {
@@ -130,7 +130,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         inputModeMap = Collections.unmodifiableMap(temp);
     }
 
-    final long hideToolbarDelay = 2500;
+    final long hideToolbarDelay = 1000;
     InputHandler inputHandler;
     Panner panner;
     Handler handler;
