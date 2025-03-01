@@ -1505,7 +1505,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             OnTouchListener moveListener = new OnTouchViewMover(toolbar, handler, toolbarHider, hideToolbarDelay);
             ImageButton moveButton = new ImageButton(this);
 
-            moveButton.setBackgroundResource(R.drawable.verticalbar);
+            moveButton.setBackgroundResource(R.drawable.short_vertical_bar);
             moveButton.setMinimumWidth(36);
             MenuItem moveToolbar = menu.findItem(R.id.moveToolbar);
             moveToolbar.setActionView(moveButton);

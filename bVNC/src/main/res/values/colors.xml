@@ -4,5 +4,6 @@
     <color name="grey_overlay">#25FFFFFF</color>
     <color name="gesture_overlay">#55000000</color>
     <color name="theme">#E66100</color>
+    <color name="notification">#ffafafaf</color>
 
 </resources>

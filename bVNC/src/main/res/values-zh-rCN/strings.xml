@@ -848,7 +848,7 @@ aSPICE对应的功能如下：
     <string name="configure_connection">配置连接</string>
 
     <string name="my_connections">我的连接</string>
-    <string name="gesture_keycode_hint">输入发送的键值，也下面按扭输入特殊字符</string>
+    <string name="gesture_keycode_hint">输入要发送的键值，按扭输入特殊字符</string>
     <string name="gesture_not_recognized">手势未识别</string>
     <string name="gesture_hint">手势</string>
 </resources>

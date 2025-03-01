@@ -17,6 +17,7 @@
         <item name="android:toolbarStyle">@style/ToolbarStyle</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="actionOverflowButtonStyle">@style/CustomOverflowButton</item>
     </style>
 
     <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
@@ -44,4 +45,8 @@
     </style>
 
     <style name="ButtonBarButton" />
+
+    <style name="CustomOverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/notification</item>
+    </style>
 </resources>

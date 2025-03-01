@@ -17,18 +17,9 @@
         android:fadeOffset="1000"
         android:fadeEnabled="true"
         android:gestureStrokeType="multiple"
-        android:gestureColor="@android:color/holo_blue_light"
+        android:gestureColor="@color/theme"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
-
-    <EditText
-        android:id="@+id/gesture_keycode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/gesture_keycode_hint"
-        android:inputType="textCapCharacters"
-        android:maxLength="1"
-        android:focusable="true"/>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -139,5 +130,14 @@
                 />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/gesture_keycode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/gesture_keycode_hint"
+        android:textAlignment="center"
+        android:maxLength="1"
+        android:focusable="true"/>
 
 </LinearLayout>
