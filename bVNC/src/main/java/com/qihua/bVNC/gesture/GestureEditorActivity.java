@@ -13,9 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,13 +27,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson2.util.StringUtils;
+import com.undatech.opaque.Connection;
+import com.undatech.opaque.util.ConnectionLoader;
+import com.undatech.opaque.util.FileUtils;
 import com.undatech.remoteClientUi.R;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GestureEditorActivity extends AppCompatActivity implements GestureEditorActions {
     private GestureLibrary gestureLibrary;
@@ -39,6 +48,7 @@ public class GestureEditorActivity extends AppCompatActivity implements GestureE
     private RecyclerView gestureList = null;
     private GestureActionLibrary actionLibrary = null;
     private AlertDialog alertDialog;
+    private String curConnId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +57,12 @@ public class GestureEditorActivity extends AppCompatActivity implements GestureE
         setContentView(R.layout.gesture_list);
 
         Intent intent = getIntent();
-        String connId = intent.getStringExtra("connId");
+        curConnId = intent.getStringExtra("connId");
 
-        actionLibrary = new GestureActionLibrary(connId);
+        actionLibrary = new GestureActionLibrary(curConnId);
 
         File gestureFile = new File(getDir("gestures", Context.MODE_PRIVATE)
-                , connId + "_gestures.dat");
+                , curConnId + "_gestures.dat");
 
         gestureLibrary = GestureLibraries.fromFile(gestureFile);
         gestureLibrary.load();
@@ -111,6 +121,83 @@ public class GestureEditorActivity extends AppCompatActivity implements GestureE
         builder.show();
     }
 
+    public void triggerCopyGestureDialog(MenuItem item) {
+        alertDialog = new AlertDialog.Builder(this)
+                .setNegativeButton(getString(R.string.cancel), (d, which) -> d.dismiss())
+                .setTitle(getString(R.string.gesture_copy_to))
+                .create();
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View copyView = inflater.inflate(R.layout.gesture_copy_to, null);
+        ListView connList = copyView.findViewById(R.id.copyToConnection);
+
+        // 准备数据
+        ConnectionLoader connectionLoader = new ConnectionLoader(getApplicationContext(), this, false);
+        Map<String, Connection> connMap = connectionLoader.loadConnectionsById();
+
+        Map<String, Connection> nameConMap = connMap.values().stream().collect(Collectors.toMap(connection -> {
+            String nickName = connection.getNickname();
+            if (nickName != null && !nickName.isEmpty()) {
+                return nickName;
+            }
+
+            return connection.getUserName() + "@" + connection.getAddress();
+        }, connection -> connection));
+
+        // 创建适配器
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, // 当前上下文
+                R.layout.gesture_connection_item, // 列表项布局
+                R.id.connectionName, // 列表项中的 TextView ID（如果使用默认布局）
+                nameConMap.keySet().toArray(new String[0]) // 数据
+        );
+
+        // 设置点击事件监听器
+        connList.setOnItemClickListener((parent, view, position, id) -> {
+            // 获取点击的项目内容
+            String itemLabel = (String) parent.getItemAtPosition(position);
+            String selectedConnId = nameConMap.get(itemLabel).getId();
+
+            // load actions
+            File actionFile = new File(getDir("actions", Context.MODE_PRIVATE)
+                    , curConnId + "_actions.dat");
+            File gestureFile = new File(getDir("gestures", Context.MODE_PRIVATE)
+                    , curConnId + "_gestures.dat");
+
+            if (!actionFile.exists() || !gestureFile.exists()) {
+                // 弹出 Toast 提示
+                Toast.makeText(GestureEditorActivity.this, getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            File destActionFile = new File(getDir("actions", Context.MODE_PRIVATE)
+                    , selectedConnId + "_actions.dat");
+            File destGestureFile = new File(getDir("gestures", Context.MODE_PRIVATE)
+                    , selectedConnId + "_gestures.dat");
+
+            if (!FileUtils.copyFile(actionFile, destActionFile.getPath())) {
+                // 弹出 Toast 提示
+                Toast.makeText(GestureEditorActivity.this, getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!FileUtils.copyFile(gestureFile, destGestureFile.getPath())) {
+                // 弹出 Toast 提示
+                Toast.makeText(GestureEditorActivity.this, getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Toast.makeText(GestureEditorActivity.this, getString(R.string.gesture_copied), Toast.LENGTH_SHORT).show();
+            alertDialog.dismiss();
+        });
+
+        connList.setAdapter(adapter);
+
+        alertDialog.setView(copyView);
+        alertDialog.show();
+    }
+
     public void triggerAddGestureDialog(MenuItem item) {
         alertDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(getString(R.string.save_gesture), null)
@@ -120,7 +207,7 @@ public class GestureEditorActivity extends AppCompatActivity implements GestureE
 
         LayoutInflater inflater = LayoutInflater.from(this);
 
-        View gestureView = inflater.inflate(R.layout.gesture_add_gesture, null);
+        View gestureView = inflater.inflate(R.layout.gesture_editor_activity, null);
         GestureOverlayView gestureOverlayView = gestureView.findViewById(R.id.popupGestureAdd);
         gestureOverlayView.setOrientation(GestureOverlayView.ORIENTATION_VERTICAL);
         gestureOverlayView.setGestureStrokeWidth(20f);

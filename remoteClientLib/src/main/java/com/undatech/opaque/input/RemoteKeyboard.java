@@ -183,6 +183,10 @@ public abstract class RemoteKeyboard {
         onScreenMetaState = onScreenMetaState & ~SUPER_MASK;
     }
 
+    public void onScreenSuperOn() {
+        onScreenMetaState = onScreenMetaState | SUPER_MASK;
+    }
+
     /**
      * Toggles on-screen Shift mask.  Returns true if result is Shift enabled, false otherwise.
      *

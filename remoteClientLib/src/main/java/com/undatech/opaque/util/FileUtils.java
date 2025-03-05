@@ -220,4 +220,47 @@ public class FileUtils {
             fos.write(str.getBytes());
         }
     }
+
+    /**
+     * 将一个文件复制到新的路径（另存为）
+     *
+     * @param sourceFile 源文件对象
+     * @param destinationFilePath 目标文件路径
+     * @return 是否复制成功
+     */
+    public static boolean copyFile(File sourceFile, String destinationFilePath) {
+        // 检查源文件是否存在，存在删除再建
+        if (!sourceFile.exists()) {
+            if (!sourceFile.delete()) {
+                return false;
+            }
+        }
+
+        // 创建目标文件对象
+        File destinationFile = new File(destinationFilePath);
+
+        // 如果目标文件的父目录不存在，创建父目录
+        if (!destinationFile.getParentFile().exists()) {
+            destinationFile.getParentFile().mkdirs();
+        }
+
+        try (InputStream inputStream = new FileInputStream(sourceFile);
+             OutputStream outputStream = new FileOutputStream(destinationFile)) {
+
+            byte[] buffer = new byte[4096]; // 缓冲区大小
+            int bytesRead;
+
+            // 逐块读取并写入
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            System.out.println("File copied successfully from " + sourceFile.getAbsolutePath() + " to " + destinationFilePath);
+            return true;
+
+        } catch (IOException e) {
+            System.err.println("Error copying file: " + e.getMessage());
+            return false;
+        }
+    }
 }

@@ -845,6 +845,7 @@ aSPICE对应的功能如下：
 
     <string name="configure_gesture">配置手势</string>
     <string name="save_gesture">保存手势</string>
+    <string name="copy_gesture">复制手势</string>
     <string name="configure_connection">配置连接</string>
 
     <string name="my_connections">我的连接</string>

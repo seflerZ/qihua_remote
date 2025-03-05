@@ -429,6 +429,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         if (keys.contains("SHIFT")) {
             canvas.getKeyboard().onScreenShiftOn();
         }
+        if (keys.contains("META")) {
+            canvas.getKeyboard().onScreenSuperOn();
+        }
 
         if (keys.contains("←")) {
             canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
@@ -445,9 +448,14 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         } else if (keys.contains("TAB")) {
             canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
             canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
+        } else if (keys.contains("ESC")) {
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE));
+            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ESCAPE));
         } else {
             // perform the key
-            canvas.getKeyboard().sendUnicode(keys.get(keys.size() - 1).charAt(0), 0);
+            if (!keys.isEmpty()) {
+                canvas.getKeyboard().sendUnicode(keys.get(keys.size() - 1).charAt(0), 0);
+            }
         }
 
         if (keys.contains("ALT")) {
@@ -458,6 +466,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         }
         if (keys.contains("SHIFT")) {
             canvas.getKeyboard().onScreenShiftOff();
+        }
+        if (keys.contains("META")) {
+            canvas.getKeyboard().onScreenSuperOff();
         }
     }
 

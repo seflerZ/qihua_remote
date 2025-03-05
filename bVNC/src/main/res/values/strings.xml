@@ -870,6 +870,7 @@ Below that is where you configure your connection.
     <string name="configure_gesture">Configure Gesture</string>
     <string name="configure_connection">Configure Connection</string>
     <string name="save_gesture">Save Gesture</string>
+    <string name="copy_gesture">Copy Gesture</string>
     <string name="gesture_keycode_hint">The key to be sent. Buttons for special key</string>
     <string name="gesture_not_recognized">Gesture not recognized</string>
     <string name="gesture_hint">Gesture</string>
