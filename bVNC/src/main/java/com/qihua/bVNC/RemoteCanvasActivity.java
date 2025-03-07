@@ -170,6 +170,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private Connection connection;
     private GestureLibrary gestureLibrary;
     private GestureActionLibrary gestureActionLibrary;
+    private float lastPanDist = 0f;
 
     /**
      * This runnable fixes things up after a rotation.
@@ -207,6 +208,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     }
 
     public void hideToolbar() {
+        handler.removeCallbacks(toolbarHider);
+
         ActionBar toolbar = getSupportActionBar();
         if (toolbar != null) {
             toolbar.hide();
@@ -352,11 +355,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
                 rootView.getWindowVisibleDisplayFrame(r);
                 getWindow().getDecorView().getWindowVisibleDisplayFrame(re);
+                float visibleImgHeight = canvas.getImageVisibleInScreenHeight();
 
-                if (isShow) {
-                    canvas.absolutePan(canvas.getAbsX(), (int) (keyBoardHeight / canvas.getZoomFactor()), true);
-                } else {
-                    canvas.absolutePan(canvas.getAbsX(), (int) (-keyBoardHeight / canvas.getZoomFactor()), true);
+                float panDistance = visibleImgHeight + keyBoardHeight - canvas.getHeight();
+                if (isShow && panDistance > 0) {
+                    canvas.absolutePan(canvas.getAbsX(), (int) (panDistance), false);
+                    lastPanDist = panDistance;
+                }
+
+                if (!isShow && lastPanDist > 0) {
+                    canvas.absolutePan(canvas.getAbsX(), (int) (-lastPanDist), false);
                 }
 
                 canvas.setVisibleDesktopHeight(r.bottom - re.top);
