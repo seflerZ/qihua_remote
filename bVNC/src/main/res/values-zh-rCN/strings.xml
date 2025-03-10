@@ -624,7 +624,7 @@ bVNC对应的功能如下：
     <string name="rdp_server_empty">服务器或端口是空着。无法连接！</string>
     <string name="rdp_username_hint">用户名</string>
     <string name="remote_sound_disabled">声音已禁用</string>
-    <string name="remote_sound_on_device">设备上的声音</string>
+    <string name="remote_sound_on_device">本地设备上的声音</string>
     <string name="remote_sound_on_server">服务器上的声音</string>
     <string name="repeater_button">UltraVNC中继器</string>
     <string name="repeater_caption">重要信息：如果使用UltraVNC中继器，请在此对话框外部输入其地址和端口号。在此输入实际VNC服务器的地址和端口号。用冒号分隔VNC服务器的地址和端口号，例如 192.168.0.100:5900。</string>
