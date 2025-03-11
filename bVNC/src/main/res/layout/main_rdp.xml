@@ -416,6 +416,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/remote_sound_on_server"
+                    android:visibility="gone"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioButton
