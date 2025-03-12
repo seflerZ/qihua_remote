@@ -77,6 +77,14 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
         twoFingers = twoFingers || (e2.getPointerCount() == 2);
 
+        if (Math.abs(distanceX) > baseSwipeDist || Math.abs(distanceY) > baseSwipeDist) {
+            canSwipeToMove = true;
+        }
+
+        if (!canSwipeToMove) {
+            return true;
+        }
+
         if (inScaling) {
             return true;
         }

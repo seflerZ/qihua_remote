@@ -20,17 +20,11 @@
 
 package com.qihua.bVNC.input;
 
-import android.content.Context;
-import android.hardware.input.InputManager;
 import android.os.Build;
 import android.os.SystemClock;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.core.view.InputDeviceCompat;
 
@@ -38,7 +32,6 @@ import com.qihua.bVNC.Constants;
 import com.qihua.bVNC.RemoteCanvas;
 import com.qihua.bVNC.RemoteCanvasActivity;
 import com.qihua.bVNC.Utils;
-import com.undatech.opaque.input.RemoteKeyboard;
 import com.undatech.opaque.util.GeneralUtils;
 
 import java.util.LinkedList;
@@ -112,7 +105,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     // event and the maximum number to send at one time.
     long swipeSpeed = 1;
     // This is how far the swipe has to travel before a swipe event is generated.
-    float startSwipeDist = 1.f;
+    float startSwipeDist = 5f;
+    boolean canSwipeToMove = false;
     float baseSwipeDist = 0.f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeRatio = 0.09f;
@@ -652,6 +646,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 inertiaSemaphore.release();
                             }
                         }
+
+                        canSwipeToMove = false;
 
                         break;
                 }
