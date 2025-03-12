@@ -359,28 +359,14 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                 sendScrollEvents(x, y, -1, meta);
                 used = true;
                 break;
-            // If the mouse was moved OR as reported, some external mice trigger this when a
-            // mouse button is pressed as well, so we check bstate here too.
-//            case MotionEvent.ACTION_HOVER_MOVE:
-//                canvas.movePanToMakePointerVisible();
-//                switch (bstate) {
-//                    case MotionEvent.BUTTON_PRIMARY:
-//                        pointer.leftButtonDown(x, y, meta);
-//                        break;
-//                    case MotionEvent.BUTTON_SECONDARY:
-//                    case MotionEvent.BUTTON_STYLUS_PRIMARY:
-//                        pointer.rightButtonDown(x, y, meta);
-//                        break;
-//                    case MotionEvent.BUTTON_TERTIARY:
-//                    case MotionEvent.BUTTON_STYLUS_SECONDARY:
-//                        pointer.middleButtonDown(x, y, meta);
-//                        break;
-//                    default:
-//                        pointer.moveMouseButtonUp(x, y, meta);
-//                        break;
-//                }
-//                used = true;
         }
+
+        // if in external displaying mode and pointer reached to the bottom of the screen, release the pointer capture
+//        if (action == MotionEvent.ACTION_MOVE && (canvas != touchpad)) {
+//            if (pointer.getY() >= canvas.getImageHeight() - 1) {
+//                touchpad.releasePointerCapture();
+//            }
+//        }
 
         canvas.movePanToMakePointerVisible();
 
@@ -537,8 +523,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             return true;
         }
 
-//        if (android.os.Build.VERSION.SDK_INT >= 14) {
-        // Handle and consume actions performed by a (e.g. USB or bluetooth) mouse.
         if (e.getDeviceId() > 10 && touchpad != canvas) {
             if (e.getButtonState() == MotionEvent.BUTTON_PRIMARY) {
                 touchpad.startPointerCapture();
@@ -546,7 +530,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
             return true;
         }
-//        }
 
         GeneralUtils.debugLog(debugLogging, TAG, "onTouchEvent: pointerID: " + pointerID);
         switch (pointerID) {
