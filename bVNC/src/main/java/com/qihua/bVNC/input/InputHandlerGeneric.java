@@ -37,6 +37,7 @@ import androidx.core.view.InputDeviceCompat;
 import com.qihua.bVNC.Constants;
 import com.qihua.bVNC.RemoteCanvas;
 import com.qihua.bVNC.RemoteCanvasActivity;
+import com.qihua.bVNC.Utils;
 import com.undatech.opaque.input.RemoteKeyboard;
 import com.undatech.opaque.util.GeneralUtils;
 
@@ -454,7 +455,15 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         totalDragX = 0;
         totalDragY = 0;
 
-        rightDragMode = true;
+        String longPressType = Utils.querySharedPreferenceString(activity.getApplicationContext(), Constants.touchpadLongPressAction, "left");
+
+        if (longPressType.equals("left")) {
+            dragMode = true;
+        } else if (longPressType.equals("middle")) {
+            middleDragMode = true;
+        } else {
+            rightDragMode = true;
+        }
     }
 
     /**

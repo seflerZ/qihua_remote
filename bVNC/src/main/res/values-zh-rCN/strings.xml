@@ -852,4 +852,10 @@ aSPICE对应的功能如下：
     <string name="gesture_keycode_hint">输入要发送的键值，按扭输入特殊字符</string>
     <string name="gesture_not_recognized">手势未识别</string>
     <string name="gesture_hint">手势</string>
+
+    <string name="pref_longpress_type_left">鼠标左键</string>
+    <string name="pref_longpress_type_middle">鼠标中键</string>
+    <string name="pref_longpress_type_right">鼠标右键</string>
+
+    <string name="touchpad_longpress_action">触摸板长按效果</string>
 </resources>

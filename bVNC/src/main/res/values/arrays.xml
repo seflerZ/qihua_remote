@@ -11,7 +11,28 @@
         <item>@string/pref_keyboard_type_VISIBLE_PASSWORD_value</item>
         <item>@string/pref_keyboard_type_TYPE_CLASS_TEXT_value</item>
     </array>
+
     <string name="pref_keyboard_type_TYPE_NULL_value">0</string>
     <string name="pref_keyboard_type_VISIBLE_PASSWORD_value">145</string>
     <string name="pref_keyboard_type_TYPE_CLASS_TEXT_value">1</string>
+
+    <array name="pref_touchpad_long_press_label">
+        <item>@string/pref_longpress_type_left</item>
+        <item>@string/pref_longpress_type_middle</item>
+        <item>@string/pref_longpress_type_right</item>
+    </array>
+
+    <string name="pref_longpress_type_left">Left Button</string>
+    <string name="pref_longpress_type_middle">Middle Button</string>
+    <string name="pref_longpress_type_right">Right Button</string>
+
+    <array name="pref_touchpad_long_press_values">
+        <item>@string/pref_longpress_type_left_value</item>
+        <item>@string/pref_longpress_type_middle_value</item>
+        <item>@string/pref_longpress_type_right_value</item>
+    </array>
+
+    <string name="pref_longpress_type_left_value">left</string>
+    <string name="pref_longpress_type_middle_value">middle</string>
+    <string name="pref_longpress_type_right_value">right</string>
 </resources>

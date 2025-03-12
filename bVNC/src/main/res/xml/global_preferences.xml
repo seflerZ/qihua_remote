@@ -28,10 +28,10 @@
         android:defaultValue="false"
         android:key="showOnlyConnectionNicknames"
         android:title="@string/show_only_connection_nicknames" />
-<!--    <ListPreference-->
-<!--        android:defaultValue="@string/pref_keyboard_type_TYPE_NULL_value"-->
-<!--        android:entries="@array/pref_keyboard_type_option_labels"-->
-<!--        android:entryValues="@array/pref_keyboard_type_option_values"-->
-<!--        android:key="softwareKeyboardType"-->
-<!--        android:title="@string/keyboard_type" />-->
+    <ListPreference
+        android:defaultValue="@string/pref_longpress_type_right_value"
+        android:entries="@array/pref_touchpad_long_press_label"
+        android:entryValues="@array/pref_touchpad_long_press_values"
+        android:key="touchpadLongPressAction"
+        android:title="@string/touchpad_longpress_action" />
 </PreferenceScreen>

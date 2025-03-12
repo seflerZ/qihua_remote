@@ -29,7 +29,7 @@ public class KeyRepeater implements Runnable {
     private int keyCode = 0;
     private KeyEvent event = null;
     private int initialDelay = 400;
-    private int defaultDelay = 100;
+    private int defaultDelay = 80;
     private boolean starting = false;
 
     public KeyRepeater(RemoteKeyboard keyboard, Handler handler) {
