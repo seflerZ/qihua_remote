@@ -370,10 +370,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 canvas.setVisibleDesktopHeight(r.bottom - re.top);
             }
 
-            if (!isShow && !extraKeysHidden) {
-                hideKeyboardAndExtraKeys();
-            }
-
             canvas.movePanToMakePointerVisible();
         });
 
@@ -1902,24 +1898,38 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     }
 
     public void toggleKeyboard(MenuItem menuItem) {
-        if (softKeyboardUp) {
-            hideKeyboardAndExtraKeys();
-        } else {
-            showKeyboardAndExtraKeys();
-        }
+        handler.post(() -> {
+            // show gesture overlay
+            if (gestureOverlayView != null && canvas.connection.getEnableGesture()) {
+                gestureOverlayView.setVisibility(View.GONE);
+            }
+
+            if (softKeyboardUp) {
+                hideKeyboardAndExtraKeys();
+            } else {
+                showKeyboardAndExtraKeys();
+            }
+        });
     }
 
     public void fillScreen(MenuItem menuItem) {
-        float zoomRatio;
-        float diff = (float) canvas.getWidth() / canvas.getHeight() - (float) canvas.getImageWidth() / canvas.getImageHeight();
-        if (diff > 0) {
-            zoomRatio = (float) canvas.getWidth() / canvas.getImageWidth();
-        } else {
-            zoomRatio = (float) canvas.getHeight() / canvas.getImageHeight();
-        }
+        handler.post(() -> {
+            // show gesture overlay
+            if (gestureOverlayView != null && canvas.connection.getEnableGesture()) {
+                gestureOverlayView.setVisibility(View.GONE);
+            }
 
-        // Because the zoom action is relative, we should divide the current zoom factor
-        canvas.canvasZoomer.changeZoom(this, zoomRatio / canvas.canvasZoomer.getZoomFactor(), (float) canvas.getWidth() / 2, 0);
+            float zoomRatio;
+            float diff = (float) canvas.getWidth() / canvas.getHeight() - (float) canvas.getImageWidth() / canvas.getImageHeight();
+            if (diff > 0) {
+                zoomRatio = (float) canvas.getWidth() / canvas.getImageWidth();
+            } else {
+                zoomRatio = (float) canvas.getHeight() / canvas.getImageHeight();
+            }
+
+            // Because the zoom action is relative, we should divide the current zoom factor
+            canvas.canvasZoomer.changeZoom(this, zoomRatio / canvas.canvasZoomer.getZoomFactor(), (float) canvas.getWidth() / 2, 0);
+        });
     }
 
 //    public void sendCopy(MenuItem menuItem) {
