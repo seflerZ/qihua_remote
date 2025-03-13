@@ -4,7 +4,7 @@
     package="com.qihua.rmt"
     android:installLocation="auto"
     android:versionCode="2520"
-    android:versionName="v1.6.4">
+    android:versionName="v1.6.5">
 
 <!--    <uses-permission tools:node="removeAll" />-->
     <uses-permission android:name="android.permission.INTERNET" />
