@@ -407,7 +407,7 @@ public class Utils {
             SharedPreferences sp = context.getSharedPreferences(Constants.generalSettingsTag, Context.MODE_PRIVATE);
             result = sp.getBoolean(key, false);
         }
-        return defaultValue;
+        return result;
     }
 
     public static String querySharedPreferenceString(Context context, String key, String dftValue) {
