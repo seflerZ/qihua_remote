@@ -401,6 +401,15 @@ public class Utils {
         return result;
     }
 
+    public static boolean querySharedPreferenceBoolean(Context context, String key, boolean defaultValue) {
+        boolean result = defaultValue;
+        if (context != null) {
+            SharedPreferences sp = context.getSharedPreferences(Constants.generalSettingsTag, Context.MODE_PRIVATE);
+            result = sp.getBoolean(key, false);
+        }
+        return defaultValue;
+    }
+
     public static String querySharedPreferenceString(Context context, String key, String dftValue) {
         String result = dftValue;
         if (context != null) {

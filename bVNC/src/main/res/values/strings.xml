@@ -876,4 +876,6 @@ Below that is where you configure your connection.
     <string name="gesture_not_recognized">Gesture not recognized</string>
     <string name="gesture_hint">Gesture</string>
 
+    <string name="touchpad_control_pref">Touchpad customization</string>
+    <string name="touchpad_edge_wheel">Use screen edge as touchpad scrolling</string>
 </resources>

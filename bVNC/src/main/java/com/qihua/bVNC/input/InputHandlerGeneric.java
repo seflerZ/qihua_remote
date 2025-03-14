@@ -127,6 +127,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     Queue<Float> distYQueue;
     private boolean dragHelped = false;
     private boolean canEnlarge = true;
+    private boolean immersiveSwipeEnabled = true;
 
     InputHandlerGeneric(RemoteCanvasActivity activity, RemoteCanvas canvas, RemoteCanvas touchpad, RemotePointer pointer,
                         boolean debugLogging) {
@@ -151,6 +152,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         distXQueue = new LinkedList<Float>();
         distYQueue = new LinkedList<Float>();
+
+        immersiveSwipeEnabled = Utils.querySharedPreferenceBoolean(activity.getApplicationContext()
+                , Constants.touchpadEdgeWheel, true);
 
 //        baseSwipeDist = baseSwipeDist / displayDensity;
 //        startSwipeDist = startSwipeDist / displayDensity;
@@ -493,10 +497,15 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     }
 
     private void detectImmersiveSwipe(float x, float y) {
+        // if global switch off, disable it
+        if (!immersiveSwipeEnabled) {
+            return;
+        }
+
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
 
-        float immersiveXDistance = Math.max(touchpad.getWidth() * immersiveSwipeRatio, 15);
-        float immersiveYDistance = Math.max(touchpad.getHeight() * immersiveSwipeRatio, 15);
+        float immersiveXDistance = Math.max(touchpad.getWidth() * immersiveSwipeRatio, 20);
+        float immersiveYDistance = Math.max(touchpad.getHeight() * immersiveSwipeRatio, 20);
 
         if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
                 (x <= immersiveXDistance || touchpad.getWidth() - x <= immersiveXDistance

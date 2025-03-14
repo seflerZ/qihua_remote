@@ -858,4 +858,6 @@ aSPICE对应的功能如下：
     <string name="pref_longpress_type_right">鼠标右键</string>
 
     <string name="touchpad_longpress_action">触摸板长按效果</string>
+    <string name="touchpad_control_pref">触摸板个性化设置</string>
+    <string name="touchpad_edge_wheel">将屏幕边缘当作鼠标滚轮使用</string>
 </resources>

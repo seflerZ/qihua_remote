@@ -14,6 +14,7 @@ public class GlobalPreferencesFragment extends PreferenceFragmentCompat {
         if (Utils.isVnc(getContext())) {
             addPreferencesFromResource(R.xml.global_preferences_vnc);
         } else if (Utils.isRdp(getContext())) {
+            addPreferencesFromResource(R.xml.global_preferences_touchpad);
             addPreferencesFromResource(R.xml.global_preferences_rdp);
         } else if (Utils.isSpice(getContext())) {
             addPreferencesFromResource(R.xml.global_preferences_spice);
