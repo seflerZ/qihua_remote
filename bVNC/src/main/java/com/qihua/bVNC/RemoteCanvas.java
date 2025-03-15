@@ -185,6 +185,11 @@ public class RemoteCanvas extends AppCompatImageView
     boolean isSpice = false;
 
     /*
+     * This flag indicates whether this is the NvStream(Sunshine) client.
+     */
+    boolean isNvStream = false;
+
+    /*
      * This flag indicates whether this is the Opaque client.
      */
     boolean isOpaque = false;

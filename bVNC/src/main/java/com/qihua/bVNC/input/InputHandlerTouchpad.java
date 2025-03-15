@@ -245,10 +245,6 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         return true;
     }
 
-    private float getRatio(float distance, boolean isY) {
-        return distance;
-    }
-
     /*
      * (non-Javadoc)
      * @see android.view.GestureDetector.SimpleOnGestureListener#onDown(android.view.MotionEvent)
@@ -294,16 +290,5 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         }
         dragY = e.getY();
         return p.getY();
-    }
-
-    /**
-     * Computes how far the pointer will move.
-     *
-     * @param distance
-     * @return
-     */
-    private float getDelta(float distance) {
-        float delta = (float) (distance * Math.cbrt(canvas.getZoomFactor()));
-        return computeAcceleration(delta);
     }
 }

@@ -91,9 +91,9 @@ class ZoomScaling extends AbstractScaling {
         if (scaling > 4.0f) {
             scaling = 4.0f;
         }
-        matrix.postScale(scaling, scaling);
+//        matrix.postScale(scaling, scaling);
         //Log.v(TAG,String.format("before set matrix scrollx = %d scrolly = %d", activity.vncCanvas.getScrollX(), activity.vncCanvas.getScrollY()));
-        activity.getCanvas().setImageMatrix(matrix);
+//        activity.getCanvas().setImageMatrix(matrix);
         resolveZoom(activity.getCanvas());
     }
 
@@ -154,8 +154,8 @@ class ZoomScaling extends AbstractScaling {
 
         resetMatrix();
         scaling = newScale;
-        matrix.postScale(scaling, scaling);
-        canvas.setImageMatrix(matrix);
+//        matrix.postScale(scaling, scaling);
+//        canvas.setImageMatrix(matrix);
         resolveZoom(canvas);
 
         // Only if we have actually scaled do we pan and potentially set mouse position.
