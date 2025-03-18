@@ -141,7 +141,7 @@ class UltraCompactBitmapData extends AbstractBitmapData {
                     + framebufferwidth + "," + framebufferheight + ")");
             dispose();
             // Try to free up some memory.
-            System.gc();
+//            System.gc();
             bitmapwidth = framebufferwidth;
             bitmapheight = framebufferheight;
             mbitmap = Bitmap.createBitmap(bitmapwidth, bitmapheight, cfg);
@@ -170,7 +170,7 @@ class UltraCompactBitmapData extends AbstractBitmapData {
         private int fps = 0;
         private int avg = 0;
         private int max = 0;
-        private final static boolean showFps = false;
+        private final static boolean showFps = true;
 
         @Override
         public void draw(Canvas canvas) {

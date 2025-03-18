@@ -164,7 +164,7 @@ class CompactBitmapData extends AbstractBitmapData {
                     + framebufferwidth + "," + framebufferheight + ")");
             dispose();
             // Try to free up some memory.
-            System.gc();
+//            System.gc();
             bitmapwidth = framebufferwidth;
             bitmapheight = framebufferheight;
             bitmapPixels = new int[bitmapwidth * bitmapheight];

@@ -53,7 +53,7 @@ public class CanvasDrawableContainer extends DrawableContainer {
 
         cursorRect = new RectF();
         // Try to free up some memory.
-        System.gc();
+//        System.gc();
         softCursor = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 
         paint = new Paint();
@@ -122,7 +122,7 @@ public class CanvasDrawableContainer extends DrawableContainer {
         if (bitmapW < width || bitmapH < width) {
             destroy();
             // Try to free up some memory.
-            System.gc();
+//            System.gc();
             bitmapW = width;
             bitmapH = height;
             bitmap = Bitmap.createBitmap(bitmapW, bitmapH, cfg);

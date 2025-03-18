@@ -149,7 +149,7 @@ class FullBufferBitmapData extends AbstractBitmapData {
         if (dataWidth < framebufferwidth || dataHeight < framebufferheight) {
             dispose();
             // Try to free up some memory.
-            System.gc();
+//            System.gc();
             dataWidth = framebufferwidth;
             dataHeight = framebufferheight;
             bitmapPixels = new int[framebufferwidth * framebufferheight];

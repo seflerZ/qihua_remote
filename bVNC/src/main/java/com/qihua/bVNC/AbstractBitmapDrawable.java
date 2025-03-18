@@ -53,7 +53,7 @@ public class AbstractBitmapDrawable extends DrawableContainer {
         cursorRect = new RectF();
         clipRect = new Rect();
         // Try to free up some memory.
-        System.gc();
+//        System.gc();
         softCursor = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         softCursorInit = false;
 

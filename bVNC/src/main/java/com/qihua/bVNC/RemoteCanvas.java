@@ -1285,7 +1285,7 @@ public class RemoteCanvas extends AppCompatImageView
         if (myDrawable != null)
             myDrawable.dispose();
         myDrawable = null;
-        System.gc();
+//        System.gc();
     }
 
     /**
@@ -1681,7 +1681,7 @@ public class RemoteCanvas extends AppCompatImageView
      * Causes a redraw of the myDrawable to happen at the indicated coordinates.
      */
     public void reDraw(int x, int y, int w, int h) {
-        if (System.currentTimeMillis() - lastDraw < 10) {
+        if (System.currentTimeMillis() - lastDraw < 8) {
             return;
         }
 

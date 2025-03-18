@@ -131,7 +131,7 @@ public abstract class MainConfiguration extends FragmentActivity {
         super.onCreate(icicle);
         Utils.showMenu(this);
         setContentView(layoutID);
-        System.gc();
+//        System.gc();
 
         setTitle(R.string.configure_connection);
 
@@ -201,14 +201,14 @@ public abstract class MainConfiguration extends FragmentActivity {
     protected void onStart() {
         Log.d(TAG, "onStart called");
         super.onStart();
-        System.gc();
+//        System.gc();
     }
 
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume called");
         super.onResume();
-        System.gc();
+//        System.gc();
     }
 
     @Override
@@ -253,7 +253,7 @@ public abstract class MainConfiguration extends FragmentActivity {
         Log.d(TAG, "onDestroy called");
         if (database != null)
             database.close();
-        System.gc();
+//        System.gc();
         super.onDestroy();
     }
 

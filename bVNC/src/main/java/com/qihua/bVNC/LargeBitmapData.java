@@ -356,7 +356,7 @@ class LargeBitmapData extends AbstractBitmapData {
                 // We ran out of memory, so try adjusting CAPACITY_MULTIPLIER
                 CAPACITY_MULTIPLIER = CAPACITY_MULTIPLIER + 10;
                 // Try to free up some memory.
-                System.gc();
+//                System.gc();
                 // Wait a second for the system to recover.
                 try {
                     Thread.sleep(500);
@@ -378,7 +378,7 @@ class LargeBitmapData extends AbstractBitmapData {
         bitmapRect = null;
         defaultPaint = null;
         // Try to free up some memory.
-        System.gc();
+//        System.gc();
         scaleMultiplier = Math.sqrt((double) (capacity * 1024 * 1024) /
                 (double) (CAPACITY_MULTIPLIER * framebufferwidth * framebufferheight));
         if (scaleMultiplier > 1)
