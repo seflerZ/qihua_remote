@@ -32,7 +32,7 @@ public class MyGestureDectector
 {
 
     private static final int TAP_TIMEOUT = 120;
-    private static final int DOUBLE_TAP_TIMEOUT = 400;
+    private static final int DOUBLE_TAP_TIMEOUT = 900;
     // Distance a touch can wander before we think the user is the first touch in a sequence of
     // double tap
     private static final int LARGE_TOUCH_SLOP = 18;
@@ -402,10 +402,10 @@ public class MyGestureDectector
     private boolean isConsideredDoubleTap(MotionEvent firstDown, MotionEvent firstUp,
                                           MotionEvent secondDown)
     {
-        if (!mAlwaysInBiggerTapRegion)
-        {
-            return false;
-        }
+//        if (!mAlwaysInBiggerTapRegion)
+//        {
+//            return false;
+//        }
 
         if (secondDown.getEventTime() - firstUp.getEventTime() > DOUBLE_TAP_TIMEOUT)
         {
