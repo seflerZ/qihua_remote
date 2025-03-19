@@ -170,7 +170,7 @@ class UltraCompactBitmapData extends AbstractBitmapData {
         private int fps = 0;
         private int avg = 0;
         private int max = 0;
-        private final static boolean showFps = true;
+        private final static boolean showFps = false;
 
         @Override
         public void draw(Canvas canvas) {
