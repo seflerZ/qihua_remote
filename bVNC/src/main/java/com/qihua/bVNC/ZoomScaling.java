@@ -197,6 +197,14 @@ class ZoomScaling extends AbstractScaling {
         // Do not apply zooming in second display mode.
         if (lastZoomFactor > 0 && canvas.connection.getUseLastPositionToolbar() && !canvas.isOutDisplay()) {
             scaling = lastZoomFactor;
+
+            // after scale, the image width will change, so the init offset should be adjusted
+            // for the case that the image width is larger than the screen width, we should remove the extra offset
+            if (scaling * canvas.getImageWidth() > canvas.getWidth()) {
+                canvasXOffset = 0;
+            } else {
+                canvasXOffset += (int) ((scaling - 1) * canvas.getImageWidth());
+            }
         } else {
             scaling = minimumScale;
         }
