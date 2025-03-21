@@ -179,14 +179,12 @@ class UltraCompactBitmapData extends AbstractBitmapData {
                     fps += 1;
                 }
 
-                synchronized (this) {
-                    canvas.drawBitmap(data.mbitmap, 0.0f, 0.0f, _defaultPaint);
-                    canvas.drawBitmap(softCursor, cursorRect.left, cursorRect.top, _defaultPaint);
+                canvas.drawBitmap(data.mbitmap, 0.0f, 0.0f, _defaultPaint);
+                canvas.drawBitmap(softCursor, cursorRect.left, cursorRect.top, _defaultPaint);
 
-                    if (showFps) {
-                        char[] text = String.valueOf("FPS:" + avg).toCharArray();
-                        canvas.drawText(text, 0, text.length, 100f, 100f, _textPaint);
-                    }
+                if (showFps) {
+                    char[] text = String.valueOf("FPS:" + avg).toCharArray();
+                    canvas.drawText(text, 0, text.length, 100f, 100f, _textPaint);
                 }
 
                 if (showFps && System.currentTimeMillis() - last > 1000) {

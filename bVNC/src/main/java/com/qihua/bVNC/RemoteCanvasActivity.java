@@ -404,7 +404,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
             // if highest score is less than 2, not recognized
             Prediction pre = predictions.get(0);
-            if (pre.score < 2) {
+            if (pre.score < 4) {
                 Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_recognized), Toast.LENGTH_LONG).show();
                 hideToolbar();
 
