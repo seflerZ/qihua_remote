@@ -1537,7 +1537,10 @@ public class RemoteCanvas extends AppCompatImageView
         int ih = getImageHeight();
 
         // bWidth = black border width
-        int bWidth = (int) ((getWidth() - iw * getMinimumScale()) / 2);
+        int bWidth = (int) ((getWidth() - iw * getZoomFactor()) / 2);
+        if (bWidth <= 0) {
+            bWidth = 0;
+        }
 
         // This is definitely 0 because we have the image top aligned
         int bHeight = 0;
