@@ -22,9 +22,12 @@ package com.qihua.bVNC.input;
 
 import android.os.Build;
 import android.os.SystemClock;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.core.view.InputDeviceCompat;
 
@@ -33,6 +36,7 @@ import com.qihua.bVNC.RemoteCanvas;
 import com.qihua.bVNC.RemoteCanvasActivity;
 import com.qihua.bVNC.Utils;
 import com.undatech.opaque.util.GeneralUtils;
+import com.undatech.remoteClientUi.R;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -129,6 +133,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     private boolean canEnlarge = true;
     private boolean immersiveSwipeEnabled = true;
 
+    private View edgeRight;
+    private View edgeLeft;
+    private View edgeTop;
+    private View edgeBottom;
+
     InputHandlerGeneric(RemoteCanvasActivity activity, RemoteCanvas canvas, RemoteCanvas touchpad, RemotePointer pointer,
                         boolean debugLogging) {
         this.activity = activity;
@@ -136,6 +145,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         this.canvas = canvas;
         this.pointer = pointer;
         this.debugLogging = debugLogging;
+
+        edgeLeft = activity.findViewById(R.id.edgeLeft);
+        edgeRight = activity.findViewById(R.id.edgeRight);
+        edgeTop = activity.findViewById(R.id.edgeTop);
+        edgeBottom = activity.findViewById(R.id.edgeBottom);
 
         // TODO: Implement this
         useDpadAsArrows = true; //activity.getUseDpadAsArrows();
@@ -513,11 +527,44 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
             inSwiping = true;
             immersiveSwipe = true;
+
+            if (x <= immersiveXDistance) {
+                edgeLeft.setVisibility(View.VISIBLE);
+                setEdgeWidth(edgeLeft, (int) immersiveXDistance);
+            } else if (touchpad.getWidth() - x <= immersiveXDistance) {
+                edgeRight.setVisibility(View.VISIBLE);
+                setEdgeWidth(edgeRight, (int) immersiveXDistance);
+            } else if (y <= immersiveYDistance) {
+                edgeTop.setVisibility(View.VISIBLE);
+                setEdgeHeight(edgeTop, (int) immersiveYDistance);
+            } else if (touchpad.getHeight() - y <= immersiveYDistance) {
+                edgeBottom.setVisibility(View.VISIBLE);
+                setEdgeHeight(edgeBottom, (int) immersiveYDistance);
+            }
         } else if (!singleHandedGesture) {
             inSwiping = false;
             immersiveSwipe = false;
         }
     }
+
+    private void setEdgeWidth(View view, int newWidthDp) {
+        // 1. 获取布局参数
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        params.width = newWidthDp;
+
+        // 3. 应用参数
+        view.setLayoutParams(params);
+    }
+
+    private void setEdgeHeight(View view, int newHeightDp) {
+        // 1. 获取布局参数
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        params.height = newHeightDp;
+
+        // 3. 应用参数
+        view.setLayoutParams(params);
+    }
+
 
     /*
      * @see com.qihua.bVNC.input.InputHandler#0yonTouchEvent(android.view.MotionEvent)
@@ -655,6 +702,11 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                                 inertiaSemaphore.release();
                             }
                         }
+
+                        edgeLeft.setVisibility(View.GONE);
+                        edgeRight.setVisibility(View.GONE);
+                        edgeTop.setVisibility(View.GONE);
+                        edgeBottom.setVisibility(View.GONE);
 
                         canSwipeToMove = false;
 

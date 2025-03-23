@@ -12,6 +12,38 @@
         android:layout_gravity="bottom|center"
         android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
 
+    <View
+        android:id="@+id/edgeTop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:background="@color/gesture_overlay"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/edgeBottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gesture_overlay"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/edgeRight"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/gesture_overlay"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/edgeLeft"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/gesture_overlay"
+        android:visibility="gone" />
+
     <android.gesture.GestureOverlayView
         android:id="@+id/gestureOverlay"
         android:layout_width="match_parent"
