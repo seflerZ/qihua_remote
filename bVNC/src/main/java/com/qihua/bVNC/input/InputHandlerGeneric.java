@@ -20,6 +20,7 @@
 
 package com.qihua.bVNC.input;
 
+import android.gesture.GestureOverlayView;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.TypedValue;
@@ -473,9 +474,31 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             dragMode = true;
         } else if (longPressType.equals("middle")) {
             middleDragMode = true;
-        } else {
+        } else if (longPressType.equals("right")){
             rightDragMode = true;
-        }
+        } else if (longPressType.equals("gesture")) {
+            // Here we mock a ACTION_DOWN event for gestureOverlayView to transmit the touch events to it flawlessly
+            // further touch events will be transmitted in method onTouchEvent.
+            GestureOverlayView gestureOverlay = activity.findViewById(R.id.gestureOverlay);
+            gestureOverlay.setVisibility(View.VISIBLE);
+
+            // 获取当前触摸坐标（需转换为手势层坐标系）
+            float x = e.getRawX() - gestureOverlay.getLeft();
+            float y = e.getRawY() - gestureOverlay.getTop();
+
+            // 生成并分发模拟事件
+            MotionEvent downEvent = MotionEvent.obtain(
+                    SystemClock.uptimeMillis(),
+                    SystemClock.uptimeMillis(),
+                    MotionEvent.ACTION_DOWN,
+                    x,
+                    y,
+                    0
+            );
+            gestureOverlay.dispatchTouchEvent(downEvent);
+            downEvent.recycle();
+        }  // else do nothing
+
     }
 
     /**
@@ -577,6 +600,27 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         final int index = e.getActionIndex();
         final int pointerID = e.getPointerId(index);
         final int meta = e.getMetaState();
+
+        GestureOverlayView gestureOverlay = activity.findViewById(R.id.gestureOverlay);
+
+        // 当手势层可见时，直接转发事件，这样可以无缝将触摸事件转至手势层
+        if (gestureOverlay.getVisibility() == View.VISIBLE) {
+            // 转换坐标到手势层的局部坐标系
+            float x = e.getRawX() - gestureOverlay.getLeft();
+            float y = e.getRawY() - gestureOverlay.getTop();
+            MotionEvent translatedEvent = MotionEvent.obtain(
+                    e.getDownTime(),
+                    e.getEventTime(),
+                    e.getAction(),
+                    x,
+                    y,
+                    e.getMetaState()
+            );
+
+            boolean handled = gestureOverlay.dispatchTouchEvent(translatedEvent);
+            translatedEvent.recycle();
+            return handled;
+        }
 
         if (scalingGestureDetector.onTouchEvent(e) || inScaling) {
             return true;

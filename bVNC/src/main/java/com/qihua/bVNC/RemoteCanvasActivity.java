@@ -23,6 +23,8 @@
 //
 package com.qihua.bVNC;
 
+import static com.qihua.bVNC.Constants.touchpadLongPressAction;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -1879,8 +1881,11 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         handler.removeCallbacks(toolbarHider);
         handler.postAtTime(toolbarHider, SystemClock.uptimeMillis() + hideToolbarDelay);
 
-        // show gesture overlay
-        if (gestureOverlayView != null && canvas.connection.getEnableGesture()) {
+        // show gesture overlay if long press action is not showing the layer
+        String longPressType = Utils.querySharedPreferenceString(getApplicationContext()
+                , Constants.touchpadLongPressAction, "left");
+
+        if (gestureOverlayView != null && canvas.connection.getEnableGesture() && !longPressType.equals("gesture")) {
             gestureOverlayView.setVisibility(View.VISIBLE);
         }
 
