@@ -152,9 +152,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         edgeTop = activity.findViewById(R.id.edgeTop);
         edgeBottom = activity.findViewById(R.id.edgeBottom);
 
-        // TODO: Implement this
-        useDpadAsArrows = true; //activity.getUseDpadAsArrows();
-        rotateDpad = false; //activity.getRotateDpad();
+//        useDpadAsArrows = true; //activity.getUseDpadAsArrows();
+//        rotateDpad = false; //activity.getRotateDpad();
 
         gestureDetector = new MyGestureDectector(activity, this, null, false);
         scalingGestureDetector = new MyScaleGestureDetector(activity, this);
@@ -165,8 +164,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         displayDensity = canvas.getDisplayDensity();
 
-        distXQueue = new LinkedList<Float>();
-        distYQueue = new LinkedList<Float>();
+        distXQueue = new LinkedList<>();
+        distYQueue = new LinkedList<>();
 
         immersiveSwipeEnabled = Utils.querySharedPreferenceBoolean(activity.getApplicationContext()
                 , Constants.touchpadEdgeWheel, true);

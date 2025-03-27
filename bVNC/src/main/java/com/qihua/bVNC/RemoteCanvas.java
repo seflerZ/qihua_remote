@@ -31,6 +31,7 @@
 package com.qihua.bVNC;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
@@ -47,11 +48,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.PointerIcon;
+import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -117,7 +122,7 @@ public class RemoteCanvas extends AppCompatImageView
     public boolean maintainConnection = true;
     public AbstractBitmapData myDrawable;
     // Progress dialog shown at connection time.
-//    public ProgressDialog pd;
+    public AlertDialog progressDialog;
     public boolean serverJustCutText = false;
     public Runnable setModes;
     public Runnable hideKeyboardAndExtraKeys;
@@ -268,31 +273,31 @@ public class RemoteCanvas extends AppCompatImageView
             }
         }
 
-        // TODO resolve deprecated
         displayWidth = display.getWidth();
         displayHeight = display.getHeight();
         DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics);
         displayDensity = metrics.density;
 
-        // TODO find out why progress dialog not showing
-        // Startup the connection thread with a progress dialog
-//        pd = ProgressDialog.show(getContext(), getContext().getString(R.string.info_progress_dialog_connecting),
-//                getContext().getString(R.string.info_progress_dialog_establishing),
-//                true, true, new DialogInterface.OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialog) {
-//                        closeConnection();
-//                        handler.post(new Runnable() {
-//                            public void run() {
-//                                Utils.showFatalErrorMessage(getContext(), getContext().getString(R.string.info_progress_dialog_aborted));
-//                            }
-//                        });
-//                    }
-//                });
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View dialogView = inflater.inflate(R.layout.connection_progress, null);
 
-        // Make this dialog cancellable only upon hitting the Back button and not touching outside.
-//        pd.setCanceledOnTouchOutside(false);
+        // 配置ProgressBar和TextView
+        ProgressBar progressBar = dialogView.findViewById(R.id.progressBar);
+        TextView messageView = dialogView.findViewById(R.id.message);
+        messageView.setText(R.string.info_progress_dialog_establishing);
+
+        progressDialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.info_progress_dialog_connecting)
+                .setView(dialogView)  // 使用自定义视图
+                .setCancelable(false)
+                .setOnCancelListener(dialog -> {
+                    closeConnection();
+                    handler.post(() ->
+                            Utils.showFatalErrorMessage(getContext(),
+                                    getContext().getString(R.string.info_progress_dialog_aborted)));
+                })
+                .create();
     }
 
     public void startPointerCapture() {
@@ -314,6 +319,7 @@ public class RemoteCanvas extends AppCompatImageView
         this.setModes = setModes;
         this.hideKeyboardAndExtraKeys = hideKeyboardAndExtraKeys;
         this.vvFileName = vvFileName;
+
         checkNetworkConnectivity();
         initializeClipboardMonitor();
         spicecomm = new SpiceCommunicator(getContext(), handler, this,
@@ -417,6 +423,8 @@ public class RemoteCanvas extends AppCompatImageView
      * @param setModes Callback to run on UI thread after connection is set up
      */
     public RemotePointer initializeCanvas(Connection conn, final Runnable setModes, final Runnable hideKeyboardAndExtraKeys) {
+        progressDialog.show();
+
         maintainConnection = true;
         this.setModes = setModes;
         this.hideKeyboardAndExtraKeys = hideKeyboardAndExtraKeys;
@@ -455,6 +463,7 @@ public class RemoteCanvas extends AppCompatImageView
                     } else {
                         throw new Exception("unknown connection type");
                     }
+
                 } catch (Throwable e) {
                     handleUncaughtException(e);
                 }
@@ -477,8 +486,8 @@ public class RemoteCanvas extends AppCompatImageView
             Log.e(TAG, e.toString());
 //            e.printStackTrace();
             // Ensure we dismiss the progress dialog before we finish
-//            if (pd.isShowing())
-//                pd.dismiss();
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
 
             if (e instanceof OutOfMemoryError) {
                 disposeDrawable();
@@ -603,7 +612,6 @@ public class RemoteCanvas extends AppCompatImageView
                 connection.getRemoteFx(), connection.getEnableGfx(), connection.getEnableGfxH264(),
                 connection.getRdpColor());
         rdpcomm.connect();
-//        pd.dismiss();
     }
 
     /**
@@ -674,18 +682,15 @@ public class RemoteCanvas extends AppCompatImageView
         reallocateDrawable(displayWidth, displayHeight);
         decoder.setPixelFormat(rfb);
 
-//        handler.post(new Runnable() {
-//            public void run() {
-//                pd.setMessage(getContext().getString(R.string.info_progress_dialog_downloading));
-//            }
-//        });
+        handler.post(() ->
+                progressDialog.setMessage(getContext().getString(R.string.info_progress_dialog_downloading)));
 
         sendUnixAuth();
         handler.post(drawableSetter);
 
         // Hide progress dialog
-//        if (pd.isShowing())
-//            pd.dismiss();
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
 
         try {
             rfb.processProtocol();
@@ -1688,6 +1693,11 @@ public class RemoteCanvas extends AppCompatImageView
             return;
         }
 
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null; // no use any more
+        }
+
         //android.util.Log.i(TAG, "reDraw called: " + x +", " + y + " + " + w + "x" + h);
         float scale = getZoomFactor();
         float shiftedX = x - shiftX;
@@ -1765,6 +1775,14 @@ public class RemoteCanvas extends AppCompatImageView
     @Override
     public boolean isAbleToPan() {
         return canvasZoomer.isAbleToPan();
+    }
+
+    @Override
+    public void onConnectionSuccess() {
+        handler.post(() -> {
+            TextView messageView = progressDialog.findViewById(R.id.message);
+            messageView.setText(R.string.info_continue_connected);
+        });
     }
 
     /**

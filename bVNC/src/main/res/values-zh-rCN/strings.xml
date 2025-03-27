@@ -267,11 +267,12 @@
     <string name="info_cert_signatures_identical">\n\n您可以确认信息与服务器证书匹配，以防止中间人攻击。</string>
     <string name="info_cert_tunnel">是否要连接以下证书标识的主机？\n\nFingerprint: %1$s\n\nIssued to:\n%2$s\n\nIssued by:\n%3$s\n\nValid from:\n%4$s\n\nValid until:\n%5$s\n\nNote: The application does not verify certificate authorities or check for certificate revocation.</string>
     <string name="info_continue_connecting">"继续连接到："</string>
+    <string name="info_continue_connected">接连成功。等待图像传输中……</string>
     <string name="info_encoding">"编码"</string>
     <string name="info_progress_dialog_aborted">连接被中止了！</string>
-    <string name="info_progress_dialog_connecting">正在连接…</string>
-    <string name="info_progress_dialog_downloading" tools:ignore="TypographyEllipsis">正在下载第一帧。\n请稍候...</string>
-    <string name="info_progress_dialog_establishing" tools:ignore="TypographyEllipsis">正在建立握手。\n请稍候...</string>
+    <string name="info_progress_dialog_connecting">正在连接</string>
+    <string name="info_progress_dialog_downloading" tools:ignore="TypographyEllipsis">正在下载第一帧，请稍候……</string>
+    <string name="info_progress_dialog_establishing" tools:ignore="TypographyEllipsis">正在与服务端建立连接，请稍候……</string>
     <string name="info_ssh_initializing_hostkey">尝试初始化SSH HostKey。</string>
     <string name="info_ssh_key_fingerprint">"主机密钥指纹是："</string>
     <string name="info_ssh_key_fingerprint_identical">\n\n您可以确认它与服务器证书的已知指纹相同，以防止中间人攻击。</string>
@@ -847,6 +848,7 @@ aSPICE对应的功能如下：
     <string name="save_gesture">保存手势</string>
     <string name="copy_gesture">复制手势</string>
     <string name="configure_connection">配置连接</string>
+    <string name="gesture_click_to_retry">单击再次执行</string>
 
     <string name="my_connections">我的连接</string>
     <string name="gesture_keycode_hint">输入要发送的键值，按扭输入特殊字符</string>

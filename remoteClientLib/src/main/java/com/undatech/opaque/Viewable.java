@@ -24,4 +24,6 @@ public interface Viewable {
     void mouseMode(boolean relative);
 
     boolean isAbleToPan();
+
+    void onConnectionSuccess();
 }

@@ -287,9 +287,10 @@
     <string name="info_cert_signatures_identical">\n\nYou can ensure the information matches the server certificate to prevent a man-in-the-middle attack.</string>
     <string name="info_cert_tunnel">Do you want to connect to the host identified by the following certificate?\n\nFingerprint: %1$s\n\nIssued to:\n%2$s\n\nIssued by:\n%3$s\n\nValid from:\n%4$s\n\nValid until:\n%5$s\n\nNote: The application does not verify certificate authorities or check for certificate revocation.</string>
     <string name="info_continue_connecting">"Continue connecting to: "</string>
+    <string name="info_continue_connected">Successfully connected. Waiting for incoming frames.</string>
     <string name="info_encoding">" encoding, "</string>
     <string name="info_progress_dialog_aborted">Connection aborted!</string>
-    <string name="info_progress_dialog_connecting">Connecting…</string>
+    <string name="info_progress_dialog_connecting">Connecting</string>
     <string name="info_progress_dialog_downloading">Downloading first frame.\nPlease wait…</string>
     <string name="info_progress_dialog_establishing">Establishing handshake.\nPlease wait…</string>
     <string name="info_ssh_initializing_hostkey">Attempting to initialize SSH HostKey.</string>
@@ -875,6 +876,7 @@ Below that is where you configure your connection.
     <string name="gesture_keycode_hint">The key to be sent. Buttons for special key</string>
     <string name="gesture_not_recognized">Gesture not recognized</string>
     <string name="gesture_hint">Gesture</string>
+    <string name="gesture_click_to_retry">Click to Redo</string>
 
     <string name="touchpad_control_pref">Touchpad customization</string>
     <string name="touchpad_edge_wheel">Use screen edge as touchpad scrolling</string>

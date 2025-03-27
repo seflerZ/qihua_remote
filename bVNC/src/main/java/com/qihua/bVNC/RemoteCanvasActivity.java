@@ -23,6 +23,7 @@
 //
 package com.qihua.bVNC;
 
+import static com.qihua.bVNC.Constants.SHORT_VIBRATION;
 import static com.qihua.bVNC.Constants.touchpadLongPressAction;
 
 import android.annotation.SuppressLint;
@@ -406,8 +407,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
             // if highest score is less than 2, not recognized
             Prediction pre = predictions.get(0);
-            if (pre.score < 4) {
-                Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_recognized), Toast.LENGTH_LONG).show();
+            if (pre.score < 5) {
+                Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_recognized), Toast.LENGTH_SHORT).show();
                 hideToolbar();
 
                 return;
@@ -417,6 +418,27 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             if (actionKeys != null && !actionKeys.isEmpty()) {
                 performShortKeys(actionKeys);
                 Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_hint) + ":" + pre.name, Toast.LENGTH_SHORT).show();
+
+//                Toast toast = new Toast(RemoteCanvasActivity.this);
+//                View view = LayoutInflater.from(this).inflate(R.layout.gesture_tips_with_retry, null);
+//                TextView textView = view.findViewById(R.id.toast_text);
+//
+//                textView.setText(String.format("%s:%s (%s)", getString(R.string.gesture_hint),
+//                        pre.name, getString(R.string.gesture_click_to_retry)));
+//                // textView.setMovementMethod(LinkMovementMethod.getInstance());
+//                textView.setHighlightColor(Color.TRANSPARENT);
+//                textView.setOnLongClickListener(new OnLongClickListener() {
+//                    @Override
+//                    public boolean onLongClick(View v) {
+//                        myVibrator.vibrate(VibrationEffect.createOneShot(SHORT_VIBRATION
+//                                , VibrationEffect.DEFAULT_AMPLITUDE));
+//                        return true;
+//                    }
+//                });
+//
+//                toast.setView(view);
+//                toast.setDuration(Toast.LENGTH_LONG);
+//                toast.show();
             }
 
             hideToolbar();

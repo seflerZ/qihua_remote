@@ -361,6 +361,8 @@ public class RdpCommunicator extends RfbConnectable implements RdpKeyboardMapper
         reattemptWithoutCredentials = false;
         authenticationAttempted = false;
         myself.setIsInNormalProtocol(true);
+
+        viewable.onConnectionSuccess();
     }
 
     @Override
