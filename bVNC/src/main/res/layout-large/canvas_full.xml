@@ -12,6 +12,14 @@
         android:layout_gravity="bottom|center"
         android:background="@android:color/background_dark" />
 
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:src="@drawable/redo"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        />-->
+
     <View
         android:id="@+id/edgeTop"
         android:layout_width="match_parent"
