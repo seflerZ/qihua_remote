@@ -1779,12 +1779,12 @@ public class RemoteCanvas extends AppCompatImageView
 
     @Override
     public void onConnectionSuccess() {
-        // there's a bug of some system if we don't send any key event after connection
-        // that no further image will be transfered
         handler.post(() -> {
             TextView messageView = progressDialog.findViewById(R.id.message);
             messageView.setText(R.string.info_continue_connected);
 
+            // there's a bug of some system if we don't send any key event after connection
+            // that no further image will be transfered
             pointer.moveMouse(getImageHeight() / 2, getImageWidth() / 2, 0);
         });
     }
