@@ -118,8 +118,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyListener,
-        SelectTextElementFragment.OnFragmentDismissedListener {
+public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyListener {
 
     public static final int[] inputModeIds = {R.id.itemInputTouchpad};
     public static final Map<Integer, String> inputModeMap;
@@ -1913,16 +1912,16 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     }
 
-    @Override
-    public void onTextSelected(String selectedString) {
-        android.util.Log.i(TAG, "onTextSelected called with selectedString: " + selectedString);
-//        canvas.pd.show();
-        connection.setVmname(canvas.vmNameToId.get(selectedString));
-        connection.save(this);
-        synchronized (canvas.spicecomm) {
-            canvas.spicecomm.notify();
-        }
-    }
+//    @Override
+//    public void onTextSelected(String selectedString) {
+//        android.util.Log.i(TAG, "onTextSelected called with selectedString: " + selectedString);
+////        canvas.pd.show();
+//        connection.setVmname(canvas.vmNameToId.get(selectedString));
+//        connection.save(this);
+//        synchronized (canvas.spicecomm) {
+//            canvas.spicecomm.notify();
+//        }
+//    }
 
     public void toggleKeyboard(MenuItem menuItem) {
         handler.post(() -> {

@@ -622,19 +622,19 @@ public class RemoteCanvasHandler extends Handler {
                             connection.getKeepPassword());
                     break;
                 }
-            case RemoteClientLibConstants.DIALOG_DISPLAY_VMS:
-//                c.pd.dismiss();
-                ArrayList<String> vms = msg.getData().getStringArrayList("vms");
-
-                if (vms.size() > 0) {
-                    fm = ((FragmentActivity) context).getSupportFragmentManager();
-                    SelectTextElementFragment displayVms = SelectTextElementFragment.newInstance(
-                            context.getString(R.string.select_vm_title),
-                            vms, (RemoteCanvasActivity) context);
-                    displayVms.setCancelable(false);
-                    displayVms.show(fm, "selectVm");
-                }
-                break;
+//            case RemoteClientLibConstants.DIALOG_DISPLAY_VMS:
+////                c.pd.dismiss();
+//                ArrayList<String> vms = msg.getData().getStringArrayList("vms");
+//
+//                if (vms.size() > 0) {
+//                    fm = ((FragmentActivity) context).getSupportFragmentManager();
+//                    SelectTextElementFragment displayVms = SelectTextElementFragment.newInstance(
+//                            context.getString(R.string.select_vm_title),
+//                            vms, (RemoteCanvasActivity) context);
+//                    displayVms.setCancelable(false);
+//                    displayVms.show(fm, "selectVm");
+//                }
+//                break;
             case RemoteClientLibConstants.SPICE_CONNECT_SUCCESS:
 //                if (c.pd != null && c.pd.isShowing()) {
 //                    c.pd.dismiss();
