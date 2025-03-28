@@ -604,9 +604,13 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         // 当手势层可见时，直接转发事件，这样可以无缝将触摸事件转至手势层
         if (gestureOverlay.getVisibility() == View.VISIBLE) {
+            if (pointerID > 0) {
+                return true;
+            }
+
             // 转换坐标到手势层的局部坐标系
-            float x = e.getRawX() - gestureOverlay.getLeft();
-            float y = e.getRawY() - gestureOverlay.getTop();
+            float x = e.getX(0) - gestureOverlay.getLeft();
+            float y = e.getY(0) - gestureOverlay.getTop();
             MotionEvent translatedEvent = MotionEvent.obtain(
                     e.getDownTime(),
                     e.getEventTime(),
