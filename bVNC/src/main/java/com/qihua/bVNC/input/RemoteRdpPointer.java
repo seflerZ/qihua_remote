@@ -22,9 +22,6 @@ public class RemoteRdpPointer extends RemotePointer {
     private static final int MOUSE_BUTTON_MIDDLE = 0x4000;
     private static final int MOUSE_BUTTON_SCROLL_UP = PTRFLAGS_WHEEL | 0x0058;
     private static final int MOUSE_BUTTON_SCROLL_DOWN = PTRFLAGS_WHEEL | PTRFLAGS_WHEEL_NEGATIVE | 0x00a8;
-
-
-
     private static final int MOUSE_BUTTON_SCROLL_LEFT = PTRFLAGS_HWHEEL | 0x0058;
     private static final int MOUSE_BUTTON_SCROLL_RIGHT = PTRFLAGS_HWHEEL | PTRFLAGS_WHEEL_NEGATIVE | 0x00a8;
 
@@ -154,15 +151,15 @@ public class RemoteRdpPointer extends RemotePointer {
         pointerY = y;
 
         // Do not let mouse pointer leave the bounds of the desktop.
-        if (pointerX < 0) {
-            pointerX = 0;
-        } else if (pointerX >= canvas.getImageWidth()) {
-            pointerX = canvas.getImageWidth() - 1;
+        if (pointerX < 1) {
+            pointerX = 1;
+        } else if (pointerX > canvas.getImageWidth()) {
+            pointerX = canvas.getImageWidth();
         }
-        if (pointerY < 0) {
-            pointerY = 0;
-        } else if (pointerY >= canvas.getImageHeight()) {
-            pointerY = canvas.getImageHeight() - 1;
+        if (pointerY < 1) {
+            pointerY = 1;
+        } else if (pointerY > canvas.getImageHeight()) {
+            pointerY = canvas.getImageHeight();
         }
 //        canvas.invalidateMousePosition();
         GeneralUtils.debugLog(this.debugLogging, TAG, "Sending absolute mouse event at: " + pointerX +

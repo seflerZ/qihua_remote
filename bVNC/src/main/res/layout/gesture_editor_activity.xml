@@ -64,6 +64,15 @@
                 android:background="@drawable/btn_normal"
                 android:tag="keycode_special"
                 />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="inputDpadKey"
+                android:text="␡"
+                android:background="@drawable/btn_normal"
+                android:tag="keycode_special"
+                />
         </LinearLayout>
     </HorizontalScrollView>
 

@@ -65,6 +65,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     protected boolean dragMode = false;
     protected boolean rightDragMode = false;
     protected boolean middleDragMode = false;
+    protected float cumulatedY = 0;
+    protected float cumulatedX = 0;
+
     protected float dragX, dragY;
     protected float gestureX, gestureY;
     protected float totalDragX, totalDragY;
@@ -112,7 +115,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     // This is how far the swipe has to travel before a swipe event is generated.
     float startSwipeDist = 5f;
     boolean canSwipeToMove = false;
-    float baseSwipeDist = 0.f;
+    float baseSwipeDist = 5f;
     // This is how far from the top and bottom edge to detect immersive swipe.
     float immersiveSwipeRatio = 0.09f;
     boolean immersiveSwipe = false;
@@ -173,8 +176,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 //        baseSwipeDist = baseSwipeDist / displayDensity;
 //        startSwipeDist = startSwipeDist / displayDensity;
 //        immersiveSwipeDistance = immersiveSwipeDistance / displayDensity;
-        GeneralUtils.debugLog(debugLogging, TAG, "displayDensity, baseSwipeDist, immersiveSwipeRatio: "
-                + displayDensity + " " + baseSwipeDist + " " + immersiveSwipeRatio);
+//        GeneralUtils.debugLog(debugLogging, TAG, "displayDensity, baseSwipeDist, immersiveSwipeRatio: "
+//                + displayDensity + " " + baseSwipeDist + " " + immersiveSwipeRatio);
 
         // for inertia scrolling
         inertiaThread = new Thread(new Runnable() {
@@ -754,6 +757,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                         edgeRight.setVisibility(View.GONE);
                         edgeTop.setVisibility(View.GONE);
                         edgeBottom.setVisibility(View.GONE);
+
+                        cumulatedX = 0;
+                        cumulatedY = 0;
 
                         canSwipeToMove = false;
 

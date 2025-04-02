@@ -30,8 +30,6 @@ import com.undatech.remoteClientUi.R;
 public class InputHandlerTouchpad extends InputHandlerGeneric {
     public static final String ID = "TOUCHPAD_MODE";
     static final String TAG = "InputHandlerTouchpad";
-    private float cumulatedY = 0;
-    private float cumulatedX = 0;
 
     public InputHandlerTouchpad(RemoteCanvasActivity activity, RemoteCanvas canvas, RemoteCanvas touchpad,
                                 RemotePointer pointer, boolean debugLogging) {
@@ -77,7 +75,10 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
         twoFingers = twoFingers || (e2.getPointerCount() == 2);
 
-        if (Math.abs(distanceX) > baseSwipeDist || Math.abs(distanceY) > baseSwipeDist) {
+        cumulatedX += distanceX;
+        cumulatedY += distanceY;
+
+        if (Math.abs(cumulatedX) > baseSwipeDist || Math.abs(cumulatedY) > baseSwipeDist) {
             canSwipeToMove = true;
         }
 

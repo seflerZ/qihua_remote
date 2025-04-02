@@ -298,6 +298,8 @@ public class RemoteCanvas extends AppCompatImageView
                                     getContext().getString(R.string.info_progress_dialog_aborted)));
                 })
                 .create();
+
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     public void startPointerCapture() {
@@ -1564,8 +1566,9 @@ public class RemoteCanvas extends AppCompatImageView
             }
         } else if ((x + bWidth < absoluteXPosition + wthresh) && (x > 0)) {
             newX += (x - (absoluteXPosition + wthresh - bWidth));
-            if (newX < bWidth)
+            if (newX < bWidth) {
                 newX = bWidth;
+            }
         }
 
         if (panX && newX != absoluteXPosition) {
@@ -1576,12 +1579,14 @@ public class RemoteCanvas extends AppCompatImageView
         // do not pan when there is space left on the screen
         if ((y + bHeight > h + absoluteYPosition - hthresh) && (absoluteYPosition + h < bHeight + ih)) {
             newY += ((y) - (h + absoluteYPosition - hthresh) - bHeight);
-            if (newY + h > ih + bHeight)
+            if (newY + h > ih + bHeight) {
                 newY = ih + bHeight - h;
+            }
         } else if ((y + bHeight < absoluteYPosition + hthresh) && y > 0) {
             newY += (y - (absoluteYPosition + hthresh - bHeight));
-            if (newY < bHeight)
+            if (newY < bHeight) {
                 newY = bHeight;
+            }
         }
 
         if (panY && newY != absoluteYPosition) {
