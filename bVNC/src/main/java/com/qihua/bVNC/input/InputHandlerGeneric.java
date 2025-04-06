@@ -416,8 +416,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
      */
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        GeneralUtils.debugLog(debugLogging, TAG, "onSingleTapConfirmed, e: " + e);
-        if (dragMode) {
+//        GeneralUtils.debugLog(debugLogging, TAG, "onSingleTapConfirmed, e: " + e);
+
+        if (dragMode || detectImmersiveRange(e.getX(), e.getY())) {
             return true;
         }
 
@@ -434,6 +435,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
      */
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+        if (dragMode || detectImmersiveRange(e.getX(), e.getY())) {
+            return true;
+        }
+
         GeneralUtils.debugLog(debugLogging, TAG, "onDoubleTap, e: " + e);
 
         totalDragX = 0;
@@ -535,6 +540,15 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         e.setLocation(x, y);
     }
 
+    private boolean detectImmersiveRange(float x, float y) {
+        float immersiveXDistance = Math.max(touchpad.getWidth() * immersiveSwipeRatio, 20);
+        float immersiveYDistance = Math.max(touchpad.getHeight() * immersiveSwipeRatio, 20);
+
+        return Constants.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                (x <= immersiveXDistance || touchpad.getWidth() - x <= immersiveXDistance
+                        || y <= immersiveYDistance || touchpad.getHeight() - y <= immersiveYDistance);
+    }
+
     private void detectImmersiveSwipe(float x, float y) {
         // if global switch off, disable it
         if (!immersiveSwipeEnabled) {
@@ -546,9 +560,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         float immersiveXDistance = Math.max(touchpad.getWidth() * immersiveSwipeRatio, 20);
         float immersiveYDistance = Math.max(touchpad.getHeight() * immersiveSwipeRatio, 20);
 
-        if (Constants.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT &&
-                (x <= immersiveXDistance || touchpad.getWidth() - x <= immersiveXDistance
-                        || y <= immersiveYDistance || touchpad.getHeight() - y <= immersiveYDistance)) {
+        if (detectImmersiveRange(x, y)) {
 
             inSwiping = true;
             immersiveSwipe = true;
