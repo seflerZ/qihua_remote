@@ -4,7 +4,14 @@
     <color name="grey_overlay">#25FFFFFF</color>
     <color name="gesture_overlay">#55000000</color>
     <color name="white_overlay">#55ffffff</color>
-    <color name="theme">#E66100</color>
+    <color name="theme">#FFE66100</color>
     <color name="notification">#ffafafaf</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Extra keys colors. -->
+    <color name="extraKeysButtonTextColor">@color/white</color>
+    <color name="extraKeysButtonActiveTextColor">@color/theme</color>
+    <color name="extraKeysButtonBackgroundColor">@color/gesture_overlay</color>
+    <color name="extraKeysButtonActiveBackgroundColor">@color/black_overlay</color>
 
 </resources>

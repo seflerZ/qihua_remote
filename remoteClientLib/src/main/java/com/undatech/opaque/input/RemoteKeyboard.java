@@ -386,6 +386,34 @@ public abstract class RemoteKeyboard {
         return metaState;
     }
 
+    public void onMetaKey(String key, boolean isOn) {
+        if (isOn) {
+            switch (key) {
+                case "ALT":
+                    onScreenAltOn();
+                    break;
+                case "CTRL":
+                    onScreenCtrlOn();
+                    break;
+                case "SHIFT":
+                    onScreenShiftOn();
+                    break;
+            }
+        } else {
+            switch (key) {
+                case "ALT":
+                    onScreenAltOff();
+                    break;
+                case "CTRL":
+                    onScreenCtrlOff();
+                    break;
+                case "SHIFT":
+                    onScreenShiftOff();
+                    break;
+            }
+        }
+    }
+
     protected KeyEvent injectMetaState(KeyEvent event, int metaState) {
         String s = event.getCharacters();
         KeyEvent evt = null;
