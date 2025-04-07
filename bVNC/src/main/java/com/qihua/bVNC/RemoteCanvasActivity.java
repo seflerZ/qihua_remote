@@ -449,7 +449,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         // init the extra keys
         LayoutInflater inflater = LayoutInflater.from(this);
         extraKeysView = (ExtraKeysView) inflater.inflate(R.layout.view_extra_keys, layoutKeys, false);
-        extraKeysView.setRemoteKeyboard(canvas.getKeyboard());
 
         extraKeysView.setExtraKeysViewClient(new ExtraKeysView.IExtraKeysView() {
             @Override
@@ -471,7 +470,29 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         Log.d(TAG, "OnCreate complete");
     }
 
+    private void readExtraKeys() {
+        if (Boolean.TRUE.equals(extraKeysView.readSpecialButton(SpecialButton.ALT, true))) {
+            canvas.getKeyboard().onScreenAltOn();
+        } else {
+            canvas.getKeyboard().onScreenAltOff();
+        }
+
+        if (Boolean.TRUE.equals(extraKeysView.readSpecialButton(SpecialButton.CTRL, true))) {
+            canvas.getKeyboard().onScreenCtrlOn();
+        } else {
+            canvas.getKeyboard().onScreenCtrlOff();
+        }
+
+        if (Boolean.TRUE.equals(extraKeysView.readSpecialButton(SpecialButton.SHIFT, true))) {
+            canvas.getKeyboard().onScreenShiftOn();
+        } else {
+            canvas.getKeyboard().onScreenShiftOff();
+        }
+    }
+
     private void performShortKeys(List<String> keys) {
+        readExtraKeys();
+
         if (keys.contains("ALT")) {
             canvas.getKeyboard().onScreenAltOn();
         }
@@ -1502,6 +1523,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent evt) {
+        readExtraKeys();
 
         boolean consumed = false;
 

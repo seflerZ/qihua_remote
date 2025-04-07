@@ -38,12 +38,6 @@ import java.util.stream.Collectors;
  * This is the terminal extra keys view from the Termux open source project.
  */
 public final class ExtraKeysView extends GridLayout {
-    private RemoteKeyboard remoteKeyboard;
-
-    public void setRemoteKeyboard(RemoteKeyboard keyboard) {
-        this.remoteKeyboard = keyboard;
-    }
-
     /** The client for the {@link ExtraKeysView}. */
     public interface IExtraKeysView {
 
@@ -486,9 +480,6 @@ public final class ExtraKeysView extends GridLayout {
             state.setIsActive(!state.isActive);
             if (!state.isActive)
                 state.setIsLocked(false);
-
-            remoteKeyboard.onMetaKey(buttonInfo.getKey(), state.isActive);
-
         } else {
             onExtraKeyButtonClick(view, buttonInfo, button);
         }
