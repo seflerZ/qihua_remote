@@ -360,9 +360,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
                 rootView.getWindowVisibleDisplayFrame(r);
                 getWindow().getDecorView().getWindowVisibleDisplayFrame(re);
-                float visibleImgHeight = canvas.getImageVisibleInScreenHeight();
+                float visibleDesktopHeight = canvas.getVisibleDesktopHeight();
 
-                float panDistance = visibleImgHeight + keyBoardHeight - canvas.getHeight();
+                float panDistance = visibleDesktopHeight + keyBoardHeight - canvas.getHeight();
                 if (isShow && panDistance > 0) {
                     canvas.absolutePan(canvas.getAbsX(), (int) (panDistance), false);
                     lastPanDist = panDistance;

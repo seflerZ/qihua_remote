@@ -464,7 +464,7 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     public void onLongPress(MotionEvent e) {
         GeneralUtils.debugLog(debugLogging, TAG, "onLongPress, e: " + e);
 
-        if (secondPointerWasDown || thirdPointerWasDown || dragMode) {
+        if (secondPointerWasDown || thirdPointerWasDown || dragMode || detectImmersiveRange(e.getX(), e.getY())) {
             GeneralUtils.debugLog(debugLogging, TAG,
                     "onLongPress: right/middle-click gesture in progress, not starting drag mode");
             return;
