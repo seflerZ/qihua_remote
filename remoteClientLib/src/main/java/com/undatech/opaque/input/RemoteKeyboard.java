@@ -239,7 +239,7 @@ public abstract class RemoteKeyboard {
                     int keyCode = KeyEvent.KEYCODE_ENTER;
                     keyEvent(keyCode, new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(30);
                     } catch (InterruptedException e) {
                     }
                     keyEvent(keyCode, new KeyEvent(KeyEvent.ACTION_UP, keyCode));
@@ -248,7 +248,7 @@ public abstract class RemoteKeyboard {
                 event = new KeyEvent(SystemClock.uptimeMillis(), s.substring(i, i + 1), KeyCharacterMap.FULL, 0);
                 keyEvent(event.getKeyCode(), event);
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                 }
             }

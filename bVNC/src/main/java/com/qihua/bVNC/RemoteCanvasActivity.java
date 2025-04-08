@@ -407,9 +407,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
             predictions.sort((o1, o2) -> (int) (o2.score - o1.score));
 
-            // if highest score is less than 2, not recognized
+            // if highest score is less than 2.5, not recognized
             Prediction pre = predictions.get(0);
-            if (pre.score < 5) {
+            if (pre.score < 2.5) {
                 Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_recognized), Toast.LENGTH_SHORT).show();
                 hideToolbar();
 
@@ -506,47 +506,63 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             canvas.getKeyboard().onScreenSuperOn();
         }
 
-        if (keys.contains("←") || keys.contains("LEFT")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
-        } else if (keys.contains("↑") || keys.contains("UP")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_UP));
-        } else if (keys.contains("↓") || keys.contains("DOWN")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_DOWN));
-        } else if (keys.contains("→") || keys.contains("RIGHT")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
-        } else if (keys.contains("TAB")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
-        } else if (keys.contains("ESC")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ESCAPE));
-        } else if (keys.contains("␡") || keys.contains("BKSP")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
-        } else if (keys.contains("DEL")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
-        } else if (keys.contains("PGUP")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_UP, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PAGE_UP));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_UP, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_PAGE_UP));
-        } else if (keys.contains("PGDN")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PAGE_DOWN));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_DOWN, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_PAGE_DOWN));
-        } else if (keys.contains("HOME")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_HOME, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_HOME));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_HOME, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MOVE_HOME));
-        }  else if (keys.contains("END")) {
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_END, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_END));
-            canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_END, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MOVE_END));
-        } else {
-            // perform the key
-            if (!keys.isEmpty()) {
-                canvas.getKeyboard().sendText(keys.get(keys.size() - 1));
+        try {
+            if (keys.contains("←") || keys.contains("LEFT")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT));
+            } else if (keys.contains("↑") || keys.contains("UP")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_UP));
+            } else if (keys.contains("↓") || keys.contains("DOWN")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_DOWN));
+            } else if (keys.contains("→") || keys.contains("RIGHT")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT));
+            } else if (keys.contains("TAB")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_TAB, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
+            } else if (keys.contains("ESC")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_ESCAPE, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ESCAPE));
+            } else if (keys.contains("␡") || keys.contains("BKSP")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+            } else if (keys.contains("DEL")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+            } else if (keys.contains("PGUP")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_UP, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PAGE_UP));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_UP, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_PAGE_UP));
+            } else if (keys.contains("PGDN")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PAGE_DOWN));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_PAGE_DOWN, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_PAGE_DOWN));
+            } else if (keys.contains("HOME")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_HOME, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_HOME));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_HOME, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MOVE_HOME));
+            }  else if (keys.contains("END")) {
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_END, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_END));
+                Thread.sleep(30);
+                canvas.getKeyboard().keyEvent(KeyEvent.KEYCODE_MOVE_END, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MOVE_END));
+            } else {
+                // perform the key
+                if (!keys.isEmpty()) {
+                    canvas.getKeyboard().sendText(keys.get(keys.size() - 1));
+                }
             }
+        } catch (Exception ignore) {
+
         }
 
         if (keys.contains("ALT")) {
