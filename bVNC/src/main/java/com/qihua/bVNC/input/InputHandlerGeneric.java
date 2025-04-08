@@ -417,6 +417,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
     public boolean onSingleTapConfirmed(MotionEvent e) {
 //        GeneralUtils.debugLog(debugLogging, TAG, "onSingleTapConfirmed, e: " + e);
 
+        activity.readSpecialKeysState();
+
         if (dragMode || detectImmersiveRange(e.getX(), e.getY())) {
             return true;
         }
@@ -426,6 +428,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         SystemClock.sleep(50);
         pointer.releaseButton(getX(e), getY(e), 0);
 //        canvas.movePanToMakePointerVisible();
+
+        activity.resetOnScreenKeys(0);
+
         return true;
     }
 
@@ -556,8 +561,8 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
 
         GeneralUtils.debugLog(debugLogging, TAG, "detectImmersiveSwipe");
 
-        float immersiveXDistance = Math.max(touchpad.getWidth() * immersiveSwipeRatio, 20);
-        float immersiveYDistance = Math.max(touchpad.getHeight() * immersiveSwipeRatio, 20);
+        float immersiveXDistance = Math.min(Math.max(touchpad.getWidth() * immersiveSwipeRatio, 50), 150);
+        float immersiveYDistance = Math.min(Math.max(touchpad.getHeight() * immersiveSwipeRatio, 50), 150);
 
         if (detectImmersiveRange(x, y)) {
 

@@ -187,7 +187,7 @@ class ZoomScaling extends AbstractScaling {
             return;
 
         // top center align
-        canvasXOffset = -canvas.getCenteredXOffset();
+        canvasXOffset = 0;
         canvasYOffset = 0;
 
         minimumScale = canvas.getMinimumScale();
@@ -200,10 +200,10 @@ class ZoomScaling extends AbstractScaling {
 
             // after scale, the image width will change, so the init offset should be adjusted
             // for the case that the image width is larger than the screen width, we should remove the extra offset
-            if (scaling * canvas.getImageWidth() > canvas.getWidth()) {
+            if (scaling * canvas.getImageWidth() >= canvas.getWidth()) {
                 canvasXOffset = 0;
             } else {
-                canvasXOffset += (int) ((scaling - 1) * canvas.getImageWidth());
+                canvasXOffset = (int) (canvas.getWidth() - canvas.getImageWidth() * scaling) / 2;
             }
         } else {
             scaling = minimumScale;

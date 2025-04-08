@@ -137,23 +137,10 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     Panner panner;
     Handler handler;
     RelativeLayout layoutKeys;
-    ImageButton keyCtrl;
     boolean keyCtrlToggled;
-    ImageButton keySuper;
     boolean keySuperToggled;
-    ImageButton keyAlt;
     boolean keyAltToggled;
-    ImageButton keyTab;
-    ImageButton keyEsc;
-    ImageButton keyShift;
     boolean keyShiftToggled;
-    ImageButton keyUp;
-    ImageButton keyDown;
-    ImageButton keyLeft;
-    ImageButton keyRight;
-    ImageButton keyHome;
-    ImageButton keyEnd;
-    ImageButton keyKeyboard;
     boolean hardKeyboardExtended;
     boolean extraKeysHidden = true;
     volatile boolean softKeyboardUp;
@@ -1010,7 +997,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     /**
      * Resets the state and image of the on-screen keys.
      */
-    private void resetOnScreenKeys(int keyCode) {
+    public void resetOnScreenKeys(int keyCode) {
         // Do not reset on-screen keys if keycode is SHIFT.
         switch (keyCode) {
             case KeyEvent.KEYCODE_SHIFT_LEFT:
@@ -1018,19 +1005,19 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                 return;
         }
         if (!keyCtrlToggled) {
-            keyCtrl.setImageResource(R.drawable.ctrloff);
+//            keyCtrl.setImageResource(R.drawable.ctrloff);
             canvas.getKeyboard().onScreenCtrlOff();
         }
         if (!keyAltToggled) {
-            keyAlt.setImageResource(R.drawable.altoff);
+//            keyAlt.setImageResource(R.drawable.altoff);
             canvas.getKeyboard().onScreenAltOff();
         }
         if (!keySuperToggled) {
-            keySuper.setImageResource(R.drawable.superoff);
+//            keySuper.setImageResource(R.drawable.superoff);
             canvas.getKeyboard().onScreenSuperOff();
         }
         if (!keyShiftToggled) {
-            keyShift.setImageResource(R.drawable.shiftoff);
+//            keyShift.setImageResource(R.drawable.shiftoff);
             canvas.getKeyboard().onScreenShiftOff();
         }
     }
@@ -1602,8 +1589,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     // Send touch events or mouse events like button clicks to be handled.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        readSpecialKeysState();
-
         try {
             return inputHandler.onTouchEvent(event);
         } catch (NullPointerException e) {
