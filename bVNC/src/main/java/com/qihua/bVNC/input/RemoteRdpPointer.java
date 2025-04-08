@@ -151,13 +151,13 @@ public class RemoteRdpPointer extends RemotePointer {
         pointerY = y;
 
         // Do not let mouse pointer leave the bounds of the desktop.
-        if (pointerX < 1) {
-            pointerX = 1;
+        if (pointerX < 0) {
+            pointerX = 0;
         } else if (pointerX > canvas.getImageWidth()) {
             pointerX = canvas.getImageWidth();
         }
-        if (pointerY < 1) {
-            pointerY = 1;
+        if (pointerY < 0) {
+            pointerY = 0;
         } else if (pointerY > canvas.getImageHeight()) {
             pointerY = canvas.getImageHeight();
         }
