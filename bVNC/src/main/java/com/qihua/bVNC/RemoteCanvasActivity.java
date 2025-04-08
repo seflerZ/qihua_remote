@@ -85,7 +85,6 @@ import com.qihua.bVNC.extrakeys.ExtraKeysConstants;
 import com.qihua.bVNC.extrakeys.ExtraKeysInfo;
 import com.qihua.bVNC.extrakeys.ExtraKeysView;
 import com.qihua.bVNC.extrakeys.SpecialButton;
-import com.qihua.bVNC.extrakeys.SpecialButtonState;
 import com.qihua.bVNC.gesture.GestureActionLibrary;
 import com.qihua.bVNC.input.InputHandler;
 import com.qihua.bVNC.input.InputHandlerTouchpad;
@@ -116,10 +115,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyListener {
 
@@ -470,7 +467,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         Log.d(TAG, "OnCreate complete");
     }
 
-    private void readExtraKeys() {
+    public void readSpecialKeysState() {
         if (Boolean.TRUE.equals(extraKeysView.readSpecialButton(SpecialButton.ALT, true))) {
             canvas.getKeyboard().onScreenAltOn();
         } else {
@@ -491,7 +488,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     }
 
     private void performShortKeys(List<String> keys) {
-        readExtraKeys();
+        readSpecialKeysState();
 
         if (keys.contains("ALT")) {
             canvas.getKeyboard().onScreenAltOn();
@@ -1539,7 +1536,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent evt) {
-        readExtraKeys();
+        readSpecialKeysState();
 
         boolean consumed = false;
 
@@ -1605,6 +1602,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     // Send touch events or mouse events like button clicks to be handled.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        readSpecialKeysState();
+
         try {
             return inputHandler.onTouchEvent(event);
         } catch (NullPointerException e) {

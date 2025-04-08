@@ -23,7 +23,6 @@ package com.qihua.bVNC.input;
 import android.gesture.GestureOverlayView;
 import android.os.Build;
 import android.os.SystemClock;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -422,10 +421,10 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             return true;
         }
 
-        int metaState = e.getMetaState();
+        int metaState = e.getMetaState() | canvas.getKeyboard().getMetaState();
         pointer.leftButtonDown(getX(e), getY(e), metaState);
         SystemClock.sleep(50);
-        pointer.releaseButton(getX(e), getY(e), metaState);
+        pointer.releaseButton(getX(e), getY(e), 0);
 //        canvas.movePanToMakePointerVisible();
         return true;
     }
