@@ -54,6 +54,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         return ID;
     }
 
+    private long lastScrollTimeMs = 0;
+
     /*
      * (non-Javadoc)
      * @see android.view.GestureDetector.SimpleOnGestureListener#onScroll(android.view.MotionEvent, android.view.MotionEvent, float, float)
@@ -85,6 +87,14 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
         if (!canSwipeToMove) {
             return true;
         }
+
+        if (lastScrollTimeMs - System.currentTimeMillis() > 200) {
+            cumulatedX = 0;
+            cumulatedY = 0;
+            canSwipeToMove = false;
+        }
+
+        lastScrollTimeMs = System.currentTimeMillis();
 
         if (inScaling) {
             return true;
