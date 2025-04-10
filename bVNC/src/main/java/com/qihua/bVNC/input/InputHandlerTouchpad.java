@@ -226,18 +226,20 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
                 swipeSpeed = 1;
             }
+
+            return true;
         }
 
         if (e1 != null) {
             // Make distanceX/Y display density independent.
             float sensitivity = pointer.getSensitivity();
-            distanceX = sensitivity * distanceX / displayDensity;
-            distanceY = sensitivity * distanceY / displayDensity;
+//            distanceX = sensitivity * distanceX / displayDensity;
+//            distanceY = sensitivity * distanceY / displayDensity;
 
             if (distanceX > 0 && distanceX < 1) {
-                distanceX = (float) Math.ceil(distanceX);
-            } else if (distanceX > -1 && distanceX < 0) {
                 distanceX = (float) Math.floor(distanceX);
+            } else if (distanceX > -1 && distanceX < 0) {
+                distanceX = (float) Math.ceil(distanceX);
             }
 
             if (distanceY > 0 && distanceY < 1) {
@@ -253,9 +255,11 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             pointer.moveMouse(newX, newY, meta);
 
             canvas.movePanToMakePointerVisible();
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /*
