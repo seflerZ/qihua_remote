@@ -149,8 +149,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             float ratioX = distanceX / ((float) canvas.getWidth() / canvas.getVisibleDesktopWidth());
 
             // The direction is just up side down.
-            int newY = (int)-(ratioY);
-            int newX = (int)(ratioX);
+            int newY = (int) -(ratioY);
+            int newX = (int) (ratioX);
             int delta = 0;
 
             if (Math.abs(distanceY) >= Math.abs(distanceX)) {
@@ -194,7 +194,7 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
                 swipeSpeed = 1;
             }
 
-            if (scrollRight || scrollLeft){
+            if (scrollRight || scrollLeft) {
                 if (distanceX < 0 && newX == 0) {
                     delta = 0;
                 } else if (distanceX > 0 && newX == 0) {
@@ -226,7 +226,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
 
                 swipeSpeed = 1;
             }
-        } else {
+        }
+
+        if (e1 != null) {
             // Make distanceX/Y display density independent.
             float sensitivity = pointer.getSensitivity();
             distanceX = sensitivity * distanceX / displayDensity;
