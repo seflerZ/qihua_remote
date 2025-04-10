@@ -257,10 +257,6 @@ public class RemoteCanvas extends AppCompatImageView
         super(context, attrs);
 
         clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-//        isVnc = Utils.isVnc(getContext());
-//        isRdp = Utils.isRdp(getContext());
-//        isSpice = Utils.isSpice(getContext());
-//        isOpaque = Utils.isOpaque(getContext());
 
         Display display;
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.R) {
@@ -279,27 +275,32 @@ public class RemoteCanvas extends AppCompatImageView
         display.getMetrics(metrics);
         displayDensity = metrics.density;
 
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View dialogView = inflater.inflate(R.layout.connection_progress, null);
 
-        // 配置ProgressBar和TextView
-        ProgressBar progressBar = dialogView.findViewById(R.id.progressBar);
-        TextView messageView = dialogView.findViewById(R.id.message);
-        messageView.setText(R.string.info_progress_dialog_establishing);
+        // we do not initialte the progress dialog if we are in external canvas
+        // we will accept it from the touchpad canvas
+        if (!outDisplay) {
+            // 配置ProgressBar和TextView
+            ProgressBar progressBar = dialogView.findViewById(R.id.progressBar);
+            TextView messageView = dialogView.findViewById(R.id.message);
+            messageView.setText(R.string.info_progress_dialog_establishing);
 
-        progressDialog = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.info_progress_dialog_connecting)
-                .setView(dialogView)
-                .setCancelable(true)
-                .setOnCancelListener(dialog -> {
-                    closeConnection();
-                    handler.post(() ->
-                            Utils.showFatalErrorMessage(getContext(),
-                                    getContext().getString(R.string.info_progress_dialog_aborted)));
-                })
-                .create();
+            progressDialog = new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.info_progress_dialog_connecting)
+                    .setView(dialogView)
+                    .setCancelable(true)
+                    .setOnCancelListener(dialog -> {
+                        closeConnection();
+                        handler.post(() ->
+                                Utils.showFatalErrorMessage(getContext(),
+                                        getContext().getString(R.string.info_progress_dialog_aborted)));
+                    })
+                    .create();
 
-        progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
     }
 
     public void startPointerCapture() {
@@ -418,6 +419,10 @@ public class RemoteCanvas extends AppCompatImageView
         handler.post(this.hideKeyboardAndExtraKeys);
     }
 
+    public void showProgessDialog() {
+        progressDialog.show();
+    }
+
     /**
      * Create a view showing a remote desktop connection
      *
@@ -425,8 +430,6 @@ public class RemoteCanvas extends AppCompatImageView
      * @param setModes Callback to run on UI thread after connection is set up
      */
     public RemotePointer initializeCanvas(Connection conn, final Runnable setModes, final Runnable hideKeyboardAndExtraKeys) {
-        progressDialog.show();
-
         maintainConnection = true;
         this.setModes = setModes;
         this.hideKeyboardAndExtraKeys = hideKeyboardAndExtraKeys;
@@ -488,8 +491,9 @@ public class RemoteCanvas extends AppCompatImageView
             Log.e(TAG, e.toString());
 //            e.printStackTrace();
             // Ensure we dismiss the progress dialog before we finish
-            if (progressDialog.isShowing())
+            if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
+            }
 
             if (e instanceof OutOfMemoryError) {
                 disposeDrawable();
@@ -691,8 +695,9 @@ public class RemoteCanvas extends AppCompatImageView
         handler.post(drawableSetter);
 
         // Hide progress dialog
-        if (progressDialog.isShowing())
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
 
         try {
             rfb.processProtocol();
@@ -2075,5 +2080,16 @@ public class RemoteCanvas extends AppCompatImageView
 
     public boolean isOutDisplay() {
         return this.outDisplay;
+    }
+
+    /*
+     * In external display mode, dialog will display in the touchpad canvas, so we accept it here
+     */
+    public void setProgressDialog(AlertDialog progressDialog) {
+        this.progressDialog = progressDialog;
+    }
+
+    public AlertDialog getProgressDialog() {
+        return progressDialog;
     }
 }

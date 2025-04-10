@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="bottom|center"
-        android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
+        android:background="@android:color/background_dark" />
 
     <View
         android:id="@+id/edgeTop"
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center"
-        android:background="@color/black_overlay"></com.undatech.opaque.util.RemoteToolbar>
+        android:background="@color/black_overlay" />
 
     <RelativeLayout
         android:id="@+id/layoutKeys"

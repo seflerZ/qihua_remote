@@ -10,6 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="bottom|center"
-        android:background="@android:color/background_dark"></com.qihua.bVNC.RemoteCanvas>
+        android:background="@android:color/background_dark" />
 
 </FrameLayout>

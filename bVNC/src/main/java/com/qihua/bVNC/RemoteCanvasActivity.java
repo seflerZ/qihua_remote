@@ -238,7 +238,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         }
 
         if (displays.length >= 1) {
-            setContentView(R.layout.control);
+            setContentView(R.layout.touchpad);
 
             // use external display in last place
             Display choosedDisplay = displays[displays.length - 1];
@@ -287,7 +287,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        touchpad.setOutDisplay(canvas != touchpad);
+        touchpad.setOutDisplay(false);
         canvas.setOutDisplay(canvas != touchpad);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -429,6 +429,9 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         layoutKeys.addView(extraKeysView);
 
+        // the progress dialog can not be displayed in external monitor, so accept it from the touchpad
+        canvas.setProgressDialog(touchpad.getProgressDialog());
+
         Log.d(TAG, "OnCreate complete");
     }
 
@@ -536,6 +539,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         canvas.initializeCanvas(connection, setModes, hideKeyboardAndExtraKeys);
 
         touchpad.setInputHandler(getInputHandlerById(R.id.itemInputTouchpad));
+        touchpad.showProgessDialog();
     }
 
     private void handleSerializedConnection(Intent i) {
