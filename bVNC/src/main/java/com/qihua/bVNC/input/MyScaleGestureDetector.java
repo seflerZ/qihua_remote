@@ -90,7 +90,7 @@ public class MyScaleGestureDetector extends ScaleGestureDetector {
         mContext = context;
         mListener = listener;
         final ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
-        mSpanSlop = viewConfiguration.getScaledTouchSlop();
+        mSpanSlop = 80;
         mMinSpan = 550;
         mHandler = handler;
         // Quick scale is enabled by default after JB_MR2
