@@ -845,6 +845,7 @@ aSPICE对应的功能如下：
     <string name="request_recording_parameter_description">申请此权限将手机的麦克风用于远程录音输入，例如在远端参加语音、视频会议时使用。</string>
 
     <string name="configure_gesture">配置手势</string>
+    <string name="gesture_not_configured">未配置手势，请至连接设置页进行配置。</string>
     <string name="save_gesture">保存手势</string>
     <string name="copy_gesture">复制手势</string>
     <string name="configure_connection">配置连接</string>

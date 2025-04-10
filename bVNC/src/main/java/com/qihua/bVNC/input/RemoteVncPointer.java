@@ -63,7 +63,7 @@ public class RemoteVncPointer extends RemotePointer {
 
     @Override
     public void scrollUp(int x, int y, int speed, int metaState) {
-        if (System.currentTimeMillis() - lastScrollMs < 300) {
+        if (System.currentTimeMillis() - lastScrollMs < 200) {
             // avoid too fast scrolling
             return;
         }
@@ -76,7 +76,7 @@ public class RemoteVncPointer extends RemotePointer {
 
     @Override
     public void scrollDown(int x, int y, int speed, int metaState) {
-        if (System.currentTimeMillis() - lastScrollMs < 300) {
+        if (System.currentTimeMillis() - lastScrollMs < 200) {
             // avoid too fast scrolling
             return;
         }

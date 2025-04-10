@@ -385,6 +385,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         gestureOverlayView.addOnGesturePerformedListener((overlay, gesture) -> {
             ArrayList<Prediction> predictions = gestureLibrary.recognize(gesture);
             if (predictions.isEmpty()) {
+                Toast.makeText(RemoteCanvasActivity.this, getString(R.string.gesture_not_configured), Toast.LENGTH_SHORT).show();
                 hideToolbar();
 
                 return;
@@ -1118,18 +1119,19 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         // Its quite common to see NullPointerExceptions here when this function is called
         // at the point of disconnection. Hence, we catch and ignore the error.
         float oldScale = canvas.canvasZoomer.getZoomFactor();
-        int x = canvas.absoluteXPosition;
-        int y = canvas.absoluteYPosition;
+//        int x = canvas.absoluteXPosition;
+//        int y = canvas.absoluteYPosition;
         canvas.canvasZoomer.setScaleTypeForActivity(RemoteCanvasActivity.this);
         float newScale = canvas.canvasZoomer.getZoomFactor();
         canvas.canvasZoomer.changeZoom(this, oldScale / newScale, 0, 0);
-        newScale = canvas.canvasZoomer.getZoomFactor();
-        if (newScale <= oldScale &&
-                canvas.canvasZoomer.getScaleType() != ImageView.ScaleType.FIT_CENTER) {
-            canvas.absoluteXPosition = x;
-            canvas.absoluteYPosition = y;
-            canvas.resetScroll();
-        }
+        canvas.movePanToMakePointerVisible();
+//        newScale = canvas.canvasZoomer.getZoomFactor();
+//        if (newScale <= oldScale &&
+//                canvas.canvasZoomer.getScaleType() != ImageView.ScaleType.FIT_CENTER) {
+//            canvas.absoluteXPosition = x;
+//            canvas.absoluteYPosition = y;
+//            canvas.resetScroll();
+//        }
         // Automatic resolution update request handling
         if (canvas.isVnc && connection.getRdpResType() == Constants.VNC_GEOM_SELECT_AUTOMATIC) {
             canvas.rfbconn.requestResolution(canvas.getWidth(), canvas.getHeight());
