@@ -161,15 +161,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private float lastPanDist = 0f;
     private ExtraKeysView extraKeysView;
 
-    /**
-     * This runnable fixes things up after a rotation.
-     */
-    private Runnable rotationCorrector = () -> {
-        try {
-            correctAfterRotation();
-        } catch (Exception e) {
-        }
-    };
     private MetaKeyBean lastSentKey;
 
     /**
@@ -295,20 +286,6 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         myVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-        View decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        try {
-                            correctAfterRotation();
-                        } catch (Exception e) {
-                            //e.printStackTrace();
-                        }
-                        //handler.postDelayed(rotationCorrector, 300);
-                    }
-                });
-
         Runnable setModes = new Runnable() {
             public void run() {
                 try {
@@ -337,29 +314,30 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
 
         KeyBoardListenerHelper helper = new KeyBoardListenerHelper(this);
         helper.setOnKeyBoardChangeListener((isShow, keyBoardHeight) -> {
-
-            if (!canvas.isOutDisplay()) {
-                Rect r = new Rect();
-                Rect re = new Rect();
-
-                rootView.getWindowVisibleDisplayFrame(r);
-                getWindow().getDecorView().getWindowVisibleDisplayFrame(re);
-                float visibleDesktopHeight = canvas.getVisibleDesktopHeight();
-
-                float panDistance = visibleDesktopHeight + keyBoardHeight - canvas.getHeight();
-                if (isShow && panDistance > 0) {
-                    canvas.absolutePan(canvas.getAbsX(), (int) (panDistance), false);
-                    lastPanDist = panDistance;
-                }
-
-                if (!isShow && lastPanDist > 0) {
-                    canvas.absolutePan(canvas.getAbsX(), (int) (-lastPanDist), false);
-                }
-
-                canvas.setVisibleDesktopHeight(r.bottom - re.top);
+            // in external display mode, no need to handle soft keyboard changes
+            if (canvas.isOutDisplay()) {
+                return;
             }
 
-            canvas.movePanToMakePointerVisible();
+            Rect r = new Rect();
+            Rect re = new Rect();
+
+            rootView.getWindowVisibleDisplayFrame(r);
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(re);
+            float visibleDesktopHeight = canvas.pointer.getY() * canvas.getZoomFactor();
+
+            float panDistance = (visibleDesktopHeight + keyBoardHeight - canvas.getHeight()) / canvas.getZoomFactor() + 200;
+            if (isShow && panDistance > 0) {
+                // this pan be force because the extra panning added above may exceed the visible desktop height(in image's resolution)
+                canvas.absolutePan(canvas.getAbsX(), (int) (panDistance), true);
+                lastPanDist = panDistance;
+            }
+
+            if (!isShow && lastPanDist > 0) {
+                canvas.absolutePan(canvas.getAbsX(), (int) (-lastPanDist), false);
+            }
+
+            canvas.setVisibleDesktopHeight(r.bottom - re.top);
         });
 
         gestureOverlayView = findViewById(R.id.gestureOverlay);
@@ -426,7 +404,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         });
         extraKeysView.setButtonTextAllCaps(true);
 
-        recreateExtraKeys();
+        int orientation = getResources().getConfiguration().orientation;
+        recreateExtraKeys(orientation == Configuration.ORIENTATION_LANDSCAPE);
 
         layoutKeys.addView(extraKeysView);
 
@@ -1104,49 +1083,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
             ((ConnectionSettable) dialog).setConnection(connection);
     }
 
-    /**
-     * This function is called by the rotationCorrector runnable
-     * to fix things up after a rotation.
-     */
-    private void correctAfterRotation() throws Exception {
-        Log.d(TAG, "correctAfterRotation");
-        canvas.waitUntilInflated();
-
-        if (canvas.canvasZoomer == null) {
-            return;
-        }
-
-        // Its quite common to see NullPointerExceptions here when this function is called
-        // at the point of disconnection. Hence, we catch and ignore the error.
-        float oldScale = canvas.canvasZoomer.getZoomFactor();
-//        int x = canvas.absoluteXPosition;
-//        int y = canvas.absoluteYPosition;
-        canvas.canvasZoomer.setScaleTypeForActivity(RemoteCanvasActivity.this);
-        float newScale = canvas.canvasZoomer.getZoomFactor();
-        canvas.canvasZoomer.changeZoom(this, oldScale / newScale, 0, 0);
-        canvas.movePanToMakePointerVisible();
-//        newScale = canvas.canvasZoomer.getZoomFactor();
-//        if (newScale <= oldScale &&
-//                canvas.canvasZoomer.getScaleType() != ImageView.ScaleType.FIT_CENTER) {
-//            canvas.absoluteXPosition = x;
-//            canvas.absoluteYPosition = y;
-//            canvas.resetScroll();
-//        }
-        // Automatic resolution update request handling
-        if (canvas.isVnc && connection.getRdpResType() == Constants.VNC_GEOM_SELECT_AUTOMATIC) {
-            canvas.rfbconn.requestResolution(canvas.getWidth(), canvas.getHeight());
-        } else if (canvas.isSpice && connection.getRdpResType() == Constants.RDP_GEOM_SELECT_AUTO) {
-            canvas.spicecomm.requestResolution(canvas.getWidth(), canvas.getHeight());
-        } else if (canvas.isOpaque && connection.isRequestingNewDisplayResolution()) {
-            canvas.spicecomm.requestResolution(canvas.getWidth(), canvas.getHeight());
-        }
-
-        // Auto change extra keys to horizontal or vertical mode
-        recreateExtraKeys();
-    }
-
-    private void recreateExtraKeys() {
-        if (canvas.getWidth() > canvas.getHeight()) {
+    private void recreateExtraKeys(boolean landscape) {
+        if (landscape) {
             try {
                 ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(ExtraKeysConstants.DEFAULT_HOR_IVALUE_EXTRA_KEYS, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
                 extraKeysView.reload(extraKeysInfo, 37f);
@@ -1169,9 +1107,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         enableImmersive();
         try {
             setExtraKeysVisibility(View.GONE, false);
-
-            // Correct a few times just in case. There is no visual effect.
-            handler.postDelayed(rotationCorrector, 300);
+            recreateExtraKeys(newConfig.screenWidthDp > newConfig.screenHeightDp);
         } catch (NullPointerException e) {
         }
     }

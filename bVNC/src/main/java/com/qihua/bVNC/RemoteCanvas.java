@@ -1643,7 +1643,7 @@ public class RemoteCanvas extends AppCompatImageView
     }
 
     /**
-     * Absolute pan.
+     * Absolute pan. These coordinates are in image's resolution.
      *
      * @param x
      * @param y
