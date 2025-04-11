@@ -694,11 +694,6 @@ public class RemoteCanvas extends AppCompatImageView
         sendUnixAuth();
         handler.post(drawableSetter);
 
-        // Hide progress dialog
-        if (progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-
         try {
             rfb.processProtocol();
         } catch (RfbProto.RfbUltraVncColorMapException e) {
@@ -1705,7 +1700,6 @@ public class RemoteCanvas extends AppCompatImageView
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
-            progressDialog = null; // no use any more
         }
 
         //android.util.Log.i(TAG, "reDraw called: " + x +", " + y + " + " + w + "x" + h);
