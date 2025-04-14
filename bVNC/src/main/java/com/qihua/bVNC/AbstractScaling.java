@@ -113,6 +113,9 @@ public abstract class AbstractScaling {
         activity.updateInputMenu();
     }
 
+    void correctAfterRotation(RemoteCanvasActivity activity) {
+    }
+
     abstract int getDefaultHandlerId();
 
     /**

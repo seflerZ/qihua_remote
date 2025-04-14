@@ -74,6 +74,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -1102,14 +1103,54 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         enableImmersive();
+
         try {
             setExtraKeysVisibility(View.GONE, false);
-            recreateExtraKeys(newConfig.screenWidthDp > newConfig.screenHeightDp);
+
+            // Correct a few times just in case. There is no visual effect.
+            handler.postDelayed(this::correctAfterRotation, 300);
         } catch (NullPointerException e) {
         }
+    }
+
+    private void correctAfterRotation() {
+        Log.d(TAG, "correctAfterRotation");
+        canvas.waitUntilInflated();
+
+        if (canvas.canvasZoomer == null) {
+            return;
+        }
+
+        // Its quite common to see NullPointerExceptions here when this function is called
+        // at the point of disconnection. Hence, we catch and ignore the error.
+//        float oldScale = canvas.canvasZoomer.getZoomFactor();
+//        int x = canvas.absoluteXPosition;
+//        int y = canvas.absoluteYPosition;
+        canvas.canvasZoomer.correctAfterRotation(RemoteCanvasActivity.this);
+//        float newScale = canvas.canvasZoomer.getZoomFactor();
+//        canvas.canvasZoomer.changeZoom(this, oldScale / newScale, 0, 0);
+        canvas.movePanToMakePointerVisible();
+//        newScale = canvas.canvasZoomer.getZoomFactor();
+//        if (newScale <= oldScale &&
+//                canvas.canvasZoomer.getScaleType() != ImageView.ScaleType.FIT_CENTER) {
+//            canvas.absoluteXPosition = x;
+//            canvas.absoluteYPosition = y;
+//            canvas.resetScroll();
+//        }
+        // Automatic resolution update request handling
+//        if (canvas.isVnc && connection.getRdpResType() == Constants.VNC_GEOM_SELECT_AUTOMATIC) {
+//            canvas.rfbconn.requestResolution(canvas.getWidth(), canvas.getHeight());
+//        } else if (canvas.isSpice && connection.getRdpResType() == Constants.RDP_GEOM_SELECT_AUTO) {
+//            canvas.spicecomm.requestResolution(canvas.getWidth(), canvas.getHeight());
+//        } else if (canvas.isOpaque && connection.isRequestingNewDisplayResolution()) {
+//            canvas.spicecomm.requestResolution(canvas.getWidth(), canvas.getHeight());
+//        }
+
+        // Auto change extra keys to horizontal or vertical mode
+        recreateExtraKeys(canvas.getWidth() > canvas.getHeight());
     }
 
     @Override

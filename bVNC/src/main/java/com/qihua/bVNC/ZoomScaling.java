@@ -193,6 +193,9 @@ class ZoomScaling extends AbstractScaling {
         minimumScale = canvas.getMinimumScale();
 
         float lastZoomFactor = canvas.connection.getLastZoomFactor();
+        if (lastZoomFactor < minimumScale) {
+            lastZoomFactor = minimumScale;
+        }
 
         // Do not apply zooming in second display mode.
         if (lastZoomFactor > 0 && canvas.connection.getUseLastPositionToolbar() && !canvas.isOutDisplay()) {
@@ -208,7 +211,26 @@ class ZoomScaling extends AbstractScaling {
         } else {
             scaling = minimumScale;
         }
+
         resolveZoom(canvas);
     }
 
+    @Override
+    void correctAfterRotation(RemoteCanvasActivity activity) {
+        RemoteCanvas canvas = activity.getCanvas();
+
+        minimumScale = canvas.getMinimumScale();
+
+        if (scaling < minimumScale) {
+            scaling = minimumScale;
+        }
+
+        if (scaling * canvas.getImageWidth() >= canvas.getWidth()) {
+            canvasXOffset = 0;
+        } else {
+            canvasXOffset = (int) (canvas.getWidth() - canvas.getImageWidth() * scaling) / 2;
+        }
+
+        resolveZoom(canvas);
+    }
 }
