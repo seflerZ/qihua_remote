@@ -284,8 +284,9 @@ public abstract class RemoteKeyboard {
                 processLocalKeyEvent(evt.getKeyCode(), evt, additionalMetaState);
                 KeyEvent upEvt = new KeyEvent(KeyEvent.ACTION_UP, evt.getKeyCode());
                 processLocalKeyEvent(upEvt.getKeyCode(), upEvt, additionalMetaState);
-                return true;
             }
+
+            return true;
         } else {
             android.util.Log.e("RemoteKeyboard", "Could not use any keymap to generate KeyEvent for unicode: " + unicodeChar);
         }
