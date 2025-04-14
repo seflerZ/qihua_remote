@@ -881,4 +881,10 @@ Below that is where you configure your connection.
 
     <string name="touchpad_control_pref">Touchpad customization</string>
     <string name="touchpad_edge_wheel">Use screen edge as touchpad scrolling</string>
+
+    <string name="extrakeys_pref">Extra key customization</string>
+    <string name="pref_extrakeys_vertical_pref">Configs for vertical screen</string>
+    <string name="pref_extrakeys_horizontal_pref">Configs for horizontal screen</string>
+    <string name="pref_extrakeys_tutor">Example:\n- One single token is \'a\'\n- {key:\'a\', popup:\'b\'} stands for a token with popup alternative\n- [[...],[...]] for two rows\n- Some character like \' should be escaped with \\</string>
+    <string name="pref_extrakeys_parsing_error">Error parsing extra keys config, using default</string>
 </resources>

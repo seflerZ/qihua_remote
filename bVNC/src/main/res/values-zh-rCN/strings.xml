@@ -864,4 +864,10 @@ aSPICE对应的功能如下：
     <string name="touchpad_longpress_action">触摸板长按效果</string>
     <string name="touchpad_control_pref">触摸板个性化设置</string>
     <string name="touchpad_edge_wheel">将屏幕边缘当作鼠标滚轮使用</string>
+
+    <string name="extrakeys_pref">软键盘配置</string>
+    <string name="pref_extrakeys_vertical_pref">竖屏时显示内容</string>
+    <string name="pref_extrakeys_horizontal_pref">横屏时显示内容</string>
+    <string name="pref_extrakeys_tutor">例子:\n- 单个字符 \'a\'\n- {key:\'a\', popup:\'b\'} 表示带弹出键的字符 \n- [[...],[...]] 表示两排键（可更多） \n- 一些特殊字符如 \' 需要被转译后使用，请用 \\ 转译成 \\\'</string>
+    <string name="pref_extrakeys_parsing_error">软件键盘配置解析错误，将使用默认值</string>
 </resources>

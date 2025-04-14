@@ -105,6 +105,8 @@ import com.undatech.opaque.util.OnTouchViewMover;
 import com.undatech.opaque.util.RemoteToolbar;
 import com.undatech.remoteClientUi.R;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -1087,17 +1089,33 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     private void recreateExtraKeys(boolean landscape) {
         if (landscape) {
             try {
-                ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(ExtraKeysConstants.DEFAULT_HOR_IVALUE_EXTRA_KEYS, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
+                String config = Utils.querySharedPreferenceString(this, Constants.horizontalExtraKeysPref, ExtraKeysConstants.DEFAULT_HOR_IVALUE_EXTRA_KEYS);
+                ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(config, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
                 extraKeysView.reload(extraKeysInfo, 37f);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.pref_extrakeys_parsing_error, Toast.LENGTH_LONG);
 
+                try {
+                    ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(ExtraKeysConstants.DEFAULT_HOR_IVALUE_EXTRA_KEYS, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
+                    extraKeysView.reload(extraKeysInfo, 37f);
+                } catch (JSONException ignore) {
+
+                }
             }
         } else {
             try {
-                ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(ExtraKeysConstants.DEFAULT_VER_IVALUE_EXTRA_KEYS, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
+                String config = Utils.querySharedPreferenceString(this, Constants.verticalExtraKeysPref, ExtraKeysConstants.DEFAULT_VER_IVALUE_EXTRA_KEYS);
+                ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(config, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
                 extraKeysView.reload(extraKeysInfo, 37f);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.pref_extrakeys_parsing_error, Toast.LENGTH_LONG);
 
+                try {
+                    ExtraKeysInfo extraKeysInfo = new ExtraKeysInfo(ExtraKeysConstants.DEFAULT_VER_IVALUE_EXTRA_KEYS, ExtraKeysConstants.DEFAULT_IVALUE_EXTRA_KEYS_STYLE, ExtraKeysConstants.CONTROL_CHARS_ALIASES);
+                    extraKeysView.reload(extraKeysInfo, 37f);
+                } catch (JSONException ignore) {
+
+                }
             }
         }
     }
