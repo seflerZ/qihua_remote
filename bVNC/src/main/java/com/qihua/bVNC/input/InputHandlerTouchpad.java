@@ -145,8 +145,8 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             }
 
             // get the relative moving distance compared to one step
-            float ratioY = distanceY / ((float) canvas.getHeight() / canvas.getVisibleDesktopHeight());
-            float ratioX = distanceX / ((float) canvas.getWidth() / canvas.getVisibleDesktopWidth());
+            float ratioY = distanceY / canvas.getZoomFactor();
+            float ratioX = distanceX / canvas.getZoomFactor();
 
             // The direction is just up side down.
             int newY = (int) -(ratioY);
