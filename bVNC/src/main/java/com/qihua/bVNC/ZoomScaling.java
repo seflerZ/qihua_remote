@@ -193,21 +193,10 @@ class ZoomScaling extends AbstractScaling {
         minimumScale = canvas.getMinimumScale();
 
         float lastZoomFactor = canvas.connection.getLastZoomFactor();
-        if (lastZoomFactor < minimumScale) {
-            lastZoomFactor = minimumScale;
-        }
-
         // Do not apply zooming in second display mode.
         if (lastZoomFactor > 0 && canvas.connection.getUseLastPositionToolbar() && !canvas.isOutDisplay()) {
             scaling = lastZoomFactor;
-
-            // after scale, the image width will change, so the init offset should be adjusted
-            // for the case that the image width is larger than the screen width, we should remove the extra offset
-            if (scaling * canvas.getImageWidth() >= canvas.getWidth()) {
-                canvasXOffset = 0;
-            } else {
-                canvasXOffset = (int) (canvas.getWidth() - canvas.getImageWidth() * scaling) / 2;
-            }
+            correctAfterRotation(activity);
         } else {
             scaling = minimumScale;
         }
@@ -225,12 +214,16 @@ class ZoomScaling extends AbstractScaling {
             scaling = minimumScale;
         }
 
-        if (scaling * canvas.getImageWidth() >= canvas.getWidth()) {
+        if (minimumScale * canvas.getImageWidth() >= canvas.getWidth()) {
             canvasXOffset = 0;
         } else {
-            canvasXOffset = (int) (canvas.getWidth() - canvas.getImageWidth() * scaling) / 2;
+            canvasXOffset = (int) (canvas.getWidth() - canvas.getImageWidth() * minimumScale) / 2;
         }
 
         resolveZoom(canvas);
+
+        // these steps will eliminate the black borders when rotating the screen
+        canvas.absolutePan(canvas.getWidth(), canvas.getHeight(), false);
+        canvas.movePanToMakePointerVisible();
     }
 }
