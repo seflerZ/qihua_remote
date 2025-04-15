@@ -853,6 +853,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         yCurrentFocus = detector.getFocusY();
 
         if (!inSwiping) {
+            // prevent right click
+            secondPointerWasDown = false;
+
             if (!inScaling && Math.abs(1.0 - detector.getScaleFactor()) < minScaleFactor) {
                 GeneralUtils.debugLog(debugLogging, TAG, "Not scaling due to small scale factor");
                 return false;
@@ -861,8 +864,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
             if (canvas != null && canvas.canvasZoomer != null) {
                 if (!inScaling) {
                     inScaling = true;
-                    // prevent right click
-                    secondPointerWasDown = false;
                 }
 
                 GeneralUtils.debugLog(debugLogging, TAG, "Changing zoom level: " + detector.getScaleFactor());

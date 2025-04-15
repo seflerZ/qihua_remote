@@ -230,9 +230,9 @@ public class InputHandlerTouchpad extends InputHandlerGeneric {
             return true;
         }
 
-        if (e1 != null) {
+        if (e1 != null && !twoFingers) {
             // Make distanceX/Y display density independent.
-            float sensitivity = pointer.getSensitivity();
+//            float sensitivity = pointer.getSensitivity();
 //            distanceX = sensitivity * distanceX / displayDensity;
 //            distanceY = sensitivity * distanceY / displayDensity;
 
