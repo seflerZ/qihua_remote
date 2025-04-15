@@ -406,8 +406,6 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
         } else if (scrollLeft) {
             pointer.scrollRight(x, y, delta, meta);
         }
-
-        pointer.releaseButton(x, y, meta);
     }
 
     /*
@@ -835,6 +833,9 @@ abstract class InputHandlerGeneric extends MyGestureDectector.SimpleOnGestureLis
                     dragHelped = false;
                 }
             }
+
+            // clean mouse button states
+            pointer.releaseButton(getX(e), getY(e), meta);
         }
 
         return gestureDetector.onTouchEvent(e);

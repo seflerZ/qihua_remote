@@ -64,7 +64,7 @@ public class RemoteRdpPointer extends RemotePointer {
             pointerMask = PTRFLAGS_WHEEL | (speed & 0x00ff);
         }
 
-        sendPointerEvent(x, y, metaState, false);
+        sendPointerEvent(x, y, metaState, true);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class RemoteRdpPointer extends RemotePointer {
         } else {
             pointerMask = PTRFLAGS_WHEEL | PTRFLAGS_WHEEL_NEGATIVE | (speed & 0x00ff);
         }
-        sendPointerEvent(x, y, metaState, false);
+        sendPointerEvent(x, y, metaState, true);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class RemoteRdpPointer extends RemotePointer {
         } else {
             pointerMask = PTRFLAGS_HWHEEL | (speed & 0x00ff);
         }
-        sendPointerEvent(x, y, metaState, false);
+        sendPointerEvent(x, y, metaState, true);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class RemoteRdpPointer extends RemotePointer {
         } else {
             pointerMask = PTRFLAGS_HWHEEL | PTRFLAGS_WHEEL_NEGATIVE | (speed & 0x00ff);
         }
-        sendPointerEvent(x, y, metaState, false);
+        sendPointerEvent(x, y, metaState, true);
     }
 
     @Override
